@@ -1,0 +1,37 @@
+{{#> layout pageTitle="Dev Portal - Kong EE Introduction" }}
+
+  {{#* inline "content-block"}}
+    <div class="app-container">
+      <div class="container">
+        {{> guides/sidebar}}
+        <section class="page-wrapper kong-doc">
+          <h1>Welcome to Kong Enterprise Edition</h1> 
+          <p>Before going further into Kong Enterprise Edition (EE), make sure you understand its <a href="https://getkong.org/about/">purpose and philosophy</a>. Once you are confident with the concept of API Gateways, this guide is going to take you through a quick introduction on how to use Kong and perform basic operations such as:</p> 
+          
+          <ul> 
+            <li>
+              <a href="https://getkong.org/docs/enterprise/latest/getting-started/quickstart">Running your own Kong instance</a>.
+            </li>
+            <li>
+              <a href="https://getkong.org/docs/enterprise/latest/getting-started/adding-your-api">Adding and consuming APIs</a>.
+            </li>
+            <li>
+              <a href="https://getkong.org/docs/enterprise/latest/getting-started/enabling-plugins">Installing plugins on Kong</a>.
+            </li>
+          </ul> 
+          
+          <h3>What is Kong, technically?</h3> 
+          <p>You’ve probably heard that Kong is built on NGINX, leveraging its stability and efficiency. But how is this possible exactly?</p> 
+          <p>To be more precise, Kong is a Lua application running in NGINX and made possible by the <a href="https://github.com/openresty/lua-nginx-module">lua-nginx-module</a>. Instead of compiling NGINX with this module, Kong is distributed along with <a href="https://openresty.org/">OpenResty</a>, which already includes lua-nginx-module. OpenResty is <em>not</em> a fork of NGINX, but a bundle of modules extending its capabilities.</p> 
+          
+          <p>This sets the foundations for a pluggable architecture, where Lua scripts (referred to as <em>”Kong plugins”</em>) can be enabled and executed at runtime. Because of this, we like to think of Kong as <strong>a paragon of microservice architecture</strong>: at its core, it implements database abstraction, routing and plugin management. Plugins can live in separate code bases and be injected anywhere into the request lifecycle, all in a few lines of code.</p> 
+          
+          <h3>Next Steps</h3>
+          <p>Now, lets get familiar with learning how to “start” and “stop” Kong EE.</p> 
+          <p>Go to <a href="/guides/5-minute-quickstart">5-minute quickstart with Kong ›</a></p>
+        </section>
+      </div>
+    </div>
+  {{/inline}}
+
+{{/layout}}

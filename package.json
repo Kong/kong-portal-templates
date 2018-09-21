@@ -1,0 +1,17 @@
+{
+  "name": "kong-portal-templates",
+  "version": "0.0.1",
+  "description": "Kong Portal Templates",
+  "repository": "https://github.com/Kong/kong-portal-templates",
+  "private": true,
+  "author": "Kong",
+  "scripts": {
+    "watch": "node src/sync",
+    "push": "PUSH=true node src/sync",
+    "pull": "PULL=true node src/sync",
+    "wipe": "DELETE_ALL=true node src/sync"
+  },
+  "devDependencies": {
+    "fs": "0.0.3"
+  }
+}

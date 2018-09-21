@@ -1,0 +1,58 @@
+{{#if auth}}
+<nav class="header-login-container">
+  {{#if isAuthenticated}}
+  <li class="dropdownWrapper">
+    <div class="header-text">
+      {{#if authData.idToken.1.picture}}
+        <img class="avatar" src="{{authData.idToken.1.picture}}" />
+      {{else}}
+        <svg id="default-user-icon" width="32" height="32" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <defs>
+            <circle id="a" cx="16" cy="16" r="16"/>
+          </defs>
+          <g fill="none" fill-rule="evenodd">
+            <g>
+              <use fill-opacity=".75" fill="#FFF" xlink:href="#a"/>
+              <circle stroke-opacity=".1" stroke="#000" cx="16" cy="16" r="15.5"/>
+            </g>
+            <path d="M16 32c-4.7787701 0-9.06822218-2.0950195-12-5.4167024V25c0-2.21 1.79-4 4.046-4 1.824 2.416 4.692 4 7.954 4 3.262 0 6.13-1.584 8-4 2.21 0 4 1.79 4 4v1.5832976C25.0682222 29.9049805 20.7787701 32 16 32zm0-27c3.3137085 0 6 2.6862915 6 6v4c0 3.3137085-2.6862915 6-6 6s-6-2.6862915-6-6v-4c0-3.3137085 2.6862915-6 6-6z" fill-opacity=".35" fill="#0A2233"/>
+          </g>
+        </svg>
+      {{/if}}
+      <svg class="dropdown-arrow" width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="nav-behavior--desktop" transform="translate(-1170.000000, -36.000000)" fill="#CFD4D9" fill-rule="nonzero">
+            <g id="header">
+                <g id="nav" transform="translate(1067.000000, 24.000000)">
+                    <g id="dd--api-reference" transform="translate(0.000000, 6.000000)">
+                        <path d="M107.292893,11.7071068 C107.683418,12.0976311 108.316582,12.0976311 108.707107,11.7071068 L112.707107,7.70710678 C113.097631,7.31658249 113.097631,6.68341751 112.707107,6.29289322 C112.316582,5.90236893 111.683418,5.90236893 111.292893,6.29289322 L108,9.65625 L104.707107,6.29289322 C104.316582,5.90236893 103.683418,5.90236893 103.292893,6.29289322 C102.902369,6.68341751 102.902369,7.31658249 103.292893,7.70710678 L107.292893,11.7071068 Z" id="icn-chevron"></path>
+                    </g>
+                </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+    <ul class="dropdown-list">
+      <li>
+        <a href="/dashboard">Dashboard</a>
+      </li>
+      <li>
+        <a href="/settings">Settings</a>
+      </li>
+      <li>
+        <a href="" id="logout">Logout</a>
+      </li>
+    </ul>
+  </li>
+  {{/if}}
+  {{#unless isAuthenticated}}
+  <li>
+    <a href="/login">Login</a>
+  </li>
+  <li>
+    <a href="/register" class="button button-transparent">Sign Up</a>
+  </li>
+  {{/unless}}
+</nav>
+{{/if}}

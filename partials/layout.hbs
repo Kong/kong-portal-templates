@@ -1,0 +1,34 @@
+{{#if pageTitle}}
+  {{> unauthenticated/title }}
+{{/if}}
+
+{{#> styles-block}}
+  {{!--
+    These are the default styles, but can be overridden.
+  --}}
+  {{> unauthenticated/theme-css}}
+  {{> unauthenticated/custom-css}}
+{{/styles-block}}
+
+{{#> header-block}}
+  {{!--
+    The `header` partial is the default content, but can be overridden.
+  --}}
+  {{> header }}
+{{/header-block}}
+
+{{#> content-block}}
+  {{!-- Default content goes here. --}}
+{{/content-block}}
+
+{{#> footer-block}}
+  {{!--
+    The `footer` partial is the default content, but can be overridden.
+  --}}
+  {{> footer }}
+{{/footer-block}}
+
+{{#> scripts-block}}
+  {{> custom-js}}
+  {{> unauthenticated/auth-js auth=authData.authType}}
+{{/scripts-block}}

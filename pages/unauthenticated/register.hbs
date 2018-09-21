@@ -1,0 +1,51 @@
+{{#> unauthenticated/layout pageTitle="Register" }} 
+
+{{#*inline "content-block"}}
+<div class="authentication">
+  <h1>Request Access</h1>
+  <div class="alert alert-info">
+    <b>Please fill out the below form and we will notify you once your request gets approved.</b>
+  </div>
+  <form id="register">
+    <label for="full_name">Full Name</label>
+    <input id="full_name" type="text" name="full_name" required />
+    <label for="email">Email</label>
+    <input id="email" type="text" name="email" required/>
+    {{#if (eq authData.authType 'basic-auth')}}
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required />
+    {{/if}}
+    {{#if (eq authData.authType 'key-auth')}}
+      <label for="key">Api Key</label>
+      <input id="key" type="text" name="key" required />
+    {{/if}}
+    <button class="button button-primary" type="submit">Sign Up</button>
+  </form>
+</div>
+{{/inline}}
+
+{{/unauthenticated/layout}}
+
+<!-- Autofill email field from UTM parameter -->
+<script>
+  function getUrlVars() {
+    var vars = {}
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value
+    })
+    return vars
+  }
+
+  function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+      urlparameter = getUrlVars()[parameter];
+    }
+    return urlparameter;
+  }
+  document.getElementById('email').value = getUrlParam('email', '')
+</script>
+
+<script>
+  document.getElementById('register').addEventListener('submit', e => { e.preventDefault() })
+</script>
