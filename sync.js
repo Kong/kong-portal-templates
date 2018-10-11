@@ -5,8 +5,6 @@ const {join, parse} = require('path')
 const https = require('https')
 const http = require('http')
 const url = require('url')
-const {exec} = require('child_process')
-const apiURL = process.env.KA_API_URL || 'http://0.0.0.0:8001'
 
 // Help Output
 if (process.argv[2] === '--help' || process.argv[2] === '-h') {
@@ -20,14 +18,21 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
   console.log('  ENV Variables:')
   console.log()
+  console.log('     KA_API_URL=<url>', '\t\t', 'Kong Admin API URL')
+  console.log('     KA_API_KEY=<key>', '\t\t', 'Sets `apikey` header on file requests')
+  console.log('     KA_BASIC_AUTH=<creds>', '\t', 'Sets `Authorization` header on file requests (Username:Password)')
+  console.log('     KA_RBAC_TOKEN=<token>', '\t', 'Sets `kong-admin-token` header on file requests')
+  console.log()
   console.log('     PULL=true', '\t\t\t', 'pull files from Files API (compare to `git pull`)')
   console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push`)')
   console.log('     DELETE_ALL=true', '\t\t', 'remove all files from Files API. USE WITH CAUTION!!!')
-  console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: src/templates)')
+  console.log()
+  console.log('     DIRECTORY=<dir>', '\t\t', 'relative folder to scan for template files (defaults to `default/`)')
   console.log('     TYPE=<type>', '\t\t', 'type of files in scanned directories, otherwise use directory structure')
-  console.log('     INTERVAL=<seconds>', '\t', 'duration of time in-between scans')
-  console.log('     EMOJI=true', '\t\t', 'enable emoji symbols')
   console.log('     WATCH=false', '\t\t', 'disable file watch')
+  console.log('     INTERVAL=<seconds>', '\t', 'duration of time in-between scans')
+  console.log()
+  console.log('     EMOJI=true', '\t\t', 'enable emoji symbols')
   console.log()
   console.log('  Examples:')
   console.log()
@@ -46,15 +51,23 @@ const LDTIMES = {}
 const LFTIMES = {}
 
 // Arguments
-let {DIRECTORY, TYPE, INTERVAL, EMOJI, WATCH, DELETE_ALL, PULL, PUSH} = process.env
-DIRECTORY = DIRECTORY || '/'
+let {
+  DIRECTORY, TYPE, INTERVAL, EMOJI, 
+  WATCH, DELETE_ALL, PULL, PUSH, 
+  KA_API_URL, KA_API_KEY, KA_RBAC_TOKEN, KA_BASIC_AUTH
+} = process.env
+
+let WATCH_DIR = !(WATCH === 'false')
+let CURL_OUTPUT = false
+
+KA_API_URL = KA_API_URL || 'http://0.0.0.0:8001'
+
+DIRECTORY = DIRECTORY || 'default/'
 INTERVAL = parseInt(INTERVAL, 10) || 5
 DELETE_ALL = DELETE_ALL === 'true'
 PUSH = PUSH === 'true'
 PULL = PULL === 'true'
 
-var WATCH_DIR = !(WATCH === 'false')
-var CURL_OUTPUT = false
 if (process.argv[2] === '--curl' || process.argv[2] === '-c') {
   CURL_OUTPUT = true
   WATCH_DIR = false
@@ -98,22 +111,19 @@ async function read (directory, type) {
 
   // Delete remote files that no longer exist locally
   if (type) {
-    await Promise.all(Object.keys(LFTIMES[directory]).map((filename) => {
-      return Promise.resolve()
-        .then(() => {
-          if (files.indexOf(filename) === -1) {
-            return handle(type, filename, join(directory, filename), deleteFile)
-              .then(res => {
-                const path = join(directory, filename)
-                handleResponse(res, 'delete', isDeleted, type, path)
-                delete LFTIMES[directory][filename]
-              })
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }))
+    let promises = Object.keys(LFTIMES[directory])
+      .filter(filename => files.indexOf(filename) < 0)
+      .map((filename) => {
+        const path = join(directory, filename)
+
+        return Promise.resolve()
+          .then(() => handle(type, filename, join(directory, filename), deleteFile))
+          .then(res => handleResponse(res, 'delete', isDeleted, type, path))
+          .then(() => delete LFTIMES[directory][filename])
+          .catch((err) => console.log(err))
+      })
+
+    await Promise.all(promises)
   }
 
   return Promise.all(files.map((filename, index) => {
@@ -151,25 +161,16 @@ async function read (directory, type) {
     if (ltime && ltime !== time) {
       return handle(type, filename, path, updateFile)
         .then((res) => handleResponse(res, 'update', isUpdated, type, path))
-        .catch((err) => {
-          console.log(err)
-        })
+        .catch((err) => console.log(err))
     }
 
     // Delete remote file if it exists, recreate it from local file
-    return handle(type, filename, path, getFile)
-      .then(res => {
-        // if file exists in remote, delete it
-        if (res && res.total > 0) {
-          return deleteFile(null, res.data[0].id, null)
-            .then(res => handleResponse(res, 'delete', isDeleted, type, path))
-        }
-      })
+    return Promise.resolve()
+      .then(() => handle(type, filename, path, getFile))
+      .then(res => deleteExistingFile(res, type, path))
       .then(() => handle(type, filename, path, createFile))
       .then(res => handleResponse(res, 'create', isCreated, type, path))
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch((err) => console.log(err))
   }))
 }
 
@@ -200,6 +201,8 @@ async function write () {
 
 // Helpers
 function handleResponse (res, op, successCb, type, path) {
+  if (CURL_OUTPUT) return
+
   const success = successCb(res)
   const symbol = getSymbol(op, success)
   console.log(`${symbol} ${op} [${type}] ${path}`)
@@ -213,6 +216,16 @@ function handleResponse (res, op, successCb, type, path) {
       console.log(' ', res.substring(0, 1000))
     }
   }
+}
+
+function deleteExistingFile (res, type, path) {
+  if (res && res.data && res.data[0]) {
+    return deleteFile(null, res.data[0].id, null).then(res => {
+      return handleResponse(res, 'delete', isDeleted, type, path)
+    })
+  }
+
+  return false
 }
 
 function isCreated (res) {
@@ -247,7 +260,7 @@ function handle (type, name, path, action) {
 
 // File API
 function getFile (path, nameOrId, type, auth) {
-  const reqUrl = `${apiURL}/files?name=${nameOrId}`
+  const reqUrl = `${KA_API_URL}/files?name=${nameOrId}`
 
   if (CURL_OUTPUT) {
     console.log(`curl -X "${reqUrl}"`)
@@ -259,7 +272,7 @@ function getFile (path, nameOrId, type, auth) {
 }
 
 function createFile (path, name, type, auth) {
-  const reqUrl = `${apiURL}/files`
+  const reqUrl = `${KA_API_URL}/files`
 
   if (CURL_OUTPUT) {
     const args = `-F "name=${name}" -F "contents=@${path}" -F "type=${type}" -F "auth=${auth}"`
@@ -272,7 +285,7 @@ function createFile (path, name, type, auth) {
 }
 
 function updateFile (path, name, type, auth) {
-  const reqUrl = `${apiURL}/files/${name}`
+  const reqUrl = `${KA_API_URL}/files/${name}`
 
   if (CURL_OUTPUT) {
     var args = `-F "contents=@${path}" -F "type=${type}" -F "auth=${auth}"`
@@ -285,7 +298,7 @@ function updateFile (path, name, type, auth) {
 }
 
 function deleteFile (path, nameOrId, type) {
-  let reqUrl = `${apiURL}/files/${nameOrId}`
+  let reqUrl = `${KA_API_URL}/files/${nameOrId}`
 
   if (CURL_OUTPUT) {
     console.log(`curl -X DELETE "${reqUrl}"`)
@@ -301,6 +314,18 @@ function httpRequest (reqUrl, method = 'GET', data = '') {
   options.headers = {
     'Content-Type': 'application/json',
     'Content-Length': Buffer.byteLength(data)
+  }
+
+  if (KA_BASIC_AUTH) {
+    options.headers["Authorization"] = 'Basic ' + btoa(KA_BASIC_AUTH)
+  }
+
+  if (KA_API_KEY) {
+    options.headers["apikey"] = KA_API_KEY
+  }
+
+  if (KA_RBAC_TOKEN) {
+    options.headers["kong-admin-token"] = KA_RBAC_TOKEN
   }
 
   options.agent = PROTOCOLS[options.protocol].agent
@@ -327,7 +352,7 @@ function httpRequest (reqUrl, method = 'GET', data = '') {
 }
 
 function getFiles (type) {
-  let reqUrl = `${apiURL}/files`
+  let reqUrl = `${KA_API_URL}/files`
   if (type) {
     reqUrl += `?type=${type}`
   }
