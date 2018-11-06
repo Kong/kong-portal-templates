@@ -8,11 +8,18 @@ window.helpers.goToPage = (url) => {
   window.location.href = url
 }
 
+window.helpers.getWorkspace = () => {
+  return window.K_CONFIG && window.K_CONFIG.WORKSPACE
+}
+
 window.helpers.buildUrl = (path) => {
-  if (path) {
-    return `${window.location.origin}/${path}`
+  if (!window.K_CONFIG.PORTAL_GUI_URL) {
+    let workspace = window.K_CONFIG.WORKSPACE || 'default'
+    let workspaceFrag = workspace === 'default' ? '' : `/${window.K_CONFIG.WORKSPACE}`
+    let pathFrag = path ? `/${path}` : ''
+    return `${window.location.origin}${workspaceFrag}${pathFrag}`
   }
-  return window.location.origin
+  return `${window.K_CONFIG.PORTAL_GUI_URL}/${path}`
 }
 
 window.helpers.getUrlParameter = (name) => {

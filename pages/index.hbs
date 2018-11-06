@@ -10,7 +10,7 @@
               <h1 class="text-color light">Build with Kong</h1>
               <p class="text-color light-opaque">Kong can be even more powerful by integrating it with your platform, apps and services.</p>
               {{#if authData.authType}}
-                <a href="/register" class="button button-success">Create a Developer Account</a>
+                <a href="{{config.PORTAL_GUI_URL}}/register" class="button button-success">Create a Developer Account</a>
               {{/if}}
             </div>
             <div class="column">
@@ -118,7 +118,7 @@
               </svg>
               <h3>Vitals API</h3>
               <p>Monitor your Kong health and understand the microservice API transactions traversing Kong.</p>
-              <p><a href="/documentation/vitals">Read the docs</a></p>
+              <p><a href="{{config.PORTAL_GUI_URL}}/documentation/vitals">Read the docs</a></p>
             </div>
             <div class="catalog-item">
              <svg width="49" height="44">
@@ -126,7 +126,7 @@
               </svg>
               <h3>Files API</h3>
               <p>Manage your Developer Portal files and API Specifications.</p>
-              <p><a href="/documentation/files">Read the docs</a></p>
+              <p><a href="{{config.PORTAL_GUI_URL}}/documentation/files">Read the docs</a></p>
             </div>
             <div class="catalog-item">
              <svg width="48" height="48">
@@ -134,7 +134,7 @@
               </svg>
               <h3>Admin API</h3>
               <p>This API is designed for internal use and provides full control over Kong.</p>
-              <p><a href="/documentation/admin">Read the docs</a></p>
+              <p><a href="{{config.PORTAL_GUI_URL}}/documentation/admin">Read the docs</a></p>
             </div>
           </div>
         </section>
@@ -157,7 +157,7 @@
               <div class="text">
                 <p class="subtitle"><strong>5-Minutes guide to Kong EE</strong></p>
                 <p>Learn the basics of Kong, make your first API Call.</p>
-                <a href="/guides/5-minute-quickstart/" target="_blank">Continue Reading &rsaquo;</a>
+                <a href="{{config.PORTAL_GUI_URL}}/guides/5-minute-quickstart/" target="_blank">Continue Reading &rsaquo;</a>
               </div>
             </div>
             <div class="column guide">
@@ -172,7 +172,7 @@
               <div class="text">
                 <p class="subtitle"><strong>Kong Architecture</strong></p>
                 <p>Learn the purpose and architecture of Kongs underlying components.</p>
-                <a href="/guides/kong-architecture-overview/" target="_blank">Continue Reading &rsaquo;</a>
+                <a href="{{config.PORTAL_GUI_URL}}/guides/kong-architecture-overview/" target="_blank">Continue Reading &rsaquo;</a>
               </div>
             </div>
           </div>
@@ -189,7 +189,7 @@
               <div class="text">
                 <p class="subtitle"><strong>Upload your first file via API</strong></p>
                 <p>Create your own documentation with your own OAS File.</p>
-                <a href="/guides/uploading-spec" target="_blank">Continue Reading &rsaquo;</a>
+                <a href="{{config.PORTAL_GUI_URL}}/guides/uploading-spec" target="_blank">Continue Reading &rsaquo;</a>
               </div>
             </div>
             <div class="column guide">
@@ -204,7 +204,7 @@
               <div class="text">
                 <p class="subtitle"><strong>Vitals endpoints 101</strong></p>
                 <p>Integrate data from Kong to your favorite monitoring tool.</p>
-                <a href="/guides/kong-vitals" target="_blank">Continue Reading &rsaquo;</a>
+                <a href="{{config.PORTAL_GUI_URL}}/guides/kong-vitals" target="_blank">Continue Reading &rsaquo;</a>
               </div>
             </div>
           </div>

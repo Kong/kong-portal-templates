@@ -35,23 +35,23 @@
     </div>
     <ul class="dropdown-list">
       <li>
-        <a href="/dashboard">Dashboard</a>
+        <a href="{{config.PORTAL_GUI_URL}}/dashboard">Dashboard</a>
       </li>
       <li>
-        <a href="/settings">Settings</a>
+        <a href="{{config.PORTAL_GUI_URL}}/settings">Settings</a>
       </li>
       <li>
-        <a href="" id="logout">Logout</a>
+        <a href="{{config.PORTAL_GUI_URL}}/" id="logout">Logout</a>
       </li>
     </ul>
   </li>
   {{/if}}
   {{#unless isAuthenticated}}
   <li>
-    <a href="/login">Login</a>
+    <a href="{{config.PORTAL_GUI_URL}}/login">Login</a>
   </li>
   <li>
-    <a href="/register" class="button button-transparent">Sign Up</a>
+    <a href="{{config.PORTAL_GUI_URL}}/register" class="button button-transparent">Sign Up</a>
   </li>
   {{/unless}}
 </nav>

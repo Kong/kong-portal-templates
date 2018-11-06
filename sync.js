@@ -5,9 +5,12 @@ const {join, parse} = require('path')
 const https = require('https')
 const http = require('http')
 const url = require('url')
-const {exec} = require('child_process')
-const apiURL = process.env.KA_API_URL || 'http://0.0.0.0:8001'
 
+const apiURL = process.env.WORKSPACE
+  ? (process.env.KA_API_URL || 'http://0.0.0.0:8001') + `/${process.env.WORKSPACE}`
+  : (process.env.KA_API_URL || 'http://0.0.0.0:8001')
+
+console.log(apiURL)
 // Help Output
 if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
@@ -176,7 +179,6 @@ async function read (directory, type) {
 async function write () {
   getFiles().then((files) => {
     files.data.forEach(file => {
-
       let fileName = file.name
       let contents = file.contents + '\n'
       let extension = file.type === 'spec'
@@ -200,6 +202,11 @@ async function write () {
 
 // Helpers
 function handleResponse (res, op, successCb, type, path) {
+
+  if (!res) {
+    return
+  }
+
   const success = successCb(res)
   const symbol = getSymbol(op, success)
   console.log(`${symbol} ${op} [${type}] ${path}`)
@@ -241,6 +248,10 @@ function handle (type, name, path, action) {
   pathName.pop()
   auth = !(pathName.length > 0 && pathName[0] === 'unauthenticated')
   pathName = pathName.join('/')
+
+  if (type !== 'page' && type !== 'partial' && type !== 'spec') {
+    return Promise.resolve()
+  }
 
   return action(path, join(pathName, parse(name).name), type, auth)
 }
@@ -371,20 +382,24 @@ async function init () {
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
     try {
+      console.log("deleting all files from:", DIRECTORY)
       const {data: files} = await getFiles(TYPE)
       await deleteAllFiles(files)
       return
     } catch (err) {
       console.log(`Error deleting files: ${err}`)
+      return
     }
   }
 
   if (PULL) {
+    console.log("pulling files from:", DIRECTORY)
     await write()
     return
   }
 
   if (PUSH) {
+    console.log("pushing files to:", DIRECTORY)
     await read(DIRECTORY)
     return
   }
