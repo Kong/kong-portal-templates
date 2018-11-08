@@ -28,12 +28,17 @@ $ npm install
 
 |Variable|Default|Description|
 |---|---|---|
-|`PUSH`|`true`|push files to Files API (compare to `git push`)|
+|`KA_API_URL`|`localhost:8004`|Kong Admin API URL|
+|`KA_API_KEY`|`abcdef`|Sets `apikey` header on file requests|
+|`KA_BASIC_AUTH`|`username:password`|Sets `Authorization` header on file requests|
+|`KA_RBAC_TOKEN`|`abcdef`|Sets `kong-admin-token` header on file requests|
+|`WORKSPACE`|`default`|Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/workspaces/default/files`)
+|`DIRECTORY`|`src/templates/`|Directory the sync script will scan and watch for changes.|
+|`WATCH`|`true`|watch files for changes and sync with files api when a change is made.|
+|`PUSH`|`true`|push files to Files API (compare to `git push --force`)|
 |`PULL`|`true`|pull files from Files API (compare to `git pull`)|
 |`DELETE_ALL`|`true`|`remove all files from Files API. USE WITH CAUTION!!!`|
 |`INTERVAL`|`5`|Sync script watch interval in seconds|
-|`WORKSPACE`|`default`|Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/workspaces/default/files`)
-|`DIRECTORY`|`src/templates/`|Directory the sync script will scan and watch for changes.|
 |`TYPE`|Type of files the sync script is scanning. By default, the files are assumed to be directory based. `<type>/<filename>`|
 |`EMOJI`|`false`|`true` enables emoji status symbol output in the sync script.|
 

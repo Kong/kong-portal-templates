@@ -4,7 +4,6 @@ const {lstatSync, readdirSync, readFileSync, writeFileSync} = require('fs')
 const {join, parse} = require('path')
 const https = require('https')
 const http = require('http')
-const btoa = require('btoa')
 const url = require('url')
 
 const apiURL = process.env.WORKSPACE
@@ -25,13 +24,11 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log('  ENV Variables:')
   console.log()
   console.log('     KA_API_URL=<url>', '\t\t', 'Kong Admin API URL')
-  console.log('     KA_API_KEY=<key>', '\t\t', 'Sets `apikey` header on file requests')
-  console.log('     KA_BASIC_AUTH=<creds>', '\t', 'Sets `Authorization` header on file requests (Username:Password)')
   console.log('     KA_RBAC_TOKEN=<token>', '\t', 'Sets `kong-admin-token` header on file requests')
   console.log()
   console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: default/)')
   console.log('     PULL=true', '\t\t\t', 'pull files from Files API (compare to `git pull`)')
-  console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push`)')
+  console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push --force`)')
   console.log('     DELETE_ALL=true', '\t\t', 'remove all files from Files API. USE WITH CAUTION!!!')
   console.log()
   console.log('     TYPE=<type>', '\t\t', 'type of files in scanned directories, otherwise use directory structure')
@@ -57,9 +54,9 @@ const LFTIMES = {}
 
 // Arguments
 let {
-  DIRECTORY, TYPE, INTERVAL, EMOJI, 
+  DIRECTORY, TYPE, INTERVAL, EMOJI,
   WATCH, DELETE_ALL, PULL, PUSH,
-  KA_API_KEY, KA_RBAC_TOKEN, KA_BASIC_AUTH
+  KA_RBAC_TOKEN
 } = process.env
 
 let WATCH_DIR = WATCH === 'true'
@@ -118,13 +115,13 @@ async function read (directory, type) {
       .filter(filename => files.indexOf(filename) < 0)
       .map((filename) => {
         const path = join(directory, filename)
-         return Promise.resolve()
+        return Promise.resolve()
           .then(() => handle(type, filename, join(directory, filename), deleteFile))
           .then(res => handleResponse(res, 'delete', isDeleted, type, path))
           .then(() => delete LFTIMES[directory][filename])
           .catch((err) => console.log(err))
       })
-     await Promise.all(promises)
+    await Promise.all(promises)
   }
 
   return Promise.all(files.map((filename, index) => {
@@ -185,7 +182,7 @@ async function write () {
         : '.hbs'
 
       let filePath = (DIRECTORY + fileName + extension)
-      
+
       if (extension === '' || !extension) {
         console.log(`Error: Not able to determine extension of ${fileName}`)
       }
@@ -224,7 +221,7 @@ function deleteExistingFile (res, type, path) {
       return handleResponse(res, 'delete', isDeleted, type, path)
     })
   }
-   return false
+  return false
 }
 
 function isCreated (res) {
@@ -323,14 +320,8 @@ function httpRequest (reqUrl, method = 'GET', data = '') {
     'Content-Length': Buffer.byteLength(data)
   }
 
-  if (KA_BASIC_AUTH) {
-    options.headers["Authorization"] = 'Basic ' + btoa(KA_BASIC_AUTH)
-  }
-   if (KA_API_KEY) {
-    options.headers["apikey"] = KA_API_KEY
-  }
-   if (KA_RBAC_TOKEN) {
-    options.headers["kong-admin-token"] = KA_RBAC_TOKEN
+  if (KA_RBAC_TOKEN) {
+    options.headers['kong-admin-token'] = KA_RBAC_TOKEN
   }
 
   options.agent = PROTOCOLS[options.protocol].agent
@@ -401,7 +392,7 @@ async function init () {
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
     try {
-      console.log("deleting all files from:", DIRECTORY)
+      console.log('deleting all files from:', DIRECTORY)
       const {data: files} = await getFiles(TYPE)
       await deleteAllFiles(files)
       return
@@ -412,13 +403,13 @@ async function init () {
   }
 
   if (PULL) {
-    console.log("pulling files from:", DIRECTORY)
+    console.log('pulling files from:', DIRECTORY)
     await write()
     return
   }
 
   if (PUSH) {
-    console.log("pushing files to:", DIRECTORY)
+    console.log('pushing files to:', DIRECTORY)
     await read(DIRECTORY)
     return
   }

@@ -10,8 +10,5 @@
     "push": "PUSH=true node src/sync",
     "pull": "PULL=true node src/sync",
     "wipe": "DELETE_ALL=true node src/sync"
-  },
-  "devDependencies": {
-    "btoa": "1.2.1"
   }
 }
