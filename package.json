@@ -12,6 +12,6 @@
     "wipe": "DELETE_ALL=true node src/sync"
   },
   "devDependencies": {
-    "fs": "0.0.3"
+    "btoa": "1.2.1"
   }
 }

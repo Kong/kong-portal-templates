@@ -4,6 +4,7 @@ const {lstatSync, readdirSync, readFileSync, writeFileSync} = require('fs')
 const {join, parse} = require('path')
 const https = require('https')
 const http = require('http')
+const btoa = require('btoa')
 const url = require('url')
 
 const apiURL = process.env.WORKSPACE
@@ -23,14 +24,20 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
   console.log('  ENV Variables:')
   console.log()
+  console.log('     KA_API_URL=<url>', '\t\t', 'Kong Admin API URL')
+  console.log('     KA_API_KEY=<key>', '\t\t', 'Sets `apikey` header on file requests')
+  console.log('     KA_BASIC_AUTH=<creds>', '\t', 'Sets `Authorization` header on file requests (Username:Password)')
+  console.log('     KA_RBAC_TOKEN=<token>', '\t', 'Sets `kong-admin-token` header on file requests')
+  console.log()
+  console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: default/)')
   console.log('     PULL=true', '\t\t\t', 'pull files from Files API (compare to `git pull`)')
   console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push`)')
   console.log('     DELETE_ALL=true', '\t\t', 'remove all files from Files API. USE WITH CAUTION!!!')
-  console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: src/templates)')
+  console.log()
   console.log('     TYPE=<type>', '\t\t', 'type of files in scanned directories, otherwise use directory structure')
   console.log('     INTERVAL=<seconds>', '\t', 'duration of time in-between scans')
   console.log('     EMOJI=true', '\t\t', 'enable emoji symbols')
-  console.log('     WATCH=false', '\t\t', 'disable file watch')
+  console.log('     WATCH=true', '\t\t', 'enable file watch')
   console.log()
   console.log('  Examples:')
   console.log()
@@ -49,15 +56,21 @@ const LDTIMES = {}
 const LFTIMES = {}
 
 // Arguments
-let {DIRECTORY, TYPE, INTERVAL, EMOJI, WATCH, DELETE_ALL, PULL, PUSH} = process.env
-DIRECTORY = DIRECTORY || '/'
+let {
+  DIRECTORY, TYPE, INTERVAL, EMOJI, 
+  WATCH, DELETE_ALL, PULL, PUSH,
+  KA_API_KEY, KA_RBAC_TOKEN, KA_BASIC_AUTH
+} = process.env
+
+let WATCH_DIR = WATCH === 'true'
+let CURL_OUTPUT = false
+
+DIRECTORY = DIRECTORY || 'default/'
 INTERVAL = parseInt(INTERVAL, 10) || 5
 DELETE_ALL = DELETE_ALL === 'true'
 PUSH = PUSH === 'true'
 PULL = PULL === 'true'
 
-var WATCH_DIR = !(WATCH === 'false')
-var CURL_OUTPUT = false
 if (process.argv[2] === '--curl' || process.argv[2] === '-c') {
   CURL_OUTPUT = true
   WATCH_DIR = false
@@ -101,22 +114,17 @@ async function read (directory, type) {
 
   // Delete remote files that no longer exist locally
   if (type) {
-    await Promise.all(Object.keys(LFTIMES[directory]).map((filename) => {
-      return Promise.resolve()
-        .then(() => {
-          if (files.indexOf(filename) === -1) {
-            return handle(type, filename, join(directory, filename), deleteFile)
-              .then(res => {
-                const path = join(directory, filename)
-                handleResponse(res, 'delete', isDeleted, type, path)
-                delete LFTIMES[directory][filename]
-              })
-          }
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }))
+    let promises = Object.keys(LFTIMES[directory])
+      .filter(filename => files.indexOf(filename) < 0)
+      .map((filename) => {
+        const path = join(directory, filename)
+         return Promise.resolve()
+          .then(() => handle(type, filename, join(directory, filename), deleteFile))
+          .then(res => handleResponse(res, 'delete', isDeleted, type, path))
+          .then(() => delete LFTIMES[directory][filename])
+          .catch((err) => console.log(err))
+      })
+     await Promise.all(promises)
   }
 
   return Promise.all(files.map((filename, index) => {
@@ -154,25 +162,16 @@ async function read (directory, type) {
     if (ltime && ltime !== time) {
       return handle(type, filename, path, updateFile)
         .then((res) => handleResponse(res, 'update', isUpdated, type, path))
-        .catch((err) => {
-          console.log(err)
-        })
+        .catch(err => console.log(err))
     }
 
     // Delete remote file if it exists, recreate it from local file
-    return handle(type, filename, path, getFile)
-      .then(res => {
-        // if file exists in remote, delete it
-        if (res && res.total > 0) {
-          return deleteFile(null, res.data[0].id, null)
-            .then(res => handleResponse(res, 'delete', isDeleted, type, path))
-        }
-      })
+    return Promise.resolve()
+      .then(() => handle(type, filename, path, getFile))
+      .then(res => deleteExistingFile(res, type, path))
       .then(() => handle(type, filename, path, createFile))
       .then(res => handleResponse(res, 'create', isCreated, type, path))
-      .catch((err) => {
-        console.log(err)
-      })
+      .catch(err => console.log(err))
   }))
 }
 
@@ -184,8 +183,8 @@ async function write () {
       let extension = file.type === 'spec'
         ? getSpecExtension(contents)
         : '.hbs'
-      let pageType = file.type + 's'
-      let filePath = (DIRECTORY + pageType + '/' + fileName + extension)
+
+      let filePath = (DIRECTORY + fileName + extension)
       
       if (extension === '' || !extension) {
         console.log(`Error: Not able to determine extension of ${fileName}`)
@@ -202,10 +201,7 @@ async function write () {
 
 // Helpers
 function handleResponse (res, op, successCb, type, path) {
-
-  if (!res) {
-    return
-  }
+  if (CURL_OUTPUT || !res) return
 
   const success = successCb(res)
   const symbol = getSymbol(op, success)
@@ -220,6 +216,15 @@ function handleResponse (res, op, successCb, type, path) {
       console.log(' ', res.substring(0, 1000))
     }
   }
+}
+
+function deleteExistingFile (res, type, path) {
+  if (res && res.data && res.data[0]) {
+    return deleteFile(null, res.data[0].id, null).then(res => {
+      return handleResponse(res, 'delete', isDeleted, type, path)
+    })
+  }
+   return false
 }
 
 function isCreated (res) {
@@ -250,6 +255,10 @@ function handle (type, name, path, action) {
   pathName = pathName.join('/')
 
   if (type !== 'page' && type !== 'partial' && type !== 'spec') {
+    return Promise.resolve()
+  }
+
+  if (!name.includes('.hbs')) {
     return Promise.resolve()
   }
 
@@ -312,6 +321,16 @@ function httpRequest (reqUrl, method = 'GET', data = '') {
   options.headers = {
     'Content-Type': 'application/json',
     'Content-Length': Buffer.byteLength(data)
+  }
+
+  if (KA_BASIC_AUTH) {
+    options.headers["Authorization"] = 'Basic ' + btoa(KA_BASIC_AUTH)
+  }
+   if (KA_API_KEY) {
+    options.headers["apikey"] = KA_API_KEY
+  }
+   if (KA_RBAC_TOKEN) {
+    options.headers["kong-admin-token"] = KA_RBAC_TOKEN
   }
 
   options.agent = PROTOCOLS[options.protocol].agent
