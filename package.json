@@ -6,9 +6,9 @@
   "private": true,
   "author": "Kong",
   "scripts": {
-    "watch": "node src/sync",
-    "push": "PUSH=true node src/sync",
-    "pull": "PULL=true node src/sync",
-    "wipe": "DELETE_ALL=true node src/sync"
+    "watch": "node sync",
+    "push": "PUSH=true node sync",
+    "pull": "PULL=true node sync",
+    "wipe": "DELETE_ALL=true node sync"
   }
 }
