@@ -76,13 +76,17 @@ window.registerApp(function () {
         return specFiles.map((spec) => {
           let specContents = this.parseSpec(spec.contents)
           let specInfo = specContents.info || {}
+          let filename = spec.name
+          if (filename.includes('unauthenticated/')) {
+            filename = spec.name.split('unauthenticated/')[1]
+          }
 
           return {
             title: specInfo.title || spec.name,
             description: specInfo.description || '',
             version: specInfo.version || 'unknown',
             tags: specContents.tags || [],
-            filename: spec.name || ''
+            filename: filename || ''
           }
         })
       },

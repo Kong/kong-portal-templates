@@ -13,13 +13,8 @@ window.helpers.getWorkspace = () => {
 }
 
 window.helpers.buildUrl = (path) => {
-  if (!window.K_CONFIG.PORTAL_GUI_URL) {
-    let workspace = window.K_CONFIG.WORKSPACE || 'default'
-    let workspaceFrag = workspace === 'default' ? '' : `/${window.K_CONFIG.WORKSPACE}`
-    let pathFrag = path ? `/${path}` : ''
-    return `${window.location.origin}${workspaceFrag}${pathFrag}`
-  }
-  return `${window.K_CONFIG.PORTAL_GUI_URL}/${path}`
+  let portalURL = window.K_CONFIG && window.K_CONFIG.PORTAL_GUI_URL
+  return `${portalURL}/${path}`
 }
 
 window.helpers.getUrlParameter = (name) => {
