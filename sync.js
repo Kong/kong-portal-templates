@@ -8,7 +8,7 @@ const url = require('url')
 
 const apiURL = process.env.WORKSPACE
   ? (process.env.KA_API_URL || 'http://0.0.0.0:8001') + `/${process.env.WORKSPACE}`
-  : (process.env.KA_API_URL || 'http://0.0.0.0:8001')
+  : (process.env.KA_API_URL || 'http://0.0.0.0:8001') + '/default'
 
 console.log(apiURL)
 // Help Output
@@ -241,6 +241,18 @@ function getSymbol (type, status) {
   return status ? SYMBOL[type] : SYMBOL.error
 }
 
+function isValidPage (type, name) {
+  return type === 'page' && name.includes('.hbs')
+}
+
+function isValidPartial (type, name) {
+  return type === 'partial' && name.includes('.hbs')
+}
+
+function isValidSpec (type, name) {
+  return type === 'spec' && (name.includes('.json') || name.includes('.yaml'))
+}
+
 // File handler
 function handle (type, name, path, action) {
   let pathName = path.replace(DIRECTORY, '').split('/')
@@ -251,11 +263,7 @@ function handle (type, name, path, action) {
   auth = !(pathName.length > 0 && pathName[0] === 'unauthenticated')
   pathName = pathName.join('/')
 
-  if (type !== 'page' && type !== 'partial' && type !== 'spec') {
-    return Promise.resolve()
-  }
-
-  if (!name.includes('.hbs')) {
+  if (!isValidPage(type, name) && !isValidPartial(type, name) && !isValidSpec(type, name)) {
     return Promise.resolve()
   }
 
