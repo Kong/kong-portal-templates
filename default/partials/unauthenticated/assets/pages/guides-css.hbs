@@ -1,0 +1,43 @@
+<style>
+#guides .hero {
+  display: flex;
+  align-items: center;
+  min-height: 15vh;
+}
+#guides .hero h1 {
+  margin: 0;
+  color: #00345a;
+  font-size: 48px;
+}
+#guides .getting-started .guides {
+  margin-bottom: 2rem;
+}
+#guides .getting-started .guides h2 {
+  color: #00345a;
+}
+#guides .getting-started .guide {
+  display: flex;
+  margin: 0 1rem;
+  padding-bottom: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+#guides .getting-started .guide:last-child {
+  margin-right: 0;
+}
+@media all and (max-width: 720px) {
+  #guides .getting-started .guide:last-child {
+    margin-left: 0;
+  }
+}
+#guides .getting-started .guide:first-child {
+  margin-left: 0;
+}
+#guides .getting-started .guide .icon {
+  padding: 1rem;
+}
+@media all and (max-width: 720px) {
+  #guides .container {
+    flex-direction: column;
+  }
+}
+</style>
