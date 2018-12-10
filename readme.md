@@ -42,49 +42,53 @@ $ npm install
 
 ### Example Usage
 
-#### Watch Template files and sync on change
-##### call script directly
+##### Watch Template files and sync on change
+call script directly
 ```bash
 $ node sync
 ```
-##### npm command
+
+npm command
 ```bash
 $ npm run watch
 ```
 
-#### Sync files with a specific workspaces dev portal
-##### call script directly
+##### Sync files with a specific workspaces dev portal
+call script directly
 ```bash
 $ WORKSPACE=custom_workpsace node sync
 ```
-##### npm command
+
+npm command
 ```bash
 $ WORKSPACE=custom_workpsace npm run wipe
 ```
 
-#### Push/Pull to Kong Files API
-##### call script directly
+##### Push/Pull to Kong Files API
+call script directly
 ```bash
 $ PUSH=true node sync
 $ PULL=true node sync
 ```
-##### npm command
+
+npm command
 ```bash
 $ npm run push
 $ npm run pull
 ```
 
-#### Delete all files from files API
-##### call script directly
+##### Delete all files from files API
+call script directly
 ```bash
 $ DELETE_ALL=true node sync
 ```
-##### npm command
+
+npm command
 ```bash
 $ npm run wipe
 ```
 
-#####Use Emoji's:
+##### Use Emoji's:
 ```bash
 $ EMOJI=true node sync
 ```
