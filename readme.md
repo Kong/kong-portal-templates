@@ -29,8 +29,6 @@ $ npm install
 |Variable|Default|Description|
 |---|---|---|
 |`KA_API_URL`|`localhost:8004`|Kong Admin API URL|
-|`KA_API_KEY`|`abcdef`|Sets `apikey` header on file requests|
-|`KA_BASIC_AUTH`|`username:password`|Sets `Authorization` header on file requests|
 |`KA_RBAC_TOKEN`|`abcdef`|Sets `kong-admin-token` header on file requests|
 |`WORKSPACE`|`default`|Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/workspaces/default/files`)
 |`DIRECTORY`|`src/templates/`|Directory the sync script will scan and watch for changes.|
@@ -44,23 +42,50 @@ $ npm install
 
 ### Example Usage
 
-Watch Template files and sync on change
-```bash
-$ node sync
-```
+#### Watch Template files and sync on change
+- call script directly
+  ```bash
+  $ node sync
+  ```
 
-Sync files with a specific workspaces dev portal
-```bash
-$ WORKSPACE=custom_workpsace node sync
-```
+- npm command
+  ```bash
+  $ npm run watch
+  ```
 
-Push/Pull to Kong Files API
-```bash
-$ PUSH=true node sync
-$ PULL=true node sync
-```
+#### Sync files with a specific workspaces dev portal
+- call script directly
+  ```bash
+  $ WORKSPACE=custom_workpsace node sync
+  ```
+- npm command
+  ```bash
+  $ WORKSPACE=custom_workpsace npm run wipe
+  ```
 
-Use Emoji's:
+#### Push/Pull to Kong Files API
+- call script directly
+  ```bash
+  $ PUSH=true node sync
+  $ PULL=true node sync
+  ```
+- npm command
+  ```bash
+  $ npm run push
+  $ npm run pull
+  ```
+
+#### Delete all files from files API
+- call script directly
+  ```bash
+  $ DELETE_ALL=true node sync
+  ```
+- npm command
+  ```bash
+  $ npm run wipe
+  ```
+
+#### Use Emoji's:
 ```bash
 $ EMOJI=true node sync
 ```

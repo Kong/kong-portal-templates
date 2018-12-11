@@ -2,15 +2,20 @@
 
 const {lstatSync, readdirSync, readFileSync, writeFileSync} = require('fs')
 const {join, parse} = require('path')
+const readline = require('readline')
 const https = require('https')
 const http = require('http')
 const url = require('url')
 
-const apiURL = process.env.WORKSPACE
-  ? (process.env.KA_API_URL || 'http://0.0.0.0:8001') + `/${process.env.WORKSPACE}`
-  : (process.env.KA_API_URL || 'http://0.0.0.0:8001') + '/default'
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
-console.log(apiURL)
+const apiURL = process.env.WORKSPACE
+  ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${process.env.WORKSPACE}`
+  : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
+
 // Help Output
 if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
@@ -396,39 +401,62 @@ function getSpecExtension (content) {
   return ''
 }
 
+function promptForPermission(prompt) {
+  return new Promise((resolve, reject) => {
+    rl.question(prompt, (answer) => {
+      if (answer === 'y' || answer ==='yes') {
+        return resolve(true)
+      }
+      console.log('action cancelled')
+      return resolve(false)
+    })
+  })
+}
+
 async function init () {
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
-    try {
-      console.log('deleting all files from:', DIRECTORY)
-      const {data: files} = await getFiles(TYPE)
-      await deleteAllFiles(files)
-      return
-    } catch (err) {
-      console.log(`Error deleting files: ${err}`)
-      return
-    }
-  }
+    let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
 
-  if (PULL) {
-    console.log('pulling files from:', DIRECTORY)
-    await write()
-    return
+    if (proceed) {
+      try {
+        console.log(`deleting all files from: ${apiURL}`)
+        const {data: files} = await getFiles(TYPE)
+        await deleteAllFiles(files)
+      } catch (err) {
+        console.log(`Error deleting files: ${apiURL}`)
+      }
+    }
+    process.exit()
   }
 
   if (PUSH) {
-    console.log('pushing files to:', DIRECTORY)
-    await read(DIRECTORY)
-    return
+    let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
+    
+    if (proceed) {
+      console.log(`pushing files to: ${apiURL}`)
+      await read(DIRECTORY)
+    }
+    process.exit()
   }
 
-  // When a type is set already for us, assume the directory is that type.
-  if (TYPE) {
-    await read(DIRECTORY, TYPE)
-    WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
+  if (PULL) {
+    console.log(`pulling files from: ${apiURL}`)
+    await write()
+    process.exit()
+  }
+
+  let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+  if (proceed) {
+    if (TYPE) {
+      await read(DIRECTORY, TYPE)
+      WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
+    } else {
+      await read(DIRECTORY)
+      WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
+    }
   } else {
-    await read(DIRECTORY)
-    WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
+    process.exit()
   }
 }
 
