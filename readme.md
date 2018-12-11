@@ -42,7 +42,7 @@ $ npm install
 
 ### Example Usage
 
-##### Watch Template files and sync on change
+#### Watch Template files and sync on change
 - call script directly
   ```bash
   $ node sync
@@ -53,7 +53,7 @@ $ npm install
   $ npm run watch
   ```
 
-##### Sync files with a specific workspaces dev portal
+#### Sync files with a specific workspaces dev portal
 - call script directly
   ```bash
   $ WORKSPACE=custom_workpsace node sync
@@ -63,7 +63,7 @@ $ npm install
   $ WORKSPACE=custom_workpsace npm run wipe
   ```
 
-##### Push/Pull to Kong Files API
+#### Push/Pull to Kong Files API
 - call script directly
   ```bash
   $ PUSH=true node sync
@@ -75,7 +75,7 @@ $ npm install
   $ npm run pull
   ```
 
-##### Delete all files from files API
+#### Delete all files from files API
 - call script directly
   ```bash
   $ DELETE_ALL=true node sync
@@ -85,7 +85,7 @@ $ npm install
   $ npm run wipe
   ```
 
-##### Use Emoji's:
+#### Use Emoji's:
 ```bash
 $ EMOJI=true node sync
 ```
