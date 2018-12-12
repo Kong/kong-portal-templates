@@ -12,10 +12,6 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const apiURL = process.env.WORKSPACE
-  ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${process.env.WORKSPACE}`
-  : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
-
 // Help Output
 if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
@@ -31,6 +27,7 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log('     KA_API_URL=<url>', '\t\t', 'Kong Admin API URL')
   console.log('     KA_RBAC_TOKEN=<token>', '\t', 'Sets `kong-admin-token` header on file requests')
   console.log()
+  console.log('     WORKSPACE=<workspace>', '\t\t', 'Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/default/files`)')
   console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: default/)')
   console.log('     PULL=true', '\t\t\t', 'pull files from Files API (compare to `git pull`)')
   console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push --force`)')
@@ -61,8 +58,12 @@ const LFTIMES = {}
 let {
   DIRECTORY, TYPE, INTERVAL, EMOJI,
   WATCH, DELETE_ALL, PULL, PUSH,
-  KA_RBAC_TOKEN
+  KA_RBAC_TOKEN, WORKSPACE
 } = process.env
+
+const apiURL = process.env.WORKSPACE
+  ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${WORKSPACE}`
+  : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
 
 let WATCH_DIR = WATCH === 'true'
 let CURL_OUTPUT = false

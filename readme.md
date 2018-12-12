@@ -2,15 +2,18 @@
 
 Developer Portal Template Files for Kong Enterprise Edition
 
-## Libraries Used
+## ClientSide Libraries Used
 
 - [Handlebars](https://handlebarsjs.com/)
 - [Swagger UI](https://github.com/swagger-api/swagger-ui)
 - [VueJS](https://vuejs.org/)
 
-## Installation
+## Requirements
 
-Install `npm` and `node`
+- [NodeJS (v9.8.0)](https://nodejs.org/en/blog/release/v9.8.0/)
+- [NPM (5.6.0)](https://www.npmjs.com/package/npm/v/5.6.0)
+
+## Installation
 
 ```bash
 $ git clone git@github.com:Kong/kong-portal-templates.git
@@ -18,11 +21,11 @@ $ npm install
 ```
 
 ## Directory Structure
-- `templates/` - Developer Portal Theme files
+- `default/` - Default Developer Portal Theme files
   - `pages/` - Handlebars pages served by the dev portal
   - `partials/` - Handlebars partials, referenced by pages
   - `specs/` - Directory of OAS specifications for use by portal
-  - `sync.js` - Script to create, and update theme files in the Kong File API
+- `sync.js` - Script to create, and update theme files in the Kong File API
 
 ## Environment Variables
 
