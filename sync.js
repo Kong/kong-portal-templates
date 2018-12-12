@@ -419,7 +419,6 @@ async function init () {
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
     let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
-
     if (proceed) {
       try {
         console.log(`deleting all files from: ${apiURL}`)
@@ -463,9 +462,18 @@ async function init () {
     process.exit()
   }
 
-
-  console.log(`No action specified. Use '--help' or '-h' to see options.`)
-  process.exit()
+  let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+  if (proceed) {
+    if (TYPE) {
+      await read(DIRECTORY, TYPE)
+      WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
+    } else {
+      await read(DIRECTORY)
+      WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
+    }
+  } else {
+    process.exit()
+  }
 }
 
 init()
