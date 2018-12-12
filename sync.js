@@ -32,6 +32,7 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log('     PULL=true', '\t\t\t', 'pull files from Files API (compare to `git pull`)')
   console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push --force`)')
   console.log('     DELETE_ALL=true', '\t\t', 'remove all files from Files API. USE WITH CAUTION!!!')
+  console.log('     NO_PROMPT=true', '\t\t', 'skip console prompt when making destructive actions. USE WITH CAUTION!!!')
   console.log()
   console.log('     TYPE=<type>', '\t\t', 'type of files in scanned directories, otherwise use directory structure')
   console.log('     INTERVAL=<seconds>', '\t', 'duration of time in-between scans')
@@ -58,10 +59,10 @@ const LFTIMES = {}
 let {
   DIRECTORY, TYPE, INTERVAL, EMOJI,
   WATCH, DELETE_ALL, PULL, PUSH,
-  KA_RBAC_TOKEN, WORKSPACE
+  KA_RBAC_TOKEN, WORKSPACE, NO_PROMPT
 } = process.env
 
-const apiURL = process.env.WORKSPACE
+const apiURL = WORKSPACE
   ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${WORKSPACE}`
   : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
 
@@ -417,7 +418,7 @@ function promptForPermission(prompt) {
 async function init () {
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
-    let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+    let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
 
     if (proceed) {
       try {
@@ -431,8 +432,23 @@ async function init () {
     process.exit()
   }
 
+  if (WATCH) {
+    let proceed = NO_PROMPT ||  await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+    if (proceed) {
+      if (TYPE) {
+        await read(DIRECTORY, TYPE)
+        WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
+      } else {
+        await read(DIRECTORY)
+        WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
+      }
+    } else {
+      process.exit()
+    }
+  }
+
   if (PUSH) {
-    let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
+    let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
     
     if (proceed) {
       console.log(`pushing files to: ${apiURL}`)
@@ -444,19 +460,6 @@ async function init () {
   if (PULL) {
     console.log(`pulling files from: ${apiURL}`)
     await write()
-    process.exit()
-  }
-
-  let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
-  if (proceed) {
-    if (TYPE) {
-      await read(DIRECTORY, TYPE)
-      WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
-    } else {
-      await read(DIRECTORY)
-      WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
-    }
-  } else {
     process.exit()
   }
 }
