@@ -49,7 +49,7 @@ $ npm install
 #### Watch Template files and sync on change
 - call script directly
   ```bash
-  $ node sync
+  $ WATCH=true node sync
   ```
 
 - npm command
@@ -60,11 +60,11 @@ $ npm install
 #### Sync files with a specific workspaces dev portal
 - call script directly
   ```bash
-  $ WORKSPACE=custom_workpsace node sync
+  $ WORKSPACE=custom_workpsace WATCH=true node sync
   ```
 - npm command
   ```bash
-  $ WORKSPACE=custom_workpsace npm run wipe
+  $ WORKSPACE=custom_workpsace npm run watch
   ```
 
 #### Push/Pull to Kong Files API
@@ -91,5 +91,5 @@ $ npm install
 
 #### Use Emoji's:
 ```bash
-$ EMOJI=true node sync
+$ EMOJI=true WATCH=true node sync
 ```
