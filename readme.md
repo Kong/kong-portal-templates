@@ -32,7 +32,7 @@ $ npm install
 |Variable|Default|Description|
 |---|---|---|
 |`KA_API_URL`|`http://127.0.0.1:8001`|Kong Admin API URL|
-|`KA_RBAC_TOKEN`|`abcdef`|Sets `kong-admin-token` header on file requests|
+|`KA_RBAC_TOKEN`|N/A|Sets `kong-admin-token` header on file requests|
 |`WORKSPACE`|`default`|Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/default/files`)
 |`DIRECTORY`|`/default`|Directory the sync script will scan and watch for changes.|
 |`WATCH`|`false`|`true` watches files for changes and sync with workspaced files api when a change is made.|
@@ -41,7 +41,7 @@ $ npm install
 |`DELETE_ALL`|`false`|`true` removes all files from workspaced Files API. USE WITH CAUTION!!!|
 |`NO_PROMPT`|`false`|`true` skip console prompt when making destructive actions. USE WITH CAUTION!!!|
 |`INTERVAL`|`5`|Sync script watch interval in seconds|
-|`TYPE`|Type of files the sync script is scanning. By default, the files are assumed to be directory based. `<type>/<filename>`|
+|`TYPE`|N/A|Type of files the sync script is scanning. By default, the files are assumed to be directory based `<type>/<filename>`.  (it is generally recommended to stay with the directory based folder structure found in `default/`)|
 |`EMOJI`|`false`|`true` enables emoji status symbol output in the sync script.|
 
 ### Example Usage
