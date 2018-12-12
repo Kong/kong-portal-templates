@@ -2,7 +2,7 @@
 
 Developer Portal Template Files for Kong Enterprise Edition
 
-## ClientSide Libraries Used
+## Client-side Libraries Used
 
 - [Handlebars](https://handlebarsjs.com/)
 - [Swagger UI](https://github.com/swagger-api/swagger-ui)
