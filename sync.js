@@ -418,7 +418,11 @@ function promptForPermission(prompt) {
 async function init () {
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
+<<<<<<< HEAD
     let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+=======
+    let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+>>>>>>> 9a3e6f1aaba5970348d9b5f9376a19a3a389b144
 
     if (proceed) {
       try {
@@ -432,6 +436,7 @@ async function init () {
     process.exit()
   }
 
+<<<<<<< HEAD
   if (WATCH) {
     let proceed = NO_PROMPT ||  await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
     if (proceed) {
@@ -460,6 +465,34 @@ async function init () {
   if (PULL) {
     console.log(`pulling files from: ${apiURL}`)
     await write()
+=======
+  if (PUSH) {
+    let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
+    
+    if (proceed) {
+      console.log(`pushing files to: ${apiURL}`)
+      await read(DIRECTORY)
+    }
+    process.exit()
+  }
+
+  if (PULL) {
+    console.log(`pulling files from: ${apiURL}`)
+    await write()
+    process.exit()
+  }
+
+  let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+  if (proceed) {
+    if (TYPE) {
+      await read(DIRECTORY, TYPE)
+      WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
+    } else {
+      await read(DIRECTORY)
+      WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
+    }
+  } else {
+>>>>>>> 9a3e6f1aaba5970348d9b5f9376a19a3a389b144
     process.exit()
   }
 }
