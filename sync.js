@@ -12,10 +12,6 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-const apiURL = process.env.WORKSPACE
-  ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${process.env.WORKSPACE}`
-  : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
-
 // Help Output
 if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
@@ -31,10 +27,12 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log('     KA_API_URL=<url>', '\t\t', 'Kong Admin API URL')
   console.log('     KA_RBAC_TOKEN=<token>', '\t', 'Sets `kong-admin-token` header on file requests')
   console.log()
+  console.log('     WORKSPACE=<workspace>', '\t\t', 'Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/default/files`)')
   console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: default/)')
   console.log('     PULL=true', '\t\t\t', 'pull files from Files API (compare to `git pull`)')
   console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push --force`)')
   console.log('     DELETE_ALL=true', '\t\t', 'remove all files from Files API. USE WITH CAUTION!!!')
+  console.log('     NO_PROMPT=true', '\t\t', 'skip console prompt when making destructive actions. USE WITH CAUTION!!!')
   console.log()
   console.log('     TYPE=<type>', '\t\t', 'type of files in scanned directories, otherwise use directory structure')
   console.log('     INTERVAL=<seconds>', '\t', 'duration of time in-between scans')
@@ -61,8 +59,12 @@ const LFTIMES = {}
 let {
   DIRECTORY, TYPE, INTERVAL, EMOJI,
   WATCH, DELETE_ALL, PULL, PUSH,
-  KA_RBAC_TOKEN
+  KA_RBAC_TOKEN, WORKSPACE, NO_PROMPT
 } = process.env
+
+const apiURL = WORKSPACE
+  ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${WORKSPACE}`
+  : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
 
 let WATCH_DIR = WATCH === 'true'
 let CURL_OUTPUT = false
@@ -416,7 +418,11 @@ function promptForPermission(prompt) {
 async function init () {
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
+<<<<<<< HEAD
+    let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+=======
     let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+>>>>>>> 9a3e6f1aaba5970348d9b5f9376a19a3a389b144
 
     if (proceed) {
       try {
@@ -430,6 +436,36 @@ async function init () {
     process.exit()
   }
 
+<<<<<<< HEAD
+  if (WATCH) {
+    let proceed = NO_PROMPT ||  await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+    if (proceed) {
+      if (TYPE) {
+        await read(DIRECTORY, TYPE)
+        WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
+      } else {
+        await read(DIRECTORY)
+        WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
+      }
+    } else {
+      process.exit()
+    }
+  }
+
+  if (PUSH) {
+    let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
+    
+    if (proceed) {
+      console.log(`pushing files to: ${apiURL}`)
+      await read(DIRECTORY)
+    }
+    process.exit()
+  }
+
+  if (PULL) {
+    console.log(`pulling files from: ${apiURL}`)
+    await write()
+=======
   if (PUSH) {
     let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
     
@@ -456,6 +492,7 @@ async function init () {
       WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
     }
   } else {
+>>>>>>> 9a3e6f1aaba5970348d9b5f9376a19a3a389b144
     process.exit()
   }
 }
