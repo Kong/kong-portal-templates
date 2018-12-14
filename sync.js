@@ -70,6 +70,11 @@ let WATCH_DIR = WATCH === 'true'
 let CURL_OUTPUT = false
 
 DIRECTORY = DIRECTORY || 'default/'
+
+if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
+  DIRECTORY = DIRECTORY += '/'
+}
+
 INTERVAL = parseInt(INTERVAL, 10) || 5
 DELETE_ALL = DELETE_ALL === 'true'
 PUSH = PUSH === 'true'
