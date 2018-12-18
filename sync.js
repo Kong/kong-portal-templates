@@ -202,9 +202,20 @@ async function write () {
       }
 
       try {
+        let localContents = readFileSync(filePath, 'utf8')
+
+        if (localContents !== contents) {
+          console.log(`File Updated: ${filePath}`)
+        }
+      } catch (e) {
+        console.log(`File Created: ${filePath}`)
+      }
+
+      try {
         writeFileSync(filePath, contents, {flag: 'w'})
         return Promise.resolve()
       } catch (e) {
+        console.log(e)
         console.log(`Pull Failed: unable to write: ${filePath}`)
         return Promise.resolve()
       }
