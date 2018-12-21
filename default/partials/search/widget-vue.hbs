@@ -4,24 +4,23 @@
 {{!-- template --}}
 <div id="search">
   <div @click="toggleActive" id="search-icon" :class="{ active: searchActive }">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-      <path d="M0 0h24v24H0z" fill="none"/>
-    </svg>
+    {{> unauthenticated/assets/icons/search-header }}
   </div>
   <div id="search-window" :class="{ active: searchActive }">
     <div class="search-bar">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-      <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
-      </svg>
+      <div v-if="isLoading">
+        {{> unauthenticated/assets/icons/loading }}
+      </div>
+      <div v-else>
+        {{> unauthenticated/assets/icons/search-widget }}
+      </div>
       <input name="search"
         v-model="searchModel"
         @focus="toggleSearchFocus(true)"
         @blur="toggleSearchFocus(false)"
         placeholder="Search..."/>
     </div>
-    <div class="search-item-container compact">
+    <div class="search-item-container compact" v-if="!isLoading">
       <div class="search-row item"
         v-for="file in searchResults"
         @click="goToSearchResult(file.path)">
@@ -58,6 +57,7 @@ window.registerApp(function () {
         searchModel: '',
         searchActive: false,
         searchFocused: false,
+        isLoading: false,
 
         fetchPageList: () => { console.log('error: fetchPageList helper failed to load') },
         searchFiles: () => { console.log('error: searchFiles helper failed to load') },
@@ -109,10 +109,13 @@ window.registerApp(function () {
         this.buildUrl = window.helpers.buildUrl || this.buildUrl
         this.isValidKey = window.helpers.isValidKey || this.isValidKey
       }
-      this.pageList = this.fetchPageList(window._kong.files)
     },
 
     methods: {
+      getFiles () {
+        return window._kong.api.get('/files', { withCredentials: true })
+      },
+
       goToFullResults () {
         let path = `search?query=${this.searchModel}`
         let url = this.buildUrl(path)
@@ -141,9 +144,20 @@ window.registerApp(function () {
     watch: {
       searchModel: {
         handler: function (searchModel, oldSearchModel) {
-          let fullSearchResults = this.searchFiles(this.searchModel, this.pageList)
-          this.searchResults = fullSearchResults.slice(0, 4)
-          this.additionalResults = fullSearchResults.length - this.searchResults.length
+          if (this.pageList < 1 && !this.isLoading) {
+            this.isLoading = true
+            this.getFiles().then((resp) => {
+              this.pageList = this.fetchPageList(resp.data.data)
+              let fullSearchResults = this.searchFiles(this.searchModel, this.pageList)
+              this.searchResults = fullSearchResults.slice(0, 4)
+              this.additionalResults = fullSearchResults.length - this.searchResults.length
+              this.isLoading = false
+            })
+          } else {
+            let fullSearchResults = this.searchFiles(this.searchModel, this.pageList)
+            this.searchResults = fullSearchResults.slice(0, 4)
+            this.additionalResults = fullSearchResults.length - this.searchResults.length
+          }
         }
       }
     },

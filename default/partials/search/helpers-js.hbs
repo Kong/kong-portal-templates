@@ -164,10 +164,14 @@ window.helpers.fetchPageList = (files) => {
   }
 
   let pages = getPageResults(files)
+  console.log('pages', pages)
   let specs = getSpecResults(files)
   let fullFiles = pages.concat(specs)
+  console.log('specs', fullFiles)
   let filteredFiles = filterFilesList(fullFiles)
+  console.log('filteredFiles', filteredFiles)
   let sortedFiles = sortFiles(filteredFiles)
+  console.log('sortedFiles', sortedFiles)
 
   return sortedFiles
 }
