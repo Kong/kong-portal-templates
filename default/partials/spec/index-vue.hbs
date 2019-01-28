@@ -59,7 +59,7 @@ window.registerApp(function () {
 
     methods: {
       getFiles () {
-        return window._kong.api.get('/files', { withCredentials: true })
+        return window._kong.api.get('/files?type=spec', { withCredentials: true })
       },
 
       goToSpec(path) {
