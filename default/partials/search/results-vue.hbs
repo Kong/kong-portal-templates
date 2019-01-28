@@ -73,16 +73,22 @@ window.registerApp(function () {
         this.goToPage = window.helpers.goToPage || this.goToPage
         this.buildUrl = window.helpers.buildUrl || this.buildUrl
       }
-      this.pageList = this.fetchPageList(window._kong.files)
-      this.searchModel = this.getUrlParameter('query')
-      this.searchResults = this.searchFiles(this.searchModel, this.pageList)
-      this.paginatedResults = this.getPaginatedResults()
-      this.activeResults = this.getActiveResults()
-      this.isLoading = false
+      this.isLoading = true
+      this.getFiles().then((resp) => {
+        this.pageList = this.fetchPageList(resp.data.data)
+        this.searchModel = this.getUrlParameter('query')
+        this.searchResults = this.searchFiles(this.searchModel, this.pageList)
+        this.paginatedResults = this.getPaginatedResults()
+        this.activeResults = this.getActiveResults()
+        this.isLoading = false
+      })
     },
 
     methods: {
-      
+      getFiles () {
+        return window._kong.api.get('/files', { withCredentials: true })
+      },
+
       isPageActive (idx) {
         return this.activePageIdx === idx
       },
