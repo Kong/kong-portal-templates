@@ -131,7 +131,7 @@ async function read (directory, type) {
           .then(() => handle(type, filename, join(directory, filename), deleteFile))
           .then(res => handleResponse(res, 'delete', isDeleted, type, path))
           .then(() => delete LFTIMES[directory][filename])
-          .catch((err) => console.log(err))
+          .catch((err) => console.log('bloop'))
       })
     await Promise.all(promises)
   }
@@ -180,7 +180,7 @@ async function read (directory, type) {
       .then(res => deleteExistingFile(res, type, path))
       .then(() => handle(type, filename, path, createFile))
       .then(res => handleResponse(res, 'create', isCreated, type, path))
-      .catch(err => console.log(err))
+      .catch(err => console.log('bleep'))
   }))
 }
 

@@ -144,7 +144,7 @@ window.registerApp(function () {
     watch: {
       searchModel: {
         handler: function (searchModel, oldSearchModel) {
-          if (this.pageList < 1 && !this.isLoading) {
+          if (!this.pageList.length && !this.isLoading) {
             this.isLoading = true
             this.getFiles().then((resp) => {
               this.pageList = this.fetchPageList(resp.data.data)

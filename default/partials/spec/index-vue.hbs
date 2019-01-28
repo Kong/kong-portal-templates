@@ -34,6 +34,7 @@ window.registerApp(function () {
 
     data () {
       return {
+        specFiles: [],
         filteredSpecs: [],
         filterModel: '',
         isLoading: true,
@@ -44,16 +45,23 @@ window.registerApp(function () {
     },
 
     mounted () {
-      this.filteredSpecs = this.filterSpecs()
-      this.isLoading = false
-
       if (window.helpers) {
         this.buildUrl = window.helpers.buildUrl || this.buildUrl
         this.goToPage = window.helpers.goToPage || this.goToPage
       }
+
+      this.getFiles().then((resp) => {
+        this.specFiles = this.fetchSpecs(resp.data.data)
+        this.filteredSpecs = this.filterSpecs()
+        this.isLoading = false
+      })
     },
 
     methods: {
+      getFiles () {
+        return window._kong.api.get('/files', { withCredentials: true })
+      },
+
       goToSpec(path) {
         let url = this.buildUrl(`documentation/${path}`)
         this.goToPage(url)
@@ -71,8 +79,8 @@ window.registerApp(function () {
         return this.specFiles
       },
 
-      fetchSpecs() {
-        let specFiles = window._kong.files.filter((file) => file.type === 'spec')
+      fetchSpecs(files) {
+        let specFiles = files.filter((file) => file.type === 'spec')
         return specFiles.map((spec) => {
           let specContents = this.parseSpec(spec.contents)
           let specInfo = specContents.info || {}
