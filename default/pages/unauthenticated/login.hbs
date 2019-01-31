@@ -55,7 +55,12 @@
     }
     return urlparameter;
   }
-  document.getElementById('username').value = getUrlParam('email', '')
+
+  var usernameEl = document.getElementById('username')
+
+  if (usernameEl) {
+    usernameEl.value = getUrlParam('email', '')
+  }
 </script>
 
 <script>
