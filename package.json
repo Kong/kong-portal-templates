@@ -10,5 +10,14 @@
     "push": "PUSH=true node sync",
     "pull": "PULL=true node sync",
     "wipe": "DELETE_ALL=true node sync"
+  },
+  "devDependencies": {
+    "fs-extra": "^7.0.1",
+    "handlebars": "^4.1.0",
+    "helper-markdown": "^1.0.0",
+    "micro": "^9.3.3",
+    "micro-dev": "^3.0.0",
+    "micro-route": "^2.5.0",
+    "node-dir": "^0.1.17"
   }
 }
