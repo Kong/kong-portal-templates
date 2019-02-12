@@ -69,7 +69,7 @@ const apiURL = WORKSPACE
 let WATCH_DIR = WATCH === 'true'
 let CURL_OUTPUT = false
 
-DIRECTORY = DIRECTORY || 'default/'
+DIRECTORY = DIRECTORY || './themes/default'
 
 if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
   DIRECTORY = DIRECTORY += '/'

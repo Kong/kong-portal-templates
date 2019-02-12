@@ -21,11 +21,13 @@ $ npm install
 ```
 
 ## Directory Structure
-- `default/` - Default Developer Portal Theme files
-  - `pages/` - Handlebars pages served by the dev portal
-  - `partials/` - Handlebars partials, referenced by pages
-  - `specs/` - Directory of OAS specifications for use by portal
-- `sync.js` - Script to create, and update theme files in the Kong File API
+- `bin/` - CLI tools for Developer Portal Templates
+  - `sync.js` - Script to create, and update theme files in the Kong File API
+- `themes/` - Theme directory
+  - `default/` - Default Developer Portal Theme files
+    - `pages/` - Handlebars pages served by the dev portal
+    - `partials/` - Handlebars partials, referenced by pages
+    - `specs/` - Directory of OAS specifications for use by portal
 
 ## Environment Variables
 
@@ -34,7 +36,7 @@ $ npm install
 |`KA_API_URL`|`http://127.0.0.1:8001`|Kong Admin API URL|
 |`KA_RBAC_TOKEN`|N/A|Sets `kong-admin-token` header on file requests|
 |`WORKSPACE`|`default`|Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/default/files`)
-|`DIRECTORY`|`/default`|Directory the sync script will scan and watch for changes.|
+|`DIRECTORY`|`./themes/default`|Directory the sync script will scan and watch for changes.|
 |`WATCH`|`false`|`true` watches files for changes and sync with workspaced files api when a change is made.|
 |`PUSH`|`false`|`true` pushes files to workspaced Files API (compare to `git push --force`)|
 |`PULL`|`false`|`true` pulls files from workspaced Files API (compare to `git pull`)|
@@ -49,7 +51,7 @@ $ npm install
 #### Watch Template files and sync on change
 - call script directly
   ```bash
-  $ WATCH=true node sync
+  $ WATCH=true node bin/sync
   ```
 
 - npm command
@@ -60,7 +62,7 @@ $ npm install
 #### Sync files with a specific workspaces dev portal
 - call script directly
   ```bash
-  $ WORKSPACE=custom_workspace WATCH=true node sync
+  $ WORKSPACE=custom_workspace WATCH=true node bin/sync
   ```
 - npm command
   ```bash
@@ -70,8 +72,8 @@ $ npm install
 #### Push/Pull to Kong Files API
 - call script directly
   ```bash
-  $ PUSH=true node sync
-  $ PULL=true node sync
+  $ PUSH=true node bin/sync
+  $ PULL=true node bin/sync
   ```
 - npm command
   ```bash
@@ -82,7 +84,7 @@ $ npm install
 #### Delete all files from files API
 - call script directly
   ```bash
-  $ DELETE_ALL=true node sync
+  $ DELETE_ALL=true node bin/sync
   ```
 - npm command
   ```bash
@@ -91,5 +93,5 @@ $ npm install
 
 #### Use Emoji's:
 ```bash
-$ EMOJI=true WATCH=true node sync
+$ EMOJI=true WATCH=true node bin/sync
 ```
