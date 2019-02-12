@@ -1,0 +1,10 @@
+{{#> unauthenticated/layout pageTitle="Unauthorized" }} 
+
+{{#*inline "content-block"}}
+  <div class="app-container authentication">
+      <h2>Unauthorized</h2>
+      <p style="max-width: 400px; text-align: left;">You are unauthorized to view this page because you are not an approved or registered developer. Please try <a href="{{config.PORTAL_GUI_URL}}/login">logging in</a>, or <a href="{{config.PORTAL_GUI_URL}}/register">signing up</a> for access.</p>
+  </div>
+{{/inline}} 
+
+{{/unauthenticated/layout}}
