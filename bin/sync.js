@@ -28,7 +28,7 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log('     KA_RBAC_TOKEN=<token>', '\t', 'Sets `kong-admin-token` header on file requests')
   console.log()
   console.log('     WORKSPACE=<workspace>', '\t\t', 'Workspace in which to sync files with (`WORKSPACE=default` will sync files with `ADMIN_API_URL/default/files`)')
-  console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: default/)')
+  console.log('     DIRECTORY=<dir>', '\t\t', 'custom folder to be scanned for files (default: ./themes/default/)')
   console.log('     PULL=true', '\t\t\t', 'pull files from Files API (compare to `git pull`)')
   console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push --force`)')
   console.log('     DELETE_ALL=true', '\t\t', 'remove all files from Files API. USE WITH CAUTION!!!')
@@ -69,7 +69,7 @@ const apiURL = WORKSPACE
 let WATCH_DIR = WATCH === 'true'
 let CURL_OUTPUT = false
 
-DIRECTORY = DIRECTORY || 'default/'
+DIRECTORY = DIRECTORY || './themes/default/'
 
 if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
   DIRECTORY = DIRECTORY += '/'
