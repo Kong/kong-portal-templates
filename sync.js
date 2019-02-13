@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const {lstatSync, readdirSync, readFileSync, writeFileSync} = require('fs')
-const {join, parse} = require('path')
+const {join, parse} = require('path').posix
 const readline = require('readline')
 const https = require('https')
 const http = require('http')
