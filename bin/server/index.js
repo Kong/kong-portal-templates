@@ -54,25 +54,28 @@ const read = async (dirname) => {
   return results
 }
 
-let auth = false
-
 // Renderer
 module.exports = dispatch()
   .dispatch('/favicon.ico', 'GET', async (req, res) => {
     res.end()
   })
-  .dispatch('/do_authorize', 'GET', async (req, res) => {
-    auth = true
+  .dispatch('/_logout', 'GET', async (req, res) => {
+    res.statusCode = 302;
+    res.setHeader('Set-Cookie', 'auth=false;')
+    res.setHeader('Location', '/')
     res.end()
   })
-  .dispatch('/do_unauthorize', 'GET', async (req, res) => {
-    auth = false
+  .dispatch('/_login', 'GET', async (req, res) => {
+    res.statusCode = 302;
+    res.setHeader('Set-Cookie', 'auth=true;')
+    res.setHeader('Location', '/')
     res.end()
   })
   .dispatch('/*', 'GET', async (req, res, { params, query }) => {
     let partials = await read(PARTIALS_DIR)
     let pages = await read(PAGES_DIR)
     let specs = await read(SPECS_DIR)
+    let auth = req.headers.cookie.indexOf('auth=true') > -1
     let options = {
       config: {
         PORTAL_GUI_URL: 'http://localhost:3000',
@@ -89,7 +92,7 @@ module.exports = dispatch()
     
     res.setHeader('Content-Type', 'text/html')
     
-    // Pagename helper
+    // Helpers
     function getPageName (authorized) {
       if (!params._) {
         return authorized ? 'index' : 'unauthenticated/index'
@@ -97,12 +100,28 @@ module.exports = dispatch()
 
       return authorized ? params._ : 'unauthenticated/' + (params._ || '')
     }
+    
+    async function render (page) {
+      let contents = ''
+      contents += `
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.12.1/js-yaml.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.22/dist/vue.js"></script>
+      `
+      contents += '<script>'
+      contents += await fs.readFile('./bin/server/core.js', 'utf8')
+      contents += '</script>'
+      contents += Handlebars.compile(page.contents)(options)
+      contents += '<script>window._kong.loaded = true</script>'
+      res.end(contents)
+    }
 
     // Root
     let pagename = getPageName(auth) || 'index'
     let page = pages.find((page) => page.path === pagename)
     if (page) {
-      res.end(Handlebars.compile(page.contents)(options))
+      render(page)
       return
     }
     
@@ -110,7 +129,7 @@ module.exports = dispatch()
     pagename = getPageName(auth) + '/index'
     page = pages.find((page) => page.path === pagename)
     if (page) {
-      res.end(Handlebars.compile(page.contents)(options))
+      render(page)
       return
     }
 
@@ -118,7 +137,7 @@ module.exports = dispatch()
     pagename = getPageName(auth) + '/loader'
     page = pages.find((page) => page.path === pagename)
     if (page) {
-      res.end(Handlebars.compile(page.contents)(options))
+      render(page)
       return
     }
     
@@ -130,7 +149,7 @@ module.exports = dispatch()
       pagename = getPageName(true) || 'index'
       let page = pages.find((page) => page.path === pagename)
       if (page) {
-        res.end(Handlebars.compile(loginPage.contents)(options))
+        render(loginPage)
         return
       }
 
@@ -138,7 +157,7 @@ module.exports = dispatch()
       pagename = getPageName(true) + '/index'
       page = pages.find((page) => page.path === pagename)
       if (page) {
-        res.end(Handlebars.compile(loginPage.contents)(options))
+        render(loginPage)
         return
       }
  
@@ -146,12 +165,12 @@ module.exports = dispatch()
       pagename = getPageName(true) + '/loader'
       page = pages.find((page) => page.path === pagename)
       if (page) {
-        res.end(Handlebars.compile(loginPage.contents)(options))
+        render(loginPage)
         return
       }
     }
 
     let notFoundPage = pages.find((page) => page.path === '404')
-    res.end(Handlebars.compile(notFoundPage.contents)(options))
+    render(notFoundPage)
     return
   })
