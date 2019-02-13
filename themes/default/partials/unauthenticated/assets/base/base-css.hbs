@@ -10,6 +10,7 @@ body {
   font-size: 16px;
   font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
   font-weight: 400;
+  margin: 0;
 }
 
 a {
@@ -213,18 +214,18 @@ section {
   font-family: Consolas, liberation mono, Menlo, Courier, monospace;
 }
 
-#app {
+.app-container {
   position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100%;
 }
-#app.error h1 {
+.app-container.error h1 {
   padding: 1%;
   background-color: red;
   color: white;
 }
-#app.error pre {
+.app-container.error pre {
   padding: 1%;
   font-size: 1.5rem;
 }

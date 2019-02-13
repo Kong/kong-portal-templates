@@ -54,9 +54,19 @@ const read = async (dirname) => {
   return results
 }
 
+let auth = false
+
 // Renderer
 module.exports = dispatch()
   .dispatch('/favicon.ico', 'GET', async (req, res) => {
+    res.end()
+  })
+  .dispatch('/do_authorize', 'GET', async (req, res) => {
+    auth = true
+    res.end()
+  })
+  .dispatch('/do_unauthorize', 'GET', async (req, res) => {
+    auth = false
     res.end()
   })
   .dispatch('/*', 'GET', async (req, res, { params, query }) => {
@@ -64,36 +74,84 @@ module.exports = dispatch()
     let pages = await read(PAGES_DIR)
     let specs = await read(SPECS_DIR)
     let options = {
+      config: {
+        PORTAL_GUI_URL: 'http://localhost:3000',
+      },
       authData: {
         authType: 'basic-auth'
-      }
+      },
+      isAuthenticated: auth
     }
 
     partials.forEach(partial => {
       Handlebars.registerPartial(partial.path, partial.contents)
     })
     
+    res.setHeader('Content-Type', 'text/html')
+    
+    // Pagename helper
+    function getPageName (authorized) {
+      if (!params._) {
+        return authorized ? 'index' : 'unauthenticated/index'
+      }
+
+      return authorized ? params._ : 'unauthenticated/' + (params._ || '')
+    }
+
     // Root
-    let pagename = params._ || 'index'
+    let pagename = getPageName(auth) || 'index'
     let page = pages.find((page) => page.path === pagename)
     if (page) {
-      return res.end(Handlebars.compile(page.contents)(options))
+      res.end(Handlebars.compile(page.contents)(options))
+      return
     }
     
     // Indexes
-    pagename = params._ + '/index'
+    pagename = getPageName(auth) + '/index'
     page = pages.find((page) => page.path === pagename)
     if (page) {
-      return res.end(Handlebars.compile(page.contents)(options))
+      res.end(Handlebars.compile(page.contents)(options))
+      return
     }
 
     // Loaders
-    pagename = params._ + '/loader'
+    pagename = getPageName(auth) + '/loader'
     page = pages.find((page) => page.path === pagename)
     if (page) {
-      return res.end(Handlebars.compile(page.contents)(options))
+      res.end(Handlebars.compile(page.contents)(options))
+      return
+    }
+    
+    // Unauthenticated, but authenticated exists
+    if (!auth) {
+      let loginPage = pages.find((page) => page.path === 'unauthenticated/login')
+
+      // Page or Authorized Homepage
+      pagename = getPageName(true) || 'index'
+      let page = pages.find((page) => page.path === pagename)
+      if (page) {
+        res.end(Handlebars.compile(loginPage.contents)(options))
+        return
+      }
+
+      // Authenticated Indexes
+      pagename = getPageName(true) + '/index'
+      page = pages.find((page) => page.path === pagename)
+      if (page) {
+        res.end(Handlebars.compile(loginPage.contents)(options))
+        return
+      }
+ 
+      // Authenticated Loaders
+      pagename = getPageName(true) + '/loader'
+      page = pages.find((page) => page.path === pagename)
+      if (page) {
+        res.end(Handlebars.compile(loginPage.contents)(options))
+        return
+      }
     }
 
     let notFoundPage = pages.find((page) => page.path === '404')
-    return res.end(Handlebars.compile(notFoundPage.contents)(options))
+    res.end(Handlebars.compile(notFoundPage.contents)(options))
+    return
   })
