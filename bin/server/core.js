@@ -20,7 +20,12 @@ if (window.performance.navigation.type === 2) {
 
 // Initialize Root Datastore
 window._kong = {
-  apps: []
+  apps: [],
+  api: {
+    get: () => {
+      return Promise.resolve({ data: { data: [] }})
+    }
+  }
 }
 
 // Handle registered applications
