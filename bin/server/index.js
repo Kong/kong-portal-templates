@@ -5,6 +5,8 @@ const micro = require('micro')
 const path = require('path')
 const dir = require('node-dir')
 const fs = require('fs-extra')
+const qs = require('querystring')
+const url = require('url')
 
 // Helpers
 const markdown = require('helper-markdown')
@@ -54,6 +56,10 @@ const read = async (dirname) => {
   return results
 }
 
+const query = req => {
+	return qs.parse((url.parse(req.url).search || '').substr(1))
+}
+
 // Renderer
 module.exports = dispatch()
   .dispatch('/favicon.ico', 'GET', async (req, res) => {
@@ -66,16 +72,21 @@ module.exports = dispatch()
     res.end()
   })
   .dispatch('/_login', 'GET', async (req, res) => {
+    let location = query(req).redirect || '/'
+
+    location = location === '/login' ? '/' : location
+    location = location === '/register' ? '/' : location
+
     res.statusCode = 302;
     res.setHeader('Set-Cookie', 'auth=true;')
-    res.setHeader('Location', '/')
+    res.setHeader('Location', location)
     res.end()
   })
   .dispatch('/*', 'GET', async (req, res, { params, query }) => {
     let partials = await read(PARTIALS_DIR)
     let pages = await read(PAGES_DIR)
     let specs = await read(SPECS_DIR)
-    let auth = req.headers.cookie.indexOf('auth=true') > -1
+    let auth = (req.headers.cookie || '').indexOf('auth=true') > -1
     let options = {
       config: {
         PORTAL_GUI_URL: 'http://localhost:3000',

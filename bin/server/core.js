@@ -54,12 +54,12 @@ addEvent(document, 'click', '#logout', function (event) {
 
 addEvent(document, 'submit', '#login', function (event) {
   event.preventDefault()
-  window.location = '/_login'
+  window.location = '/_login?redirect=' + window.location.pathname
 })
 
 addEvent(document, 'submit', '#register', function (event) {
   event.preventDefault()
-  window.location = '/_login'
+  window.location = '/_login?redirect=' + window.location.pathname
 })
 
 // On Load
