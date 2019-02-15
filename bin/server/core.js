@@ -22,8 +22,20 @@ if (window.performance.navigation.type === 2) {
 window._kong = {
   apps: [],
   api: {
-    get: () => {
-      return Promise.resolve({ data: { data: [] }})
+    get: async (path, axiosConfig, transformResponse) => {
+      let resp = { data: [], status: 200 }
+
+      try {
+        resp = await axios.get(`/_portal_api${path}`, axiosConfig)
+        if (transformResponse) { resp = transformResponse(resp) }
+        resp.status = 200
+      } catch (error) {
+        resp.data = []
+        resp.response = error.response
+        resp.status = error.response && error.response.status ? error.response.status : -1
+      }
+  
+      return resp
     }
   }
 }

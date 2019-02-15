@@ -30,26 +30,24 @@ let SPECS_DIR = path.join(DIRECTORY, 'specs')
 const read = async (dirname) => {
   let files = await dir.promiseFiles(dirname)
   let results = []
+  let dirparts = dirname.split('/')
+  let hasType = dirparts.length > 3
+  let type = dirparts.pop()
   
+  hasType = type === '' ? false : true
+
   for (let index in files) {
+    let filepath = files[index].replace(dirname.replace('./', ''), '').split('.')[0]
+
     results.push({
+      auth: files[index].indexOf('unauthenticated') > -1 ? false : true,
+      type: hasType ? type : filepath.split('/')[0].slice(0, -1),
       contents: await fs.readFile(files[index], 'utf8'),
       path: files[index],
       filename: path.basename(files[index]),
       name: path.basename(files[index]).split('.')[0],
-      
-      /**
-       * Here we get the filename path for router matching by removing the directive,
-       * removing the relative prefix first, then we take care of the file extension,
-       * finally we want to remove the forward slash at the beginning.
-       * 
-       * [./]theme/default/partials
-       *  ^                                         login(0)[.]hbs(1)
-       *                  .substr(1)                      ^
-       *                          ^
-       * [theme/default/partials][/]unauthenticated/[login.hbs] -> unauthenticated/login
-       */
-      path: files[index].replace(dirname.replace('./', ''), '').split('.')[0].substr(1)
+      path: hasType ? filepath.substr(1) : filepath.split('/').slice(1).join('/'),
+      title: hasType ? filepath.substr(1) : filepath.split('/').slice(1).join('/'),
     })
   }
 
@@ -64,6 +62,12 @@ const query = req => {
 module.exports = dispatch()
   .dispatch('/favicon.ico', 'GET', async (req, res) => {
     res.end()
+  })
+  .dispatch('/_portal_api/files', 'GET', async (req, res) => {
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify({
+      data: await read(DIRECTORY)
+    }))
   })
   .dispatch('/_logout', 'GET', async (req, res) => {
     res.statusCode = 302;
@@ -90,6 +94,7 @@ module.exports = dispatch()
     let options = {
       config: {
         PORTAL_GUI_URL: 'http://localhost:3000',
+        WORKSPACE: null
       },
       authData: {
         authType: 'basic-auth'
@@ -112,9 +117,9 @@ module.exports = dispatch()
       return authorized ? params._ : 'unauthenticated/' + (params._ || '')
     }
     
-    async function render (page) {
-      let contents = ''
+    async function render (page, contents = '') {
       contents += `
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.12.1/js-yaml.min.js"></script>
         <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
@@ -125,6 +130,8 @@ module.exports = dispatch()
       contents += '</script>'
       contents += Handlebars.compile(page.contents)(options)
       contents += '<script>window._kong.loaded = true</script>'
+      contents += `<script>window.K_CONFIG = ${JSON.stringify(options.config)}</script>`
+
       res.end(contents)
     }
 
