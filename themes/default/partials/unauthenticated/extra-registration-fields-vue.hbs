@@ -1,0 +1,25 @@
+
+{{!-- template --}}
+<div id="extra-fields">
+  <div v-for="field in fields">
+    <label for="meta.company-name">Company Name</label>
+    <input id="meta.company-name" type="text" name="meta.company-name" required />
+  </div>
+
+</div>
+
+{{!-- component --}}
+<script>
+window.registerApp(function () {
+  new window.Vue({
+    el: '#extra-fields',
+    delimeters: ['${', '}'],
+
+    data () {
+      return {
+        fields: [{}, {}],
+      }
+    },
+  })
+})
+</script>

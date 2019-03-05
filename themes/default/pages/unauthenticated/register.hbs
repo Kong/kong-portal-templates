@@ -1,4 +1,4 @@
-{{#> unauthenticated/layout pageTitle="Register" }} 
+{{#> unauthenticated/layout pageTitle="Register" }}
 
 {{#*inline "content-block"}}
 <div class="authentication">
@@ -23,11 +23,14 @@
         <label for="key">Api Key</label>
         <input id="key" type="text" name="key" required />
       {{/if}}
+      {{> unauthenticated/extra-registration-fields-vue}}
       <button class="button button-primary" type="submit">Sign Up</button>
     </form>
   {{/if}}
 </div>
 {{/inline}}
+
+
 
 {{/unauthenticated/layout}}
 
