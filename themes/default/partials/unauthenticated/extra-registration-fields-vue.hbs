@@ -1,9 +1,12 @@
 
 {{!-- template --}}
 <div id="extra-fields">
-  <div v-for="field in fields">
-    <label for="meta.company-name">Company Name</label>
-    <input id="meta.company-name" type="text" name="meta.company-name" required />
+  <div v-for="(field, i) in fields" :key="i">
+    <label :for="field.field_name">${ field.input }</label>
+    <input :id="field.field_name"
+           :name="field.field_name"
+           :type="field.type_of_input"
+           :required="field.required" />
   </div>
 
 </div>
@@ -13,13 +16,27 @@
 window.registerApp(function () {
   new window.Vue({
     el: '#extra-fields',
-    delimeters: ['${', '}'],
+    delimiters: ['${', '}'],
 
     data () {
       return {
-        fields: [{}, {}],
+        fields: [],
       }
     },
+    methods: {
+      getExtraFields: function() {
+        window._kong.api.get("/extrafields", { withCredentials: true })
+          .then(res => {
+            this.fields = res.data['extra-fields']
+          })
+          .catch(err => {
+            console.error('failed to load extra-fields', err);
+          })
+      }
+    },
+    mounted () {
+      this.getExtraFields()
+    }
   })
 })
 </script>
