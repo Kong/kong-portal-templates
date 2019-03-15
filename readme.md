@@ -62,11 +62,7 @@ $ npm install
 #### Sync files with a specific workspaces dev portal
 - call script directly
   ```bash
-<<<<<<< HEAD
-  $ WORKSPACE=custom_workpsace WATCH=true node bin/sync
-=======
   $ WORKSPACE=custom_workspace WATCH=true node sync
->>>>>>> master
   ```
 - npm command
   ```bash

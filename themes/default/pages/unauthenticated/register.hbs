@@ -11,17 +11,7 @@
       <b>Please fill out the below form and we will notify you once your request gets approved.</b>
     </div>
     <form id="register">
-      <label for="email">Email</label>
-      <input id="email" type="text" name="email" required/>
-      {{#if (eq authData.authType 'basic-auth')}}
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password" required />
-      {{/if}}
-      {{#if (eq authData.authType 'key-auth')}}
-        <label for="key">Api Key</label>
-        <input id="key" type="text" name="key" required />
-      {{/if}}
-      {{> unauthenticated/extra-registration-fields-vue}}
+      {{> unauthenticated/registration-fields-vue}}
       <button class="button button-primary" type="submit">Sign Up</button>
     </form>
   {{/if}}
@@ -49,7 +39,7 @@
     }
     return urlparameter;
   }
-  document.getElementById('email').value = getUrlParam('email', '')
+  //document.getElementById('email').value = getUrlParam('email', '')
 </script>
 
 <script>
