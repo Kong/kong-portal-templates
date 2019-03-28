@@ -27,7 +27,7 @@
       :class="{ active: activePageIdx === idx }"
       v-for="item, idx in Object.keys(paginatedResults)">
       ${ idx + 1 }
-    </button> 
+    </button>
     <button
       @click="rotatePagination(1)"
       class="next-item"
@@ -45,7 +45,7 @@ window.registerApp(function () {
     el: '#search-results',
     delimiters: ['${', '}'],
 
-    data () {
+    data: function () {
       return {
         pageList: [],
         searchModel: '',
@@ -57,15 +57,15 @@ window.registerApp(function () {
         activePageIdx: 0,
         resultsPerPage: 6,
 
-        getUrlParameter: () => { console.log('error: getUrlParameter helper failed to load') },
-        fetchPageList: () => { console.log('error: fetchPageList helper failed to load') },
-        searchFiles: () => { console.log('error: searchFiles helper failed to load') },
-        goToPage: () => { console.log('error: goToPage helper failed to load') },
-        buildUrl: () => { console.log('error: buildUrl helper failed to load') }
+        getUrlParameter: function () { console.log('error: getUrlParameter helper failed to load') },
+        fetchPageList: function () { console.log('error: fetchPageList helper failed to load') },
+        searchFiles: function () { console.log('error: searchFiles helper failed to load') },
+        goToPage: function () { console.log('error: goToPage helper failed to load') },
+        buildUrl: function () { console.log('error: buildUrl helper failed to load') }
       }
     },
 
-    mounted () {
+    mounted: function () {
       if (window.helpers) {
         this.getUrlParameter = window.helpers.getUrlParameter || this.getUrlParameter
         this.fetchPageList = window.helpers.fetchPageList || this.fetchPageList
@@ -82,12 +82,12 @@ window.registerApp(function () {
     },
 
     methods: {
-      
-      isPageActive (idx) {
+
+      isPageActive: function (idx) {
         return this.activePageIdx === idx
       },
 
-      toggleActive (isActive) {
+      toggleActive: function (isActive) {
         if (typeof isActive === Boolean) {
           this.searchActive = isActive
           return
@@ -95,7 +95,7 @@ window.registerApp(function () {
         this.searchActive = !this.searchActive
       },
 
-      toggleSearchFocus (isFocused) {
+      toggleSearchFocus: function (isFocused) {
         if (typeof isFocused === Boolean) {
           this.searchFocused = isFocused
           return
@@ -103,11 +103,11 @@ window.registerApp(function () {
         this.searchFocused = !this.searchFocused
       },
 
-      goToPagination (idx) {
+      goToPagination: function (idx) {
         this.activePageIdx = idx
       },
 
-      rotatePagination (rotation) {
+      rotatePagination: function (rotation) {
         let maxIdx = Object.keys(this.paginatedResults).length - 1
         let minIdx = 0
 
@@ -118,7 +118,7 @@ window.registerApp(function () {
         }
       },
 
-      getPaginatedResults () {
+      getPaginatedResults: function() {
         let count = 0
         let pageIdx = 0
         let paginatedResults = {}

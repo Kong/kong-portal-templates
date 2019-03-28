@@ -7,9 +7,9 @@ if (!window.helpers) {
   window.helpers = {}
 }
 
-window.helpers.searchFiles = (searchModel, files) => {
+window.helpers.searchFiles = function (searchModel, files)  {
   if (searchModel !== '') {
-    let searchedFiles = files.filter((file) => {
+    let searchedFiles = files.filter(function (file) {
       let fileContent = JSON.stringify(file).toLowerCase()
       let searchParam = searchModel.toLowerCase()
       return fileContent.includes(searchParam)
@@ -26,7 +26,7 @@ window.helpers.searchConfig = {
   /**
    * files to exclude from search, will be filtered based of url path
    * aliases are identified by file title
-   * 
+   *
    * NOTE: 'unauthenticated/' path will not be included in filter query.
    *       For example, including '404' will filter pages with the both
    *       the path of '404' and 'unauthenticated/404'
@@ -53,7 +53,7 @@ window.helpers.searchConfig = {
   }
 }
 
-window.helpers.fetchPageList = (files) => {
+window.helpers.fetchPageList = function (files)  {
 
   /**
    * Parse file with type 'page' into title, functional path, authType, & alias.
@@ -64,9 +64,9 @@ window.helpers.fetchPageList = (files) => {
    */
   let getPageResults = function (files) {
 
-    let pages = files.filter(file => { return file.type === 'page' })
+    let pages = files.filter(function (file)  { return file.type === 'page' })
 
-    return pages.map(page => {
+    return pages.map( function(page) {
       let splitTitle = page.name.split('/')
       let title = splitTitle[splitTitle.length - 1]
       let splitPath = page.name.split('unauthenticated/')
@@ -97,17 +97,17 @@ window.helpers.fetchPageList = (files) => {
 
     let virtualPages = []
 
-    let specs = files.filter(file => { return file.type === 'spec' })
-    let loaders = files.filter(file => { return file.name.includes('loader') })
+    let specs = files.filter(function (file) { return file.type === 'spec' })
+    let loaders = files.filter(function (file) { return file.name.includes('loader') })
 
-    loaders.forEach(loader => {
-      specs.forEach(spec => {
+    loaders.forEach( function (loader) {
+      specs.forEach( function (spec) {
         let splitTitle = spec.name.split('/')
         let title = splitTitle[splitTitle.length - 1]
         let splitPath = loader.name.split('unauthenticated/')
         let initPath = splitPath[splitPath.length - 1]
         let virtualPath = initPath.split('loader')[0] + title
-        
+
         let searchConfig = window.helpers.searchConfig
         let aliasList = searchConfig && searchConfig.aliasList
           ? searchConfig.aliasList
@@ -133,7 +133,7 @@ window.helpers.fetchPageList = (files) => {
    */
   let filterFilesList = function (files) {
 
-    return files.filter(file => {
+    return files.filter( function (file) {
       let searchConfig = window.helpers.searchConfig
       let blacklist = searchConfig && searchConfig.blacklist
         ? searchConfig.blacklist
@@ -148,9 +148,9 @@ window.helpers.fetchPageList = (files) => {
       if (file.auth) {
         return true
       }
-      
+
       // Return true/false if authenticated version exists
-      !!files.find(comparisonFile => {
+      !!files.find( function (comparisonFile) {
         return (file.path === comparisonFile.path) && comparisonFile.auth
       })
     })
@@ -160,7 +160,7 @@ window.helpers.fetchPageList = (files) => {
    * Sort files in alphabetical order
    */
   let sortFiles = function (files) {
-    return files.sort((fileA, fileB) => { return fileA.title > fileB.title  })
+    return files.sort( function (fileA, fileB) { return fileA.title > fileB.title  })
   }
 
   let pages = getPageResults(files)

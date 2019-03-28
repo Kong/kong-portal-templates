@@ -50,7 +50,7 @@ window.registerApp(function () {
     el: '#search',
     delimiters: ['${', '}'],
 
-    data () {
+    data: function () {
       return {
         pageList: [],
         searchResults: [],
@@ -67,7 +67,7 @@ window.registerApp(function () {
       }
     },
 
-    created () {
+    created: function () {
       // event listener allowing user to type to search without having searchbar selected
       window.addEventListener('keyup', (event) => {
         // on escape close search window
@@ -101,7 +101,7 @@ window.registerApp(function () {
       })
     },
 
-    mounted () {
+    mounted: function () {
       if (window.helpers) {
         this.fetchPageList = window.helpers.fetchPageList || this.fetchPageList
         this.searchFiles = window.helpers.searchFiles || this.searchFiles
@@ -113,23 +113,23 @@ window.registerApp(function () {
     },
 
     methods: {
-      goToFullResults () {
+      goToFullResults: function () {
         let path = `search?query=${this.searchModel}`
         let url = this.buildUrl(path)
         this.goToPage(url)
       },
 
-      goToSearchResult (path) {
+      goToSearchResult: function (path) {
         let url = this.buildUrl(path)
         this.goToPage(url)
       },
 
-      toggleActive () {
+      toggleActive: function () {
         this.searchModel = ''
         this.searchActive = !this.searchActive
       },
 
-      toggleSearchFocus (isFocused) {
+      toggleSearchFocus: function (isFocused) {
         if (typeof isFocused === Boolean) {
           this.searchFocused = isFocused
           return
