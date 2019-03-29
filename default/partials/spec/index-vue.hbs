@@ -27,58 +27,69 @@
 
 {{!-- component --}}
 <script>
+"use strict";
+
 window.registerApp(function () {
   new window.Vue({
     el: '#spec-index',
     delimiters: ['${', '}'],
-
-    data: function() {
+    data: function data() {
       return {
         filteredSpecs: [],
         filterModel: '',
         isLoading: true,
-
-        buildUrl: function() { console.log('error: buildUrl helper failed to load') },
-        goToPage: function() { console.log('error: goToPage helper failed to load') }
-      }
+        buildUrl: function buildUrl() {
+          console.log('error: buildUrl helper failed to load');
+        },
+        goToPage: function goToPage() {
+          console.log('error: goToPage helper failed to load');
+        }
+      };
     },
-
-    mounted: function () {
-      this.filteredSpecs = this.filterSpecs()
-      this.isLoading = false
+    mounted: function mounted() {
+      this.filteredSpecs = this.filterSpecs();
+      this.isLoading = false;
 
       if (window.helpers) {
-        this.buildUrl = window.helpers.buildUrl || this.buildUrl
-        this.goToPage = window.helpers.goToPage || this.goToPage
+        this.buildUrl = window.helpers.buildUrl || this.buildUrl;
+        this.goToPage = window.helpers.goToPage || this.goToPage;
       }
     },
-
     methods: {
-      goToSpec: function (path) {
-        let url = this.buildUrl(`documentation/${path}`)
-        this.goToPage(url)
+      goToSpec: function goToSpec(path) {
+        var url = this.buildUrl("documentation/".concat(path));
+        this.goToPage(url);
       },
+      filterSpecs: function filterSpecs() {
+        var _this = this;
 
-      filterSpecs: function () {
         if (this.filterModel !== '') {
-          return this.specFiles.filter( function (spec)  {
-            let specContent = JSON.stringify(spec).toLowerCase()
-            let filterParam = this.filterModel.toLowerCase()
-            return specContent.includes(filterParam)
-          }.bind(this))
+          return this.specFiles.filter(function (spec) {
+            var specContent = JSON.stringify(spec).toLowerCase();
+
+            var filterParam = _this.filterModel.toLowerCase();
+
+            return specContent.includes(filterParam);
+          });
         }
 
-        return this.specFiles
+        return this.specFiles;
       },
+      fetchSpecs: function fetchSpecs() {
+        var _this2 = this;
 
-      fetchSpecs: function () {
-        let specFiles = window._kong.files.filter((file) => file.type === 'spec')
-        return specFiles.map( function (spec) {
-          let specContents = this.parseSpec(spec.contents)
-          let specInfo = specContents.info || {}
-          let filename = spec.name
+        var specFiles = window._kong.files.filter(function (file) {
+          return file.type === 'spec';
+        });
+
+        return specFiles.map(function (spec) {
+          var specContents = _this2.parseSpec(spec.contents);
+
+          var specInfo = specContents.info || {};
+          var filename = spec.name;
+
           if (filename.includes('unauthenticated/')) {
-            filename = spec.name.split('unauthenticated/')[1]
+            filename = spec.name.split('unauthenticated/')[1];
           }
 
           return {
@@ -87,70 +98,67 @@ window.registerApp(function () {
             version: specInfo.version || 'unknown',
             tags: specContents.tags || [],
             filename: filename || ''
-          }
-        }.bind(this))
+          };
+        });
       },
-
-      parseSpec: function (item) {
-        if (!item) return {}
-
-        let parsedItem = this.parseJSON(item)
+      parseSpec: function parseSpec(item) {
+        if (!item) return {};
+        var parsedItem = this.parseJSON(item);
 
         if (!parsedItem) {
-          parsedItem = this.parseYAML(item)
+          parsedItem = this.parseYAML(item);
         }
 
         if (!parsedItem) {
-          parsedItem = {}
+          parsedItem = {};
         }
 
-        return parsedItem
+        return parsedItem;
       },
-
-      parseJSON: function (item) {
+      parseJSON: function parseJSON(item) {
         try {
-          return JSON.load(item)
+          return JSON.load(item);
         } catch (e) {
-          return false
+          return false;
         }
       },
-
-      parseYAML: function (item) {
+      parseYAML: function parseYAML(item) {
         try {
-          return window.YAML.load(item)
+          return window.YAML.load(item);
         } catch (e) {
-          return false
+          return false;
         }
       },
+      formatTags: function formatTags(tagObj) {
+        if (!tagObj) return '';
+        var tags = Object.keys(tagObj).map(function (tagKey) {
+          return tagObj[tagKey].name;
+        });
+        var tagStr = tags.slice(0, 3).join(', ');
 
-      formatTags: function (tagObj) {
-        if (!tagObj) return ''
-
-        let tags = Object.keys(tagObj).map( function (tagKey) { return tagObj[tagKey].name })
-        let tagStr = tags.slice(0, 3).join(', ')
         if (tags.length > 3) {
-          let extraTags = tags.length - 3
-          tagStr += `... (${extraTags} more)`
+          var extraTags = tags.length - 3;
+          tagStr += "... (".concat(extraTags, " more)");
         }
-        return tagStr
+
+        return tagStr;
       }
     },
-
     computed: {
-      specFiles: function () {
-        return this.fetchSpecs()
+      specFiles: function specFiles() {
+        return this.fetchSpecs();
       }
     },
-
     watch: {
       filterModel: {
-        handler: function() {
-          this.filteredSpecs = this.filterSpecs()
+        handler: function handler() {
+          this.filteredSpecs = this.filterSpecs();
         }
       }
     }
-  })
-})
+  });
+});
+
 </script>
 
 {{!-- style --}}

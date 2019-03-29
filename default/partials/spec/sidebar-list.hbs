@@ -28,13 +28,13 @@
 
 {{!-- component --}}
 <script>
+"use strict";
 
 window.registerApp(function () {
   new window.Vue({
     el: '#spec-sidebar-list',
     delimiters: ['${', '}'],
-
-    data: function() {
+    data: function data() {
       return {
         specName: window._kong.spec.name,
         spec: window._kong.spec,
@@ -42,55 +42,55 @@ window.registerApp(function () {
         activeTags: [],
         activeId: null,
         isLoading: true,
-
-        buildSidebar: function (){ console.log('error: buildSidebar helper failed to load') },
-        retrieveParsedSpec: function () { console.log('error: retrieveParsedSpec helper failed to load') }
-      }
-    },
-
-    mounted: function () {
-      if (window.helpers) {
-        this.buildSidebar = window.helpers.buildSidebar || this.buildSidebar
-        this.retrieveParsedSpec = window.helpers.retrieveParsedSpec || this.retrieveParsedSpec
-        let spec = this.retrieveParsedSpec(this.specName, this.spec)
-        let builtSpec = this.buildSidebar(spec)
-        this.sidebarData = builtSpec
-        this.isLoading = false
-      }
-    },
-
-    methods: {
-      moveToAnchor: function (destination) {
-        window.scrollTo(0, destination.offsetTop - 120)
-      },
-
-      isIdActive: function (id) {
-        return this.activeId === id
-      },
-
-      isTagActive: function (tag) {
-        return this.activeTags.includes(tag)
-      },
-
-      sidebarAnchorClicked: function (sidebarItem, method) {
-        this.activeTags.push(sidebarItem.tag)
-        this.activeId = method.id
-        let anchorPath = `operations-${sidebarItem.tag}-${method.id}`
-        window.location.hash = anchorPath
-        let anchor = document.querySelector(`#${anchorPath}`)
-        this.moveToAnchor(anchor)
-      },
-
-      subMenuClicked: function (sidebarItem) {
-        if (this.isTagActive(sidebarItem.tag)) {
-          this.activeTags = this.activeTags.filter(activeTag => activeTag !== sidebarItem.tag)
-          return
+        buildSidebar: function buildSidebar() {
+          console.log('error: buildSidebar helper failed to load');
+        },
+        retrieveParsedSpec: function retrieveParsedSpec() {
+          console.log('error: retrieveParsedSpec helper failed to load');
         }
-        this.activeTags.push(sidebarItem.tag)
+      };
+    },
+    mounted: function mounted() {
+      if (window.helpers) {
+        this.buildSidebar = window.helpers.buildSidebar || this.buildSidebar;
+        this.retrieveParsedSpec = window.helpers.retrieveParsedSpec || this.retrieveParsedSpec;
+        var spec = this.retrieveParsedSpec(this.specName, this.spec);
+        var builtSpec = this.buildSidebar(spec);
+        this.sidebarData = builtSpec;
+        this.isLoading = false;
+      }
+    },
+    methods: {
+      moveToAnchor: function moveToAnchor(destination) {
+        window.scrollTo(0, destination.offsetTop - 120);
+      },
+      isIdActive: function isIdActive(id) {
+        return this.activeId === id;
+      },
+      isTagActive: function isTagActive(tag) {
+        return this.activeTags.includes(tag);
+      },
+      sidebarAnchorClicked: function sidebarAnchorClicked(sidebarItem, method) {
+        this.activeTags.push(sidebarItem.tag);
+        this.activeId = method.id;
+        var anchorPath = "operations-".concat(sidebarItem.tag, "-").concat(method.id);
+        window.location.hash = anchorPath;
+        var anchor = document.querySelector("#".concat(anchorPath));
+        this.moveToAnchor(anchor);
+      },
+      subMenuClicked: function subMenuClicked(sidebarItem) {
+        if (this.isTagActive(sidebarItem.tag)) {
+          this.activeTags = this.activeTags.filter(function (activeTag) {
+            return activeTag !== sidebarItem.tag;
+          });
+          return;
+        }
+
+        this.activeTags.push(sidebarItem.tag);
       }
     }
-  })
-})
+  });
+});
 </script>
 
 {{!-- style --}}
