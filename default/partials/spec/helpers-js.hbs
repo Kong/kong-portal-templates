@@ -7,19 +7,19 @@ if (!window.helpers) {
   window.helpers = {}
 }
 
-window.helpers.buildSidebar = (parsedSpec) => {
+window.helpers.buildSidebar = function (parsedSpec)  {
   // If specFile contains array of errors return early
   if (window.helpers.isObject(parsedSpec) === false || !parsedSpec.paths) return
 
   // Build object of sidebar data from the parsedSpec
   const acc = {} // Set up accumulator object
-  Object.keys(parsedSpec.paths).forEach(path => {
+  Object.keys(parsedSpec.paths).forEach(function (path)  {
     const operationPath = parsedSpec.paths[path]
 
-    Object.keys(operationPath).forEach(method => {
+    Object.keys(operationPath).forEach(function (method) {
       // If the parsedSpec does not have any tags group everything under default
       let tags = operationPath[method].tags ? operationPath[method].tags : ['default']
-      tags.forEach(tag => {
+      tags.forEach( function tag {
         const operationTag = acc[tag] = acc[tag] || {}
         const operationMethod = operationTag[path] = operationTag[path] || {}
         const operationDetails = operationMethod[method] = operationMethod[method] || {}
@@ -33,17 +33,17 @@ window.helpers.buildSidebar = (parsedSpec) => {
   const sidebarArray =
     Object
       .keys(acc)
-      .map(tag => {
+      .map(function (tag) {
         return {
           tag,
           paths: Object
             .keys(acc[tag])
-            .map(path => {
+            .map(function (path) {
               return {
                 path,
                 methods: Object
                   .keys(acc[tag][path])
-                  .map(method => {
+                  .map(function (method)  {
                     return {
                       method,
                       id: acc[tag][path][method].id,
@@ -62,7 +62,7 @@ window.helpers.buildSidebar = (parsedSpec) => {
 /*
  * Lookup spec file to render from data attribute on page
  */
-window.helpers.retrieveParsedSpec = (name, spec) => {
+window.helpers.retrieveParsedSpec = function (name, spec)  {
   if (!spec) {
     throw new Error(`<p>Oops! Looks like we had trouble finding the spec: '${name}'</p>`)
   }
@@ -77,7 +77,7 @@ window.helpers.retrieveParsedSpec = (name, spec) => {
   return parsedSpec
 }
 
-window.helpers.addEvent = (parent, evt, selector, handler) => {
+window.helpers.addEvent = function (parent, evt, selector, handler)  {
   parent.addEventListener(evt, function (event) {
     if (event.target.matches(selector + ', ' + selector + ' *')) {
       handler.apply(event.target.closest(selector), arguments)
