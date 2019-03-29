@@ -1,4 +1,4 @@
-{{#> unauthenticated/layout pageTitle="Register" }} 
+{{#> unauthenticated/layout pageTitle="Register" }}
 
 {{#*inline "content-block"}}
 <div class="authentication">
@@ -52,5 +52,5 @@
 </script>
 
 <script>
-  document.getElementById('register').addEventListener('submit', e => { e.preventDefault() })
+  document.getElementById('register').addEventListener('submit', function (e)  { return  e.preventDefault() })
 </script>
