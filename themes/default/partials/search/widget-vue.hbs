@@ -43,13 +43,15 @@
 
 {{!-- component --}}
 <script>
+"use strict";
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 window.registerApp(function () {
   new window.Vue({
     el: '#search',
     delimiters: ['${', '}'],
-
-    data () {
+    data: function data() {
       return {
         pageList: [],
         searchResults: [],
@@ -58,116 +60,120 @@ window.registerApp(function () {
         searchActive: false,
         searchFocused: false,
         isLoading: false,
-
-        fetchPageList: () => { console.log('error: fetchPageList helper failed to load') },
-        searchFiles: () => { console.log('error: searchFiles helper failed to load') },
-        goToPage: () => { console.log('error: goToPage helper failed to load') },
-        buildUrl: () => { console.log('error: buildUrl helper failed to load') },
-        isValidKey: () => { console.log('error: isValidKey helper failed to load') }
-      }
+        fetchPageList: function fetchPageList() {
+          console.log('error: fetchPageList helper failed to load');
+        },
+        searchFiles: function searchFiles() {
+          console.log('error: searchFiles helper failed to load');
+        },
+        goToPage: function goToPage() {
+          console.log('error: goToPage helper failed to load');
+        },
+        buildUrl: function buildUrl() {
+          console.log('error: buildUrl helper failed to load');
+        },
+        isValidKey: function isValidKey() {
+          console.log('error: isValidKey helper failed to load');
+        }
+      };
     },
+    created: function created() {
+      var _this = this;
 
-    created () {
       // event listener allowing user to type to search without having searchbar selected
-      window.addEventListener('keyup', (event) => {
+      window.addEventListener('keyup', function (event) {
         // on escape close search window
-        if (event.which === 27 && this.searchActive) {
-          this.toggleActive()
+        if (event.which === 27 && _this.searchActive) {
+          _this.toggleActive(); // on enter close if text box empty & go to results page if not
 
-        // on enter close if text box empty & go to results page if not
-        } else if (this.searchActive && event.which === 13) {
-          this.searchModel === '' ? this.toggleActive() : this.goToFullResults()
-
-        // on delete remove last character of input model
-        } else if (this.searchActive && !this.searchFocused && event.which === 8) {
-          this.searchModel = this.searchModel.slice(0, this.searchModel.length - 1)
-
-        // if key is character/special character append key event to input model
-        } else if (this.searchActive && !this.searchFocused && this.isValidKey(event.which)) {
-          this.searchModel += event.key
+        } else if (_this.searchActive && event.which === 13) {
+          _this.searchModel === '' ? _this.toggleActive() : _this.goToFullResults(); // on delete remove last character of input model
+        } else if (_this.searchActive && !_this.searchFocused && event.which === 8) {
+          _this.searchModel = _this.searchModel.slice(0, _this.searchModel.length - 1); // if key is character/special character append key event to input model
+        } else if (_this.searchActive && !_this.searchFocused && _this.isValidKey(event.which)) {
+          _this.searchModel += event.key;
         }
-      })
+      }); // event listener allowing which closes search when clicked out of
 
-      // event listener allowing which closes search when clicked out of
-      window.addEventListener('click', (event) => {
-        let searchWindowEl = window.document.getElementById('search-window')
-        let searchToggleEl = window.document.getElementById('search-icon')
-        let isSearchWindowClicked = searchWindowEl.contains(event.target)
-        let isSearchToggleClicked = searchToggleEl.contains(event.target)
+      window.addEventListener('click', function (event) {
+        var searchWindowEl = window.document.getElementById('search-window');
+        var searchToggleEl = window.document.getElementById('search-icon');
+        var isSearchWindowClicked = searchWindowEl.contains(event.target);
+        var isSearchToggleClicked = searchToggleEl.contains(event.target);
 
-        if (this.searchActive && !isSearchToggleClicked && !isSearchWindowClicked) {
-          this.toggleActive()
+        if (_this.searchActive && !isSearchToggleClicked && !isSearchWindowClicked) {
+          _this.toggleActive();
         }
-      })
+      });
     },
-
-    mounted () {
+    mounted: function mounted() {
       if (window.helpers) {
-        this.fetchPageList = window.helpers.fetchPageList || this.fetchPageList
-        this.searchFiles = window.helpers.searchFiles || this.searchFiles
-        this.goToPage = window.helpers.goToPage || this.goToPage
-        this.buildUrl = window.helpers.buildUrl || this.buildUrl
-        this.isValidKey = window.helpers.isValidKey || this.isValidKey
+        this.fetchPageList = window.helpers.fetchPageList || this.fetchPageList;
+        this.searchFiles = window.helpers.searchFiles || this.searchFiles;
+        this.goToPage = window.helpers.goToPage || this.goToPage;
+        this.buildUrl = window.helpers.buildUrl || this.buildUrl;
+        this.isValidKey = window.helpers.isValidKey || this.isValidKey;
       }
     },
-
     methods: {
-      getFiles () {
-        return window._kong.api.get('/files', { withCredentials: true })
+      getFiles: function getFiles() {
+        return window._kong.api.get('/files', {
+          withCredentials: true
+        });
       },
-
-      goToFullResults () {
-        let path = `search?query=${this.searchModel}`
-        let url = this.buildUrl(path)
-        this.goToPage(url)
+      goToFullResults: function goToFullResults() {
+        var path = "search?query=".concat(this.searchModel);
+        var url = this.buildUrl(path);
+        this.goToPage(url);
       },
-
-      goToSearchResult (path) {
-        let url = this.buildUrl(path)
-        this.goToPage(url)
+      goToSearchResult: function goToSearchResult(path) {
+        var url = this.buildUrl(path);
+        this.goToPage(url);
       },
-
-      toggleActive () {
-        this.searchModel = ''
-        this.searchActive = !this.searchActive
+      toggleActive: function toggleActive() {
+        this.searchModel = '';
+        this.searchActive = !this.searchActive;
       },
-
-      toggleSearchFocus (isFocused) {
-        if (typeof isFocused === Boolean) {
-          this.searchFocused = isFocused
-          return
+      toggleSearchFocus: function toggleSearchFocus(isFocused) {
+        if (_typeof(isFocused) === Boolean) {
+          this.searchFocused = isFocused;
+          return;
         }
-        this.searchFocused = !this.searchFocused
+
+        this.searchFocused = !this.searchFocused;
       }
     },
-
     watch: {
       searchModel: {
-        handler: function (searchModel, oldSearchModel) {
+        handler: function handler(searchModel, oldSearchModel) {
+          var _this2 = this;
+
           if (!this.pageList.length && !this.isLoading) {
-            this.isLoading = true
-            this.getFiles().then((resp) => {
-              this.pageList = this.fetchPageList(resp.data.data)
-              let fullSearchResults = this.searchFiles(this.searchModel, this.pageList)
-              this.searchResults = fullSearchResults.slice(0, 4)
-              this.additionalResults = fullSearchResults.length - this.searchResults.length
-              this.isLoading = false
-            })
+            this.isLoading = true;
+            this.getFiles().then(function (resp) {
+              _this2.pageList = _this2.fetchPageList(resp.data.data);
+
+              var fullSearchResults = _this2.searchFiles(_this2.searchModel, _this2.pageList);
+
+              _this2.searchResults = fullSearchResults.slice(0, 4);
+              _this2.additionalResults = fullSearchResults.length - _this2.searchResults.length;
+              _this2.isLoading = false;
+            });
           } else {
-            let fullSearchResults = this.searchFiles(this.searchModel, this.pageList)
-            this.searchResults = fullSearchResults.slice(0, 4)
-            this.additionalResults = fullSearchResults.length - this.searchResults.length
+            var fullSearchResults = this.searchFiles(this.searchModel, this.pageList);
+            this.searchResults = fullSearchResults.slice(0, 4);
+            this.additionalResults = fullSearchResults.length - this.searchResults.length;
           }
         }
       }
     },
-
-    beforeDestroy () {
-      window.removeEventListener('keyup')
-      window.removeEventListener('click')
+    beforeDestroy: function beforeDestroy() {
+      window.removeEventListener('keyup');
+      window.removeEventListener('click');
     }
-  })
-})
+  });
+});
+
 </script>
 
 {{!-- style --}}
