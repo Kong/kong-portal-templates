@@ -2,45 +2,35 @@
 {{> common-helpers-js }}
 
 <script type="text/javascript">
+"use strict";
 
 if (!window.helpers) {
-  window.helpers = {}
+  window.helpers = {};
 }
 
-window.helpers.searchFiles = (searchModel, files) => {
+window.helpers.searchFiles = function (searchModel, files) {
   if (searchModel !== '') {
-    let searchedFiles = files.filter((file) => {
-      let fileContent = JSON.stringify(file).toLowerCase()
-      let searchParam = searchModel.toLowerCase()
-      return fileContent.includes(searchParam)
-    })
-
-    return searchedFiles
+    var searchedFiles = files.filter(function (file) {
+      var fileContent = JSON.stringify(file).toLowerCase();
+      var searchParam = searchModel.toLowerCase();
+      return fileContent.includes(searchParam);
+    });
+    return searchedFiles;
   }
 
-  return []
-}
+  return [];
+};
 
 window.helpers.searchConfig = {
-
   /**
    * files to exclude from search, will be filtered based of url path
    * aliases are identified by file title
-   * 
+   *
    * NOTE: 'unauthenticated/' path will not be included in filter query.
    *       For example, including '404' will filter pages with the both
    *       the path of '404' and 'unauthenticated/404'
    */
-  blacklist: [
-    '404',
-    'user',
-    'search',
-    'unauthorized',
-    'reset-password',
-    'documentation/loader',
-    'documentation/api1',
-    'documentation/api2'
-  ],
+  blacklist: ['404', 'user', 'search', 'unauthorized', 'reset-password', 'documentation/loader', 'documentation/api1', 'documentation/api2'],
 
   /**
    * key/value pairs which describe title aliases for particular results,
@@ -51,10 +41,9 @@ window.helpers.searchConfig = {
     'guides/index': 'guides',
     'documentation/index': 'documentation'
   }
-}
+};
 
-window.helpers.fetchPageList = (files) => {
-
+window.helpers.fetchPageList = function (files) {
   /**
    * Parse file with type 'page' into title, functional path, authType, & alias.
    *   - title: 'unauthenticated/guides/index' => 'index'
@@ -62,30 +51,25 @@ window.helpers.fetchPageList = (files) => {
    *   - auth: file.auth (true/false)
    *   - alias: is applied if alias value exists in search config object
    */
-  let getPageResults = function (files) {
-
-    let pages = files.filter(file => { return file.type === 'page' })
-
-    return pages.map(page => {
-      let splitTitle = page.name.split('/')
-      let title = splitTitle[splitTitle.length - 1]
-      let splitPath = page.name.split('unauthenticated/')
-      let path = splitPath[splitPath.length - 1]
-
-      let searchConfig = window.helpers.searchConfig
-      let aliasList = searchConfig && searchConfig.aliasList
-        ? searchConfig.aliasList
-        : {}
-
+  var getPageResults = function getPageResults(files) {
+    var pages = files.filter(function (file) {
+      return file.type === 'page';
+    });
+    return pages.map(function (page) {
+      var splitTitle = page.name.split('/');
+      var title = splitTitle[splitTitle.length - 1];
+      var splitPath = page.name.split('unauthenticated/');
+      var path = splitPath[splitPath.length - 1];
+      var searchConfig = window.helpers.searchConfig;
+      var aliasList = searchConfig && searchConfig.aliasList ? searchConfig.aliasList : {};
       return {
         title: title,
         path: path,
         auth: page.auth,
         alias: aliasList[path]
-      }
-    })
-  }
-
+      };
+    });
+  };
   /**
    * Locate 'loader' files needed to serve spec files & compile virtual routes for search
    *   - title: 'specs/files.yaml' => 'files.yaml' (simply the spec name)
@@ -93,82 +77,79 @@ window.helpers.fetchPageList = (files) => {
    *   - auth: file.auth (true/false)
    *   - alias: is applied if alias value exists in search config object
    */
-  let getSpecResults = function (files) {
 
-    let virtualPages = []
 
-    let specs = files.filter(file => { return file.type === 'spec' })
-    let loaders = files.filter(file => { return file.name.includes('loader') })
-
-    loaders.forEach(loader => {
-      specs.forEach(spec => {
-        let splitTitle = spec.name.split('/')
-        let title = splitTitle[splitTitle.length - 1]
-        let splitPath = loader.name.split('unauthenticated/')
-        let initPath = splitPath[splitPath.length - 1]
-        let virtualPath = initPath.split('loader')[0] + title
-        
-        let searchConfig = window.helpers.searchConfig
-        let aliasList = searchConfig && searchConfig.aliasList
-          ? searchConfig.aliasList
-          : {}
-
+  var getSpecResults = function getSpecResults(files) {
+    var virtualPages = [];
+    var specs = files.filter(function (file) {
+      return file.type === 'spec';
+    });
+    var loaders = files.filter(function (file) {
+      return file.name.includes('loader');
+    });
+    loaders.forEach(function (loader) {
+      specs.forEach(function (spec) {
+        var splitTitle = spec.name.split('/');
+        var title = splitTitle[splitTitle.length - 1];
+        var splitPath = loader.name.split('unauthenticated/');
+        var initPath = splitPath[splitPath.length - 1];
+        var virtualPath = initPath.split('loader')[0] + title;
+        var searchConfig = window.helpers.searchConfig;
+        var aliasList = searchConfig && searchConfig.aliasList ? searchConfig.aliasList : {};
         virtualPages.push({
           title: title,
           path: virtualPath,
           auth: loader.auth,
           alias: aliasList[virtualPath]
-        })
-
-      })
-    })
-
-    return virtualPages
-  }
-
+        });
+      });
+    });
+    return virtualPages;
+  };
   /**
    * Remove unwanted files from search pool. This includes:
    *   - unauthenticated files when an authenticated version exists
    *   - files which path shows up on the blacklist
    */
-  let filterFilesList = function (files) {
 
-    return files.filter(file => {
-      let searchConfig = window.helpers.searchConfig
-      let blacklist = searchConfig && searchConfig.blacklist
-        ? searchConfig.blacklist
-        : []
 
-      // Return false if on blacklist
+  var filterFilesList = function filterFilesList(files) {
+    return files.filter(function (file) {
+      var searchConfig = window.helpers.searchConfig;
+      var blacklist = searchConfig && searchConfig.blacklist ? searchConfig.blacklist : []; // Return false if on blacklist
+
       if (blacklist.includes(file.path)) {
-        return false
-      }
+        return false;
+      } // Return true if authenticated
 
-      // Return true if authenticated
+
       if (file.auth) {
-        return true
-      }
-      
-      // Return true/false if authenticated version exists
-      !!files.find(comparisonFile => {
-        return (file.path === comparisonFile.path) && comparisonFile.auth
-      })
-    })
-  }
+        return true;
+      } // Return true/false if authenticated version exists
 
+
+      !!files.find(function (comparisonFile) {
+        return file.path === comparisonFile.path && comparisonFile.auth;
+      });
+    });
+  };
   /**
    * Sort files in alphabetical order
    */
-  let sortFiles = function (files) {
-    return files.sort((fileA, fileB) => { return fileA.title > fileB.title  })
-  }
 
-  let pages = getPageResults(files)
-  let specs = getSpecResults(files)
-  let fullFiles = pages.concat(specs)
-  let filteredFiles = filterFilesList(fullFiles)
-  let sortedFiles = sortFiles(filteredFiles)
 
-  return sortedFiles
-}
+  var sortFiles = function sortFiles(files) {
+    return files.sort(function (fileA, fileB) {
+      return fileA.title > fileB.title;
+    });
+  };
+
+  var pages = getPageResults(files);
+  var specs = getSpecResults(files);
+  var fullFiles = pages.concat(specs);
+  var filteredFiles = filterFilesList(fullFiles);
+  var sortedFiles = sortFiles(filteredFiles);
+  return sortedFiles;
+};
+
 </script>
