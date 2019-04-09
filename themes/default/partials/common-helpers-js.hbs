@@ -14,7 +14,7 @@ window.helpers.getWorkspace = function () {
 
 window.helpers.buildUrl = function (path) {
   let portalURL = window.K_CONFIG && window.K_CONFIG.PORTAL_GUI_URL
-  return 'portalURL/' + path
+  return portalURL + '/' + path
 }
 
 window.helpers.getUrlParameter = function (name)  {
