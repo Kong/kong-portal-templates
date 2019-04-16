@@ -38,7 +38,7 @@ window.registerApp(function () {
     },
     methods: {
       getExtraFields: function() {
-        window._kong.api.get('/extrafields', { withCredentials: true })
+        window._kong.api.get('/developer/custom-fields', { withCredentials: true })
           .then(res => {
             this.fields = res.data['extra-fields']
             this.loading = false
@@ -50,7 +50,6 @@ window.registerApp(function () {
     },
     mounted () {
       this.getExtraFields()
-      console.log('auth', this.authType)
     }
   })
 })
