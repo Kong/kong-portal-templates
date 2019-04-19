@@ -18,6 +18,9 @@ Handlebars.registerHelper('currentYear', () => new Date().getFullYear())
 Handlebars.registerHelper('setToWindow', (name, item) => { window[name] = item })
 Handlebars.registerHelper('markdown', markdown())
 
+// Additional Helpers
+Handlebars.registerHelper('concat', (...args) => args.slice(0, -1).join(''))
+
 // Environment Variables
 let DIRECTORY = process.env.DIRECTORY || './themes/default/'
 
@@ -64,9 +67,14 @@ module.exports = dispatch()
     res.end()
   })
   .dispatch('/_portal_api/files', 'GET', async (req, res) => {
-    res.setHeader('Content-Type', 'application/json')
+    let files = await read(DIRECTORY)
+    let type = query(req).type
+    if (type) {
+      files = files.filter((value) => value.type === type)
+    }
+    res.setHeader('Content-Type', 'application/json; encoding=utf-8')
     res.end(JSON.stringify({
-      data: await read(DIRECTORY)
+      data: files
     }))
   })
   .dispatch('/_logout', 'GET', async (req, res) => {
@@ -106,7 +114,7 @@ module.exports = dispatch()
       Handlebars.registerPartial(partial.path, partial.contents)
     })
     
-    res.setHeader('Content-Type', 'text/html')
+    res.setHeader('Content-Type', 'text/html; encoding=utf-8')
     
     // Helpers
     function getPageName (authorized) {
@@ -119,6 +127,7 @@ module.exports = dispatch()
     
     async function render (page, contents = '') {
       contents += `
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.12.1/js-yaml.min.js"></script>
         <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
