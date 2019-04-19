@@ -6,10 +6,10 @@
   "private": true,
   "author": "Kong",
   "scripts": {
-    "watch": "node sync",
-    "push": "PUSH=true node sync",
-    "pull": "PULL=true node sync",
-    "wipe": "DELETE_ALL=true node sync",
+    "watch": "node bin/sync",
+    "push": "PUSH=true bin/node bin/sync",
+    "pull": "PULL=true node bin/sync",
+    "wipe": "DELETE_ALL=true node bin/sync",
     "serve": "micro bin/server",
     "serve-dev": "micro-dev bin/server"
   },

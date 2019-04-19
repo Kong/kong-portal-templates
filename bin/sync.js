@@ -69,7 +69,7 @@ const apiURL = WORKSPACE
 let WATCH_DIR = WATCH === 'true'
 let CURL_OUTPUT = false
 
-DIRECTORY = DIRECTORY || './themes/default/'
+DIRECTORY = DIRECTORY || 'themes/default/'
 
 if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
   DIRECTORY = DIRECTORY += '/'
@@ -176,8 +176,6 @@ async function read (directory, type) {
 
     // Delete remote file if it exists, recreate it from local file
     return Promise.resolve()
-      .then(() => handle(type, filename, path, getFile))
-      .then(res => deleteExistingFile(res, type, path))
       .then(() => handle(type, filename, path, createFile))
       .then(res => handleResponse(res, 'create', isCreated, type, path))
       .catch(err => console.log(err))
@@ -453,7 +451,7 @@ async function init () {
 
   if (PUSH) {
     let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
-    
+
     if (proceed) {
       console.log(`pushing files to: ${apiURL}`)
       await read(DIRECTORY)
