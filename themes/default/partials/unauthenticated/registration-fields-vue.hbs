@@ -40,7 +40,7 @@ window.registerApp(function () {
       getExtraFields: function() {
         window._kong.api.get('/developer/custom-fields', { withCredentials: true })
           .then(res => {
-            this.fields = res.data['extra-fields']
+            this.fields = res.data
             this.loading = false
           })
           .catch(err => {
