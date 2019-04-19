@@ -144,12 +144,6 @@ window.registerApp(function () {
       }
     },
 
-    computed: {
-      specFiles () {
-        return this.fetchSpecs()
-      }
-    },
-
     watch: {
       filterModel: {
         handler: function() {
@@ -183,7 +177,7 @@ window.registerApp(function () {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid #979797; 
+  border-bottom: 1px solid #979797;
   margin: 48px 148px;
   padding-bottom: 48px;
 }
