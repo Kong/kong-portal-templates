@@ -10,8 +10,8 @@
     "push": "PUSH=true node sync",
     "pull": "PULL=true node sync",
     "wipe": "DELETE_ALL=true node sync",
-    "serve:default": "micro bin/server",
-    "serve-dev:default": "micro-dev bin/server"
+    "serve": "micro bin/server",
+    "serve-dev": "micro-dev bin/server"
   },
   "devDependencies": {
     "fs-extra": "^7.0.1",
