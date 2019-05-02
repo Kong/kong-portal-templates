@@ -283,6 +283,10 @@ section {
   flex: 1 0 auto;
 }
 
+
+/**************************************************************************
+ * swagger-ui container
+ */
 #ui-wrapper {
   display: flex;
   position: relative;
@@ -291,6 +295,7 @@ section {
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
+  max-width: 100%;
 }
 #ui-wrapper.error {
   flex-direction: column;
@@ -301,6 +306,16 @@ section {
     margin-top: 40px;
   }
 }
+
+
+/**************************************************************************
+ * swagger-ui operation panel theming
+ */
+.swagger-ui .side-panel { background: hsl(220, 8%, 19%); }
+.swagger-ui .model-example-wrapper { overflow: auto; }
+.swagger-ui .code-block { background: hsla(220, 8%, 10%, 1); }
+.swagger-ui .operations-container select { border-color: rgba(255,255,255,0.1); }
+
 
 .overlay {
   position: fixed;
