@@ -38,13 +38,14 @@ window.registerApp(function () {
     },
     methods: {
       getExtraFields: function() {
-        window._kong.api.get('/developer/meta-fields', { withCredentials: true })
+        window._kong.api.get('/developer/meta_fields', { withCredentials: true })
           .then(res => {
-            this.fields = res.data
+            console.log(res.data)
+            this.fields = window.transformMetaFields(res.data.message)
             this.loading = false
           })
           .catch(err => {
-            console.error('failed to load extra-fields', err);
+            console.error('failed to load developer-meta-fields', err);
           })
       }
     },
