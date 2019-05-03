@@ -41,7 +41,7 @@ window.registerApp(function () {
         window._kong.api.get('/developer/meta_fields', { withCredentials: true })
           .then(res => {
             console.log(res.data)
-            this.fields = window.transformMetaFields(res.data.message)
+            this.fields = window.transformMetaFields(res.data)
             this.loading = false
           })
           .catch(err => {
