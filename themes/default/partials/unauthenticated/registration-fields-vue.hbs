@@ -1,13 +1,13 @@
 
 {{!-- template --}}
 <div id="extra-fields">
-  <div v-if="!loading" v-cloak>
+  <div class="wrapper" :class="{ loaded: !loading }">
     <div v-for="(field, i) in fields" :key="i">
       <label :for="field.field_name">${ field.input }</label>
       <input :id="field.field_name"
-            :name="field.field_name"
-            :type="field.type_of_input"
-            :required="field.required" />
+             :name="field.field_name"
+             :type="field.type_of_input"
+             :required="field.required" />
     </div>
     <label for="email">Email</label>
     <input id="email" type="text" name="email" required/>
@@ -23,7 +23,7 @@
 </div>
 
 {{!-- component --}}
-<script>
+<script style="display: none;">
 window.registerApp(function () {
   new window.Vue({
     el: '#extra-fields',
@@ -40,7 +40,6 @@ window.registerApp(function () {
       getExtraFields: function() {
         window._kong.api.get('/developer/meta_fields', { withCredentials: true })
           .then(res => {
-            console.log(res.data)
             this.fields = window.transformMetaFields(res.data)
             this.loading = false
           })
@@ -55,3 +54,14 @@ window.registerApp(function () {
   })
 })
 </script>
+
+
+<style style="display: none;">
+  #extra-fields .wrapper {
+    display: none;
+  }
+
+  #extra-fields .wrapper.loaded {
+    display: block;
+  }
+</style>
