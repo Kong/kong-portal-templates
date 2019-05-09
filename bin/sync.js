@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const {lstatSync, readdirSync, readFileSync, writeFileSync} = require('fs')
-const {join, parse} = require('path')
+const {join, parse} = require('path').posix
 const readline = require('readline')
 const https = require('https')
 const http = require('http')
@@ -183,27 +183,42 @@ async function read (directory, type) {
 }
 
 async function write () {
-  getFiles().then((files) => {
-    files.data.forEach(file => {
+  let files = await getFiles()
+  return Promise.all(
+    files.data.map(file => {
       let fileName = file.name
       let contents = file.contents + '\n'
+      let fileType = file.type + 's/'
       let extension = file.type === 'spec'
         ? getSpecExtension(contents)
         : '.hbs'
 
-      let filePath = (DIRECTORY + fileName + extension)
+      let filePath = (DIRECTORY + fileType + fileName + extension)
 
       if (extension === '' || !extension) {
         console.log(`Error: Not able to determine extension of ${fileName}`)
       }
 
       try {
-        writeFileSync(filePath, contents, {flag: 'w'})
+        let localContents = readFileSync(filePath, 'utf8')
+
+        if (localContents !== contents) {
+          console.log(`File Updated: ${filePath}`)
+        }
       } catch (e) {
+        console.log(`File Created: ${filePath}`)
+      }
+
+      try {
+        writeFileSync(filePath, contents, {flag: 'w'})
+        return Promise.resolve()
+      } catch (e) {
+        console.log(e)
         console.log(`Pull Failed: unable to write: ${filePath}`)
+        return Promise.resolve()
       }
     })
-  })
+  )
 }
 
 // Helpers

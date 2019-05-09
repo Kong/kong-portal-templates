@@ -62,11 +62,11 @@ $ npm install
 #### Sync files with a specific workspaces dev portal
 - call script directly
   ```bash
-  $ WORKSPACE=custom_workpsace WATCH=true node bin/sync
+  $ WORKSPACE=custom_workspace WATCH=true node sync
   ```
 - npm command
   ```bash
-  $ WORKSPACE=custom_workpsace npm run watch
+  $ WORKSPACE=custom_workspace npm run watch
   ```
 
 #### Push/Pull to Kong Files API
