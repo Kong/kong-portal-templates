@@ -1,0 +1,171 @@
+<style>
+#sidebar .sidebar-menu {
+  position: fixed;
+  z-index: 2;
+  top: 80px;
+  width: 215px;
+  height: calc(100vh - 80px);
+  background: #fff;
+  overflow-y: auto;
+}
+#sidebar #spec-sidebar {
+  padding-bottom: 100px;
+}
+#sidebar .sidebar-list li.list-title {
+  font-weight: 700;
+  color: #003459;
+  text-transform: uppercase;
+}
+
+.sidebar-list:not(.spec) {
+  padding: 0 1.5rem;
+  margin-top: 2rem;
+}
+.sidebar-list:not(.spec) ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-list:not(.spec) ul li {
+  padding: 0.5rem;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.7);
+  text-transform: capitalize;
+}
+.sidebar-list:not(.spec) ul li a {
+  color: inherit;
+}
+.sidebar-list:not(.spec) ul li a:hover {
+  color: black;
+}
+.sidebar-list:not(.spec) ul li.list-title {
+  font-weight: 700;
+  color: #003459;
+  text-transform: uppercase;
+}
+.sidebar-list:not(.spec) ul li.submenu {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.sidebar-list:not(.spec) ul li.submenu.active ul {
+  height: auto;
+  max-height: 9999px;
+}
+.sidebar-list:not(.spec) ul li.submenu.active .submenu-title:after {
+  transform: rotate(90deg);
+}
+.sidebar-list:not(.spec) ul li .submenu-title {
+  position: relative;
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+}
+.sidebar-list:not(.spec) ul li .submenu-title:after {
+  position: absolute;
+  display: block;
+  content: "";
+  top: 2px;
+  left: -1rem;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid black;
+}
+.sidebar-list:not(.spec) ul li .submenu-items {
+  max-height: 0;
+  overflow: hidden;
+}
+.sidebar-list:not(.spec) ul li .submenu-items a {
+  display: block;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.7);
+}
+.sidebar-list:not(.spec) ul li .submenu-items a:hover {
+  color: black;
+}
+.sidebar-list:not(.spec) ul li .submenu-items li.active {
+  background: rgba(0, 0, 0, 0.05);
+}
+.sidebar-list:not(.spec) ul li .submenu-items li.active a {
+  font-weight: 500;
+}
+.sidebar-list:not(.spec) ul li .method:before {
+  display: none;
+  width: 47px;
+  margin-right: 0.5rem;
+  padding-top: 0.15rem;
+  color: #fff;
+  text-align: center;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 1rem;
+  border-radius: 2px;
+  vertical-align: bottom;
+}
+.sidebar-list:not(.spec) ul li .method-post:before {
+  content: "POST";
+  background: #248FB2;
+}
+.sidebar-list:not(.spec) ul li .method-put:before {
+  content: "PUT";
+  background: #9B6F8A;
+}
+.sidebar-list:not(.spec) ul li .method-get:before {
+  content: "GET";
+  background: #6ABD5A;
+}
+.sidebar-list:not(.spec) ul li .method-delete:before {
+  content: "DELETE";
+  background: #E2797A;
+}
+
+@media all and (max-width: 1200px) {
+  #sidebar {
+    position: fixed;
+    top: 40px;
+    right: 0;
+    transform: translateX(100%);
+    transition: all 400ms ease;
+    z-index: 2;
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  #sidebar.open .sidebar-menu {
+    height: 100vh;
+    width: auto;
+    right: 0;
+  }
+
+  .sidebar-toggle {
+    position: fixed;
+    display: flex;
+    top: 80px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    justify-content: left;
+    padding: 1rem;
+    background: #eee;
+    z-index: 2;
+    transition: background 300ms ease;
+    cursor: pointer;
+  }
+  .sidebar-toggle:hover {
+    background: #f6f6f6;
+  }
+}
+@media all and (min-width: 1201px) {
+  .sidebar-toggle {
+    display: none;
+  }
+}
+</style>

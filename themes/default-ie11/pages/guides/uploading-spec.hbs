@@ -1,0 +1,48 @@
+{{#> layout pageTitle="Dev Portal - Uploading Spec File" }}
+
+{{#* inline "content-block"}}
+<div class="app-container">
+  <div class="container">
+     {{> guides/sidebar}}
+        <section class="page-wrapper kong-doc">
+{{#markdown}}
+
+# Uploading a Specification file
+
+## Option 1 - The Terminal
+
+- Upload a Specification file with the following call in the terminal
+	- In this example we are using the 
+	[Swagger Petstore](http://petstore.swagger.io/v2/swagger.json)
+
+```bash
+	curl -X POST http://127.0.0.1:8001/WORKSPACE_NAME/files \
+	curl -X POST http://127.0.0.1:8001/WORKSPACE_NAME/files \
+	-F "type=spec" \
+	-F "name=swagger" \
+	-F "contents=@swagger.json" \
+	-F "auth=true"
+```
+
+- Navigate to the Dev Portal [API Catalog](/documentation), the new Swagger Spec
+should now be listed.
+
+## Option 2 - The Kong Manager
+
+- In the Kong Manager, navigate to the Dev Portal 'Specs' page in your Workspace.
+- Click the button **_+ Add Spec_**
+- Enter `swagger` as the file name
+- Check the **_Requires Authentication_** Box
+- Click the **_Create File_** button
+- Copy and paste your spec file into the code editor.
+- Once finished, click the **_Update File_** button.
+- Back in the Dev Portal, navigate to the Dev Portal 
+[API Catalog](/documentation), the new Swagger Spec should now be listed.
+
+
+{{/markdown}}
+</section>
+</div>
+</div>
+{{/inline}}
+{{/layout}}
