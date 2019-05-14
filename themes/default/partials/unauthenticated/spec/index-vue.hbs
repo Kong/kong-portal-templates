@@ -59,7 +59,11 @@ window.registerApp(function () {
 
     methods: {
       getFiles () {
-        return window._kong.api.get('/files/unauthenticated?type=spec', { withCredentials: true })
+        if (window._kong.isAuthenticated) {
+          return window._kong.api.get('/files?type=spec', { withCredentials: true })
+        }
+
+        return window._kong.api.get('/files/unauthenticated?type=spec')
       },
 
       goToSpec(path) {
