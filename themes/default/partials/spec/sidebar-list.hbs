@@ -5,7 +5,7 @@
 <div class="spec sidebar-list" id="spec-sidebar-list" v-if="sidebarData.length">
   <ul :class="{ active: !isLoading }">
     <li class="list-title">Resources</li>
-    <li 
+    <li
       v-for="sidebarItem in sidebarData"
       class="submenu"
       :class="{ active: isTagActive(sidebarItem.tag) }">
@@ -76,6 +76,7 @@ window.registerApp(function () {
         this.activeTags.push(sidebarItem.tag)
         this.activeId = method.id
         let anchorPath = `operations-${sidebarItem.tag}-${method.id}`
+        anchorPath = anchorPath.replace(/ /g,"_")
         window.location.hash = anchorPath
         let anchor = document.querySelector(`#${anchorPath}`)
         this.moveToAnchor(anchor)
@@ -84,7 +85,7 @@ window.registerApp(function () {
       subMenuClicked (sidebarItem) {
         if (this.isTagActive(sidebarItem.tag)) {
           this.activeTags = this.activeTags.filter(activeTag => activeTag !== sidebarItem.tag)
-          return 
+          return
         }
         this.activeTags.push(sidebarItem.tag)
       }
@@ -165,8 +166,8 @@ window.registerApp(function () {
     content: '';
     top: 2px;
     left: -1rem;
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
     border-left: 5px solid black;
