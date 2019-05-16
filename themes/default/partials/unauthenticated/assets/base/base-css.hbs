@@ -311,6 +311,9 @@ section {
 }
 
 @media all and (min-width: 1200px) {
+  .kong-doc {
+    margin-left: 215px;
+  }
   #ui-wrapper {
     max-width: calc(100% - 215px) !important;
     margin-left: 215px;
@@ -318,6 +321,7 @@ section {
 }
 
 @media all and (max-width: 1200px) {
+  .kong-doc,
   #ui-wrapper {
     margin-left: 0;
   }
@@ -347,6 +351,11 @@ section {
 .swagger-ui .model-example-wrapper { overflow: auto; }
 .swagger-ui .code-block { background: hsla(220, 8%, 10%, 1); }
 .swagger-ui .operations-container select { border-color: rgba(255,255,255,0.1); }
+
+/**************************************************************************
+ * swagger-ui operation panel fixes
+ */
+.swagger-ui .code-block { max-height: 600px !important }
 
 .overlay {
   position: fixed;
