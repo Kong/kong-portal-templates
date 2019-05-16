@@ -15,7 +15,8 @@
           <div v-for="method in path.methods">
             <li class="method" :class="{ active: isIdActive(method.id) }">
               <a
-                @click="sidebarAnchorClicked(sidebarItem, method)">
+                @click="sidebarAnchorClicked(sidebarItem, method)"
+                :title="method.summary">
                 ${method.summary}
               </a>
             </li>
