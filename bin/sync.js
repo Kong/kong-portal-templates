@@ -66,24 +66,29 @@ const apiURL = WORKSPACE
   ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${WORKSPACE}`
   : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
 
-let WATCH_DIR = WATCH === 'true'
-let CURL_OUTPUT = false
+INTERVAL = parseInt(INTERVAL, 10) || 5
 
 DIRECTORY = DIRECTORY || 'themes/default/'
-
 if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
   DIRECTORY = DIRECTORY += '/'
 }
 
-INTERVAL = parseInt(INTERVAL, 10) || 5
-DELETE_ALL = DELETE_ALL === 'true'
-PUSH = PUSH === 'true'
-PULL = PULL === 'true'
-
+let WATCH_DIR = WATCH === 'true'
+let CURL_OUTPUT = false
 if (process.argv[2] === '--curl' || process.argv[2] === '-c') {
   CURL_OUTPUT = true
   WATCH_DIR = false
 }
+
+function isEnvVarTrue (variable) {
+  return variable ? variable.toLowerCase() === 'true' : false
+}
+
+DELETE_ALL = isEnvVarTrue(DELETE_ALL)
+PUSH = isEnvVarTrue(PUSH)
+PULL = isEnvVarTrue(PULL)
+WATCH = isEnvVarTrue(WATCH)
+EMOJI = isEnvVarTrue(EMOJI)
 
 const PROTOCOLS = {
   'http:': {
@@ -280,7 +285,7 @@ function isValidSpec (type, name) {
 
 // File handler
 function handle (type, name, path, action) {
-  let pathName = path.replace(DIRECTORY, '').split('/')
+  let pathName = path.replace(DIRECTORY.replace('./', ''), '').split('/')
   let auth
 
   pathName.shift()
@@ -466,7 +471,6 @@ async function init () {
 
   if (PUSH) {
     let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
-
     if (proceed) {
       console.log(`pushing files to: ${apiURL}`)
       await read(DIRECTORY)
