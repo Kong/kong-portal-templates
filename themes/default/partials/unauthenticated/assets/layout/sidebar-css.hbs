@@ -12,90 +12,89 @@
   padding-bottom: 100px;
 }
 #sidebar .sidebar-list li.list-title {
-  font-weight: 700;
-  color: #003459;
-  text-transform: uppercase;
+  font-weight: 600;
+  color: hsl(205, 100%, 17%);
 }
-
-.sidebar-list:not(.spec) {
-  padding: 0 1.5rem;
+.sidebar-list {
+  padding: 0 1rem;
   margin-top: 2rem;
 }
-.sidebar-list:not(.spec) ul {
+.sidebar-list ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
-.sidebar-list:not(.spec) ul li {
-  padding: 0.5rem;
-  font-size: 15px;
-  font-weight: 400;
-  color: rgba(0, 0, 0, 0.7);
-  text-transform: capitalize;
-}
-.sidebar-list:not(.spec) ul li a {
-  color: inherit;
-}
-.sidebar-list:not(.spec) ul li a:hover {
-  color: black;
-}
-.sidebar-list:not(.spec) ul li.list-title {
-  font-weight: 700;
-  color: #003459;
-  text-transform: uppercase;
-}
-.sidebar-list:not(.spec) ul li.submenu {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-.sidebar-list:not(.spec) ul li.submenu.active ul {
-  height: auto;
-  max-height: 9999px;
-}
-.sidebar-list:not(.spec) ul li.submenu.active .submenu-title:after {
-  transform: rotate(90deg);
-}
-.sidebar-list:not(.spec) ul li .submenu-title {
-  position: relative;
-  display: block;
-  font-size: 15px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.85);
+.sidebar-list .method a {
   cursor: pointer;
 }
-.sidebar-list:not(.spec) ul li .submenu-title:after {
+.sidebar-list ul li {
+  padding: 0.3rem 0.2rem;
+  font-size: 14px;
+  font-weight: 400;
+  color: hsl(205, 13%, 40%);
+}
+.sidebar-list ul li a {
+  color: hsl(205, 13%, 40%);
+}
+.sidebar-list ul li a:hover {
+  color: hsl(205, 13%, 20%);
+}
+.sidebar-list ul li.submenu {
+  padding: .3rem .2rem;
+}
+.sidebar-list ul li.submenu.active ul {
+  height: auto;
+  max-height: 9999px;
+  padding-top: .5rem;
+}
+.sidebar-list ul li .submenu-title {
+  position: relative;
+  display: block;
+  font-weight: 500;
+  color: hsl(205, 13%, 30%);
+  cursor: pointer;
+  padding: .3rem;
+  margin: auto -.3rem;
+  border-radius: 3px;
+}
+.sidebar-list ul li .submenu-title:hover,
+.sidebar-list ul li.active .submenu-title {
+  color: hsl(205, 13%, 20%);
+  background: hsl(205, 13%, 95%);
+}
+.sidebar-list ul li .submenu-title:after {
   position: absolute;
   display: block;
   content: "";
-  top: 2px;
-  left: -1rem;
   width: 0;
   height: 0;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-left: 5px solid black;
+  top: 8px;
+  left: auto;
+  right: 10px;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid hsl(205, 10%, 70%);
 }
-.sidebar-list:not(.spec) ul li .submenu-items {
+.sidebar-list ul li.active .submenu-title:after {
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid hsl(205, 10%, 70%);
+  top: 10px;
+}
+.sidebar-list ul li .submenu-items {
   max-height: 0;
   overflow: hidden;
 }
-.sidebar-list:not(.spec) ul li .submenu-items a {
+.sidebar-list ul li .submenu-items a {
   display: block;
-  font-size: 14px;
   line-height: 1.2;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.7);
 }
-.sidebar-list:not(.spec) ul li .submenu-items a:hover {
-  color: black;
-}
-.sidebar-list:not(.spec) ul li .submenu-items li.active {
-  background: rgba(0, 0, 0, 0.05);
-}
-.sidebar-list:not(.spec) ul li .submenu-items li.active a {
+.sidebar-list li.active > a {
   font-weight: 500;
 }
-.sidebar-list:not(.spec) ul li .method:before {
+.sidebar-list ul li .method:before {
   display: none;
   width: 47px;
   margin-right: 0.5rem;
@@ -108,19 +107,19 @@
   border-radius: 2px;
   vertical-align: bottom;
 }
-.sidebar-list:not(.spec) ul li .method-post:before {
+.sidebar-list ul li .method-post:before {
   content: "POST";
   background: #248FB2;
 }
-.sidebar-list:not(.spec) ul li .method-put:before {
+.sidebar-list ul li .method-put:before {
   content: "PUT";
   background: #9B6F8A;
 }
-.sidebar-list:not(.spec) ul li .method-get:before {
+.sidebar-list ul li .method-get:before {
   content: "GET";
   background: #6ABD5A;
 }
-.sidebar-list:not(.spec) ul li .method-delete:before {
+.sidebar-list ul li .method-delete:before {
   content: "DELETE";
   background: #E2797A;
 }
@@ -139,7 +138,7 @@
   }
   #sidebar.open .sidebar-menu {
     height: 100vh;
-    width: auto;
+    width: 300px;
     right: 0;
   }
 
@@ -166,6 +165,9 @@
 
 @media all and (min-width: 1201px) {
   .sidebar-toggle {
+    display: none;
+  }
+  .overlay.on {
     display: none;
   }
 }
