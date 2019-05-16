@@ -75,6 +75,7 @@ window.registerApp(function () {
         this.activeTags.push(sidebarItem.tag);
         this.activeId = method.id;
         var anchorPath = "operations-".concat(sidebarItem.tag, "-").concat(method.id);
+        anchorPath = anchorPath.replace(/ /g,"_")
         window.location.hash = anchorPath;
         var anchor = document.querySelector("#".concat(anchorPath));
         this.moveToAnchor(anchor);
