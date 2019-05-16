@@ -101,18 +101,19 @@
 .sidebar-list li.active > a {
   font-weight: 500;
 }
-.sidebar-list ul li .method:before {
-  display: none;
-  width: 47px;
-  margin-right: 0.5rem;
-  padding-top: 0.15rem;
-  color: #fff;
-  text-align: center;
-  font-weight: normal;
-  font-size: 11px;
-  line-height: 1rem;
-  border-radius: 2px;
-  vertical-align: bottom;
+.sidebar-list ul li .method-post:before,
+.sidebar-list ul li .method-put:before,
+.sidebar-list ul li .method-get:before,
+.sidebar-list ul li .method-delete:before,
+.sidebar-list ul li .method-patch:before,
+.sidebar-list ul li .method-options:before {
+  color: white;
+  font-size: 9px;
+  padding: .08rem .3rem .08rem;
+  position: relative;
+  top: -1px;
+  border-radius: 3px;
+  font-weight: 600;
 }
 .sidebar-list ul li .method-post:before {
   content: "POST";
@@ -129,6 +130,18 @@
 .sidebar-list ul li .method-delete:before {
   content: "DELETE";
   background: #E2797A;
+}
+.sidebar-list ul li .method-patch:before {
+  content: "PATCH";
+  background: #50e3c2;
+}
+.sidebar-list ul li .method-head:before {
+  content: "HEAD";
+  background: #9012fe;
+}
+.sidebar-list ul li .method-options:before {
+  content: "OPTIONS";
+  background: #0d5aa7;
 }
 
 @media all and (max-width: 1200px) {

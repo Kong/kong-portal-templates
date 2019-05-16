@@ -16,6 +16,7 @@
             <li class="method" :class="{ active: isIdActive(method.id) }">
               <a
                 @click="sidebarAnchorClicked(sidebarItem, method)"
+                :class="{ [`method-${method.method}`]: true }"
                 :title="method.summary">
                 ${method.summary}
               </a>

@@ -16,6 +16,7 @@
             <li class="method" :class="{ active: isIdActive(method.id) }">
               <a
                 @click="sidebarAnchorClicked(sidebarItem, method)"
+                :class="linkMethod(method)"
                 :title="method.summary">
                 ${method.summary}
               </a>
@@ -90,6 +91,11 @@ window.registerApp(function () {
         }
 
         this.activeTags.push(sidebarItem.tag);
+      },
+      linkMethod: function linkMethod(method) {
+        var classes = {};
+        classes["method-" + method.method] = true;
+        return classes;
       }
     }
   });
