@@ -285,7 +285,7 @@ function isValidSpec (type, name) {
 
 // File handler
 function handle (type, name, path, action) {
-  let pathName = path.replace(DIRECTORY, '').split('/')
+  let pathName = path.replace(DIRECTORY.replace('./', ''), '').split('/')
   let auth
 
   pathName.shift()
