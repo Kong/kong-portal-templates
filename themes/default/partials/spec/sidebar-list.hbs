@@ -1,0 +1,104 @@
+{{!-- imports --}}
+{{> spec/helpers-js }}
+
+{{!-- template --}}
+<div class="spec sidebar-list" id="spec-sidebar-list" v-if="sidebarData.length">
+  <ul :class="{ active: !isLoading }">
+    <li class="list-title">Resources</li>
+    <li
+      v-for="sidebarItem in sidebarData"
+      class="submenu"
+      :class="{ active: isTagActive(sidebarItem.tag) }">
+      <span class="submenu-title" @click="subMenuClicked(sidebarItem)">${ sidebarItem.tag }</span>
+      <ul class="submenu-items">
+        <div v-for="path in sidebarItem.paths">
+          <div v-for="method in path.methods">
+            <li class="method" :class="{ active: isIdActive(method.id) }">
+              <a
+                @click="sidebarAnchorClicked(sidebarItem, method)"
+                :class="{ [`method-${method.method}`]: true }"
+                :title="method.summary">
+                ${method.summary}
+              </a>
+            </li>
+          </div>
+        </div>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+{{!-- component --}}
+<script>
+
+window.registerApp(function () {
+  new window.Vue({
+    el: '#spec-sidebar-list',
+    delimiters: ['${', '}'],
+
+    data () {
+      return {
+        specName: window._kong.spec.name,
+        spec: window._kong.spec,
+        sidebarData: [],
+        activeTags: [],
+        activeId: null,
+        isLoading: true,
+
+        buildSidebar: () => { console.log('error: buildSidebar helper failed to load') },
+        retrieveParsedSpec: () => { console.log('error: retrieveParsedSpec helper failed to load') }
+      }
+    },
+
+    mounted () {
+      if (window.helpers) {
+        this.buildSidebar = window.helpers.buildSidebar || this.buildSidebar
+        this.retrieveParsedSpec = window.helpers.retrieveParsedSpec || this.retrieveParsedSpec
+        let spec = this.retrieveParsedSpec(this.specName, this.spec)
+        let builtSpec = this.buildSidebar(spec)
+        this.sidebarData = builtSpec
+        this.isLoading = false
+      }
+    },
+
+    methods: {
+      moveToAnchor (destination) {
+        window.scrollTo(0, destination.offsetTop - 120)
+      },
+
+      isIdActive (id) {
+        return this.activeId === id
+      },
+
+      isTagActive (tag) {
+        return this.activeTags.includes(tag)
+      },
+
+      sidebarAnchorClicked (sidebarItem, method) {
+        this.activeTags.push(sidebarItem.tag)
+        this.activeId = method.id
+        let anchorPath = `operations-${sidebarItem.tag}-${method.id}`
+        anchorPath = anchorPath.replace(/ /g,"_")
+        window.location.hash = anchorPath
+        let anchor = document.querySelector(`#${anchorPath}`)
+        this.moveToAnchor(anchor)
+      },
+
+      subMenuClicked (sidebarItem) {
+        if (this.isTagActive(sidebarItem.tag)) {
+          this.activeTags = this.activeTags.filter(activeTag => activeTag !== sidebarItem.tag)
+          return
+        }
+        this.activeTags.push(sidebarItem.tag)
+      }
+    }
+  })
+})
+</script>
+
+{{!-- style --}}
+<style>
+  #spec-sidebar-list > ul:not(.active) {
+    display: none;
+  }
+</style>
