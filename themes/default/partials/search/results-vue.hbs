@@ -27,11 +27,11 @@
       :class="{ active: activePageIdx === idx }"
       v-for="item, idx in Object.keys(paginatedResults)">
       ${ idx + 1 }
-    </button> 
+    </button>
     <button
       @click="rotatePagination(1)"
       class="next-item"
-      :class="{ active: activePageIdx < activeResults.length }">
+      :class="{ active: !!paginatedResults[activePageIdx + 1] }">
       ${ "Next >" }
     </button>
   </div>
