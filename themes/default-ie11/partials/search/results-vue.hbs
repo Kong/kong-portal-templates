@@ -25,13 +25,13 @@
       @click="goToPagination(idx)"
       class="pagination-item"
       :class="{ active: activePageIdx === idx }"
-      v-for="item, idx in Object.keys(paginatedResults)">
+      v-for="item, idx in paginatedResults">
       ${ idx + 1 }
     </button>
     <button
       @click="rotatePagination(1)"
       class="next-item"
-      :class="{ active: activePageIdx < activeResults.length }">
+      :class="{ active: !!paginatedResults[activePageIdx + 1] }">
       ${ "Next >" }
     </button>
   </div>
@@ -53,7 +53,7 @@ window.registerApp(function () {
         searchModel: '',
         searchResults: [],
         isLoading: true,
-        paginatedResults: {},
+        paginatedResults: [],
         activeResults: [],
         activePageIdx: 0,
         resultsPerPage: 6,
@@ -124,7 +124,7 @@ window.registerApp(function () {
         this.activePageIdx = idx;
       },
       rotatePagination: function rotatePagination(rotation) {
-        var maxIdx = Object.keys(this.paginatedResults).length - 1;
+        var maxIdx = this.paginatedResults.length - 1;
         var minIdx = 0;
 
         if (rotation === 1 && this.activePageIdx < maxIdx) {
@@ -134,29 +134,19 @@ window.registerApp(function () {
         }
       },
       getPaginatedResults: function getPaginatedResults() {
-        var count = 0;
-        var pageIdx = 0;
-        var paginatedResults = {};
+        var _this = this;
 
-        if (!this.searchResults.length) {
-          return {
-            0: []
-          };
-        }
-
-        for (pageIdx = 0; this.searchResults.length > count; pageIdx++) {
-          paginatedResults[pageIdx] = [];
-
-          for (var k = 0; k < this.resultsPerPage; k++) {
-            if (this.searchResults[count]) {
-              paginatedResults[pageIdx].push(this.searchResults[count]);
-            }
-
-            count += 1;
+        return this.searchResults.reduce(function (paginatedRes, currentSearchRes) {
+          // Start a new page if current page has reached max results per page.
+          if (paginatedRes[paginatedRes.length - 1].length === _this.resultsPerPage) {
+            paginatedRes.push([]);
           }
-        }
 
-        return paginatedResults;
+          // Add current search result to current page.
+          paginatedRes[paginatedRes.length - 1].push(currentSearchRes);
+
+          return paginatedRes;
+        },[[]]);
       },
       getActiveResults: function getActiveResults() {
         return this.paginatedResults[this.activePageIdx];
