@@ -5,7 +5,10 @@
 <div id="spec-index" :class="{ active: !isLoading }">
   <div class="page-header">
     <h1>API Catalog</h1>
-    <input name="filter" v-model="filterModel" placeholder="Search"/>
+    <span class="search">
+      {{> unauthenticated/assets/icons/search-widget }}
+      <input name="filter" v-model="filterModel" placeholder="Search"/>
+    </span>
   </div>
 
   <div v-if="filteredSpecs.length > 0" class="list-items">
@@ -182,8 +185,13 @@ window.registerApp(function () {
   padding-bottom: 48px;
 }
 
+#spec-index .search svg {
+  position: absolute;
+  margin: 12px 7px;
+  fill: rgba(0,0,0,0.45);
+}
+
 #spec-index .page-header input {
-  background: url(images/search.svg) no-repeat scroll 8px 12px;
   padding-left: 30px;
   font-size: 15px;
   color: rgba(0,0,0,0.45);
