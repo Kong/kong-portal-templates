@@ -303,12 +303,46 @@ section {
   flex-direction: column;
   text-align: center;
 }
+
 @media all and (max-width: 720px) {
   #ui-wrapper {
     margin-top: 40px;
   }
 }
 
+@media all and (min-width: 1200px) {
+  .kong-doc {
+    margin-left: 215px;
+  }
+  #ui-wrapper {
+    max-width: calc(100% - 215px) !important;
+    margin-left: 215px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .kong-doc,
+  #ui-wrapper {
+    margin-left: 0;
+  }
+}
+
+.swagger-ui .description { 
+  word-wrap: break-word;
+}
+
+.swagger-ui .response-item {
+  word-break: break-word;
+}
+
+.swagger-ui .operations-container .opblock .response-code {
+  height: unset;
+  word-break: keep-all;
+}
+
+.swagger-ui .operations-container .opblock .response-code .markdown {
+  word-break: break-all;
+}
 
 /**************************************************************************
  * swagger-ui operation panel theming
@@ -318,6 +352,10 @@ section {
 .swagger-ui .code-block { background: hsla(220, 8%, 10%, 1); }
 .swagger-ui .operations-container select { border-color: rgba(255,255,255,0.1); }
 
+/**************************************************************************
+ * swagger-ui operation panel fixes
+ */
+.swagger-ui .code-block { max-height: 600px !important }
 
 .overlay {
   position: fixed;

@@ -5,7 +5,7 @@
 <div class="spec sidebar-list" id="spec-sidebar-list" v-if="sidebarData.length">
   <ul :class="{ active: !isLoading }">
     <li class="list-title">Resources</li>
-    <li 
+    <li
       v-for="sidebarItem in sidebarData"
       class="submenu"
       :class="{ active: isTagActive(sidebarItem.tag) }">
@@ -15,7 +15,9 @@
           <div v-for="method in path.methods">
             <li class="method" :class="{ active: isIdActive(method.id) }">
               <a
-                @click="sidebarAnchorClicked(sidebarItem, method)">
+                @click="sidebarAnchorClicked(sidebarItem, method)"
+                :class="{ [`method-${method.method}`]: true }"
+                :title="method.summary">
                 ${method.summary}
               </a>
             </li>
@@ -76,6 +78,7 @@ window.registerApp(function () {
         this.activeTags.push(sidebarItem.tag)
         this.activeId = method.id
         let anchorPath = `operations-${sidebarItem.tag}-${method.id}`
+        anchorPath = anchorPath.replace(/ /g,"_")
         window.location.hash = anchorPath
         let anchor = document.querySelector(`#${anchorPath}`)
         this.moveToAnchor(anchor)
@@ -84,7 +87,7 @@ window.registerApp(function () {
       subMenuClicked (sidebarItem) {
         if (this.isTagActive(sidebarItem.tag)) {
           this.activeTags = this.activeTags.filter(activeTag => activeTag !== sidebarItem.tag)
-          return 
+          return
         }
         this.activeTags.push(sidebarItem.tag)
       }
@@ -97,137 +100,5 @@ window.registerApp(function () {
 <style>
   #spec-sidebar-list > ul:not(.active) {
     display: none;
-  }
-
-  #spec-sidebar-list .method a {
-    cursor: pointer;
-  }
-
-  #spec-sidebar-list {
-    padding: 0 1.5rem;
-    margin-top: 2rem;
-  }
-
-  #spec-sidebar-list ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  #spec-sidebar-list ul li {
-    padding: .5rem;
-    font-size: 15px;
-    font-weight: 400;
-    color: rgba(0,0,0,.7);
-    text-transform: capitalize;
-  }
-
-  #spec-sidebar-list ul li a {
-    color: inherit;
-  }
-
-  #spec-sidebar-list ul li a:hover {
-    color: black;
-  }
-
-  #spec-sidebar-list ul.list-title {
-    font-weight: 700;
-    color: rgba(0, 52, 89, 1);
-    text-transform: uppercase;
-  }
-
-  #spec-sidebar-list ul.submenu {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  #spec-sidebar-list ul li.submenu.active ul {
-    height: auto;
-    max-height: 9999px;
-  }
-
-  #spec-sidebar-list ul li .submenu.active .submenu-title:after {
-    transform: rotate(90deg);
-  }
-
-  #spec-sidebar-list ul li .submenu-title {
-    position: relative;
-    display: block;
-    font-size: 15px;
-    font-weight: 500;
-    color: rgba(0,0,0,.85);
-    cursor: pointer;
-  }
-
-  #spec-sidebar-list ul li .submenu-title:after {
-    position: absolute;
-    display: block;
-    content: '';
-    top: 2px;
-    left: -1rem;
-    width: 0; 
-    height: 0; 
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 5px solid black;
-  }
-
-  #spec-sidebar-list ul li .submenu-items {
-    max-height: 0;
-    overflow: hidden;
-  }
-
-  #spec-sidebar-list ul li .submenu-items a {
-    display: block;
-    font-size: 14px;
-    line-height: 1.2;
-    font-weight: normal;
-    color: rgba(0,0,0,.7);
-  }
-
-  #spec-sidebar-list ul li .submenu-items a:hover {
-    color: rgba(0,0,0,1);
-  }
-
-  #spec-sidebar-list ul li .submenu-items li.active {
-    background: rgba(0,0,0,.05);
-  }
-
-  #spec-sidebar-list ul li .submenu-items li.active a {
-    font-weight: 500;
-  }
-
-  #spec-sidebar-list ul li .method:before {
-    display: none;
-    width: 47px;
-    margin-right: .5rem;
-    padding-top: .15rem;
-    color: #fff;
-    text-align: center;
-    font-weight: normal;
-    font-size: 11px;
-    line-height: 1rem;
-    border-radius: 2px;
-    vertical-align: bottom;
-  }
-
-  #spec-sidebar-list ul li .method-post:before {
-    content: "POST";
-    background: #248FB2;
-  }
-
-  #spec-sidebar-list ul li .method-put:before {
-    content: "PUT";
-    background: #9B6F8A;
-  }
-
-  #spec-sidebar-list ul li .method-get:before {
-    content: "GET";
-    background: #6ABD5A;
-  }
-
-  #spec-sidebar-list ul li .method-delete:before {
-    content: "DELETE";
-    background: #E2797A;
   }
 </style>
