@@ -269,7 +269,9 @@ section {
   flex-shrink: 0;
   flex-basis: auto;
 }
-
+[v-cloak] {
+  display: none;
+}
 .page-wrapper {
   display: flex;
   flex-direction: column;
@@ -343,7 +345,7 @@ section {
 }
 
 /**************************************************************************
- * swagger-ui operation panel theme
+ * swagger-ui operation panel theming
  */
 .swagger-ui .side-panel { background: hsl(220, 8%, 19%); }
 .swagger-ui .model-example-wrapper { overflow: auto; }
@@ -354,7 +356,6 @@ section {
  * swagger-ui operation panel fixes
  */
 .swagger-ui .code-block { max-height: 600px !important }
-
 
 .overlay {
   position: fixed;
