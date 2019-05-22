@@ -1,0 +1,17 @@
+<!-- Responsive sidebar toggle -->
+<div class="sidebar-toggle">
+  <p>Open Sidebar</p>
+</div>
+
+<!-- Sidebar -->
+<div id="sidebar">
+  <div class="sidebar-menu">
+    <div class="sidebar-list">
+      <ul>
+        <li class="list-title">Getting Started</li>
+        <li><a href="{{config.PORTAL_GUI_URL}}/guides">Introduction</a></li>
+      </ul>
+    </div>
+    {{> unauthenticated/spec/sidebar-list title="Resources" }}
+  </div>
+</div>
