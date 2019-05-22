@@ -16,7 +16,7 @@
             <li class="method" :class="{ active: isIdActive(method.id) }">
               <a
                 @click="sidebarAnchorClicked(sidebarItem, method)"
-                :class="{ [`method-${method.method}`]: true }"
+                :class="linkMethod(method)"
                 :title="method.summary">
                 ${method.summary}
               </a>
@@ -90,6 +90,12 @@ window.registerApp(function () {
           return
         }
         this.activeTags.push(sidebarItem.tag)
+      },
+
+      linkMethod (method) {
+        let classes = {}
+        classes["method-" + method.method] = true
+        return classes
       }
     }
   })
