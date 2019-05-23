@@ -241,6 +241,9 @@ window.registerApp(function () {
   flex-grow: 0;
   font-size: 18px;
   color: #1270B2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #spec-index .list-item:hover .title {
@@ -252,8 +255,9 @@ window.registerApp(function () {
   font-size: 16px;
   color: rgba(0,0,0,0.70);
   line-height: 24px;
-  max-height: 72px;
+  height: 72px;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #spec-index .list-item .meta {
@@ -267,7 +271,10 @@ window.registerApp(function () {
 }
 
 .list-item .meta p {
-  margin: 0
+  margin: 0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .page-header input {
