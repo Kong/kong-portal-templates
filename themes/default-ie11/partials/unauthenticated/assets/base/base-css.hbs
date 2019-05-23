@@ -327,20 +327,19 @@ section {
   }
 }
 
-.swagger-ui .description { 
-  word-wrap: break-word;
+.swagger-ui .information-container *,
+.swagger-ui .operations-container .col:not(.end) * {
+  white-space: normal !important;
+  word-break: break-all !important;
 }
 
-.swagger-ui .response-item {
-  word-break: break-word;
-}
-
-.swagger-ui .operations-container .opblock .response-code {
+.swagger-ui .operations-container .opblock .opblock-summary {
   height: unset;
-  word-break: keep-all;
 }
 
+.swagger-ui .operations-container .col.end .opblock .response-code,
 .swagger-ui .operations-container .opblock .response-code .markdown {
+  height: unset;
   word-break: break-all;
 }
 
