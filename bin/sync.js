@@ -350,8 +350,11 @@ function deleteFile (path, nameOrId, type) {
   return httpRequest(reqUrl, 'DELETE')
 }
 
-function httpRequest (reqUrl, method = 'GET', data = '') {
+function httpRequest (reqUrl, method = 'GET', data = '', tries = 0) {
+  tries++
+
   const options = url.parse(reqUrl)
+
   options.method = method
   options.headers = {
     'Content-Type': 'application/json',
@@ -363,13 +366,25 @@ function httpRequest (reqUrl, method = 'GET', data = '') {
   }
 
   options.agent = PROTOCOLS[options.protocol].agent
-  const adapter = PROTOCOLS[options.protocol].adapter
 
+  const adapter = PROTOCOLS[options.protocol].adapter
   return new Promise((resolve, reject) => {
     const req = adapter.request(options, (res) => {
       let body = ''
       res.on('data', (chunk) => (body += chunk.toString('utf8')))
-      res.on('error', reject)
+      res.on('error', (err) => {
+        if (res.statusCode == 500 && tries > 1) {
+          return reject(err)
+        }
+
+        // Internal server error generally means database connection exhaustion
+        // lets retry up to two times then bail out.
+        if (res.statusCode == 500) {
+          return httpRequest(reqUrl, method, data, tries)
+        }
+
+        return reject(err)
+      })
       res.on('end', () => {
         if (res.statusCode >= 200 && res.statusCode <= 299) {
           resolve({ statusCode: res.statusCode, headers: res.headers, body })
