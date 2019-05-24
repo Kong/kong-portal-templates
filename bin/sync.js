@@ -373,24 +373,26 @@ function httpRequest (reqUrl, method = 'GET', data = '', tries = 0) {
       let body = ''
       res.on('data', (chunk) => (body += chunk.toString('utf8')))
       res.on('error', (err) => {
-        if (res.statusCode == 500 && tries > 1) {
-          return reject(err)
-        }
-
         // Internal server error generally means database connection exhaustion
         // lets retry up to two times then bail out.
-        if (res.statusCode == 500) {
+        if (res.statusCode === 500 && tries < 2) {
           return httpRequest(reqUrl, method, data, tries)
         }
 
         return reject(err)
       })
       res.on('end', () => {
-        if (res.statusCode >= 200 && res.statusCode <= 299) {
-          resolve({ statusCode: res.statusCode, headers: res.headers, body })
-        } else {
-          reject(`Request failed. status: ${res.statusCode}, body: ${body}`)
+        // Internal server error generally means database connection exhaustion
+        // lets retry up to two times then bail out.
+        if (res.statusCode === 500 && tries < 2) {
+          return httpRequest(reqUrl, method, data, tries)
         }
+
+        if (res.statusCode >= 200 && res.statusCode <= 299) {
+          return resolve({ statusCode: res.statusCode, headers: res.headers, body })
+        }
+
+        return reject(`Request failed. status: ${res.statusCode}, body: ${body}`)
       })
     })
 
