@@ -492,9 +492,9 @@ function anErrorHasOccurredTryingTo (message, error, url = apiURL) {
     error = [
       `Portal is disabled on this workspace.`,
       ``,
-      `Run the following command to enable the portal.`,
+      `Run the following command to enable the portal:`,
       ``,
-      `\tKA_API_URL=${KA_API_URL} KA_RBAC_TOKEN=${KA_RBAC_TOKEN} WORKSPACE=${WORKSPACE} ENABLE=true ./bin/sync.js`
+      `KA_API_URL=${KA_API_URL} KA_RBAC_TOKEN=${KA_RBAC_TOKEN} WORKSPACE=${WORKSPACE} ENABLE=true ./bin/sync.js`
     ].join('\n')
   }
   
