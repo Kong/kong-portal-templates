@@ -61,16 +61,13 @@ let {
   DIRECTORY, TYPE, INTERVAL, EMOJI,
   WATCH, DELETE_ALL, PULL, PUSH,
   KA_RBAC_TOKEN, WORKSPACE, NO_PROMPT,
-  ENABLE, DEBUG
+  ENABLE, DEBUG, KA_API_URL
 } = process.env
 
-const apiURL = WORKSPACE
-  ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${WORKSPACE}`
-  : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
-
-const workspaceApiURL = WORKSPACE
-? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/workspaces/${WORKSPACE}`
-: (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/workspaces/default'
+WORKSPACE = WORKSPACE || 'default'
+KA_API_URL = KA_API_URL || 'http://127.0.0.1:8001'
+const apiURL = KA_API_URL + `/${WORKSPACE}`
+const workspaceApiURL = KA_API_URL + `/workspaces/${WORKSPACE}`
 
 INTERVAL = parseInt(INTERVAL, 10) || 5
 
@@ -79,7 +76,8 @@ if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
   DIRECTORY = DIRECTORY += '/'
 }
 
-let WATCH_DIR = WATCH === 'true'
+
+let WATCH_DIR = isEnvVarTrue(WATCH)
 let CURL_OUTPUT = false
 if (process.argv[2] === '--curl' || process.argv[2] === '-c') {
   CURL_OUTPUT = true
@@ -93,7 +91,7 @@ function isEnvVarTrue (variable) {
 DELETE_ALL = isEnvVarTrue(DELETE_ALL)
 PUSH = isEnvVarTrue(PUSH)
 PULL = isEnvVarTrue(PULL)
-WATCH = isEnvVarTrue(WATCH)
+WATCH = WATCH_DIR
 EMOJI = isEnvVarTrue(EMOJI)
 ENABLE = isEnvVarTrue(ENABLE)
 DEBUG = isEnvVarTrue(DEBUG)
@@ -489,15 +487,27 @@ function areYouSure (message) {
   return NO_PROMPT || promptForPermission(`⚠️  ${message}\n(y/n) `)
 }
 
-function anErrorHasOccurredTryingTo (message, e, url = apiURL) {
+function anErrorHasOccurredTryingTo (message, error, url = apiURL) {
+  if (error === `Request failed. status: 404, body: {"message":"Not Found"}`) {
+    error = [
+      `Portal is disabled on this workspace.`,
+      ``,
+      `Run the following command to enable the portal.`,
+      ``,
+      `\tKA_API_URL=${KA_API_URL} KA_RBAC_TOKEN=${KA_RBAC_TOKEN} WORKSPACE=${WORKSPACE} ENABLE=true ./bin/sync.js`
+    ].join('\n')
+  }
+  
+  console.log(``)
   console.log(`🔥 An error occurred while trying to ${message} on ${url}:`)
   console.log(``)
-  console.log(`\t`, error.message)
+  console.log(`\t` + (error.message || error))
 }
 
 async function init () {
   if (ENABLE) {
     try {
+      console.log(`Enabling portal on "${WORKSPACE || 'default'}"`)
       await enablePortal()
       console.log('✅ Portal enabled.')
     } catch (e) {
@@ -540,17 +550,25 @@ async function init () {
   if (PUSH) {
     let proceed = await areYouSure(`Push all files to "${apiURL}"?`)
     if (proceed) {
-      console.log(`Pushing files to: ${apiURL}`)
-      await read(DIRECTORY)
-      console.log(`Done.`)
+      try {
+        console.log(`Pushing files to: ${apiURL}`)
+        await read(DIRECTORY)
+        console.log(`Done.`)
+      } catch (e) {
+        anErrorHasOccurredTryingTo('push files', e)
+      }
     }
     process.exit()
   }
 
   if (PULL) {
-    console.log(`Pulling files from: ${apiURL}`)
-    await write()
-    console.log(`Done.`)
+    try {
+      console.log(`Pulling files from: ${apiURL}`)
+      await write()
+      console.log(`Done.`)
+    } catch (e) {
+      anErrorHasOccurredTryingTo('pulling files', e)
+    }
     process.exit()
   }
 
