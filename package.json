@@ -10,5 +10,8 @@
     "push": "PUSH=true node bin/sync",
     "pull": "PULL=true node bin/sync",
     "wipe": "DELETE_ALL=true node bin/sync"
+  },
+  "dependencies": {
+    "fs-extra": "^8.0.1"
   }
 }
