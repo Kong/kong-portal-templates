@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const {lstatSync, readdirSync, readFileSync, writeFileSync} = require('fs')
-const {join, parse} = require('path').posix
+const {join, parse, dirname} = require('path').posix
 const readline = require('readline')
 const https = require('https')
 const http = require('http')
 const url = require('url')
+const {lstatSync, readdirSync, readFileSync, ensureDir, exists, readFile, writeFile} = require('fs-extra')
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -33,6 +33,7 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log('     PUSH=true', '\t\t\t', 'push files to Files API (compare to `git push --force`)')
   console.log('     DELETE_ALL=true', '\t\t', 'remove all files from Files API. USE WITH CAUTION!!!')
   console.log('     NO_PROMPT=true', '\t\t', 'skip console prompt when making destructive actions. USE WITH CAUTION!!!')
+  console.log('     ENABLE=true', '\t\t', 'enable portal on this workspace')
   console.log()
   console.log('     TYPE=<type>', '\t\t', 'type of files in scanned directories, otherwise use directory structure')
   console.log('     INTERVAL=<seconds>', '\t', 'duration of time in-between scans')
@@ -59,12 +60,17 @@ const LFTIMES = {}
 let {
   DIRECTORY, TYPE, INTERVAL, EMOJI,
   WATCH, DELETE_ALL, PULL, PUSH,
-  KA_RBAC_TOKEN, WORKSPACE, NO_PROMPT
+  KA_RBAC_TOKEN, WORKSPACE, NO_PROMPT,
+  ENABLE, DEBUG
 } = process.env
 
 const apiURL = WORKSPACE
   ? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/${WORKSPACE}`
   : (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/default'
+
+const workspaceApiURL = WORKSPACE
+? (process.env.KA_API_URL || 'http://127.0.0.1:8001') + `/workspaces/${WORKSPACE}`
+: (process.env.KA_API_URL || 'http://127.0.0.1:8001') + '/workspaces/default'
 
 INTERVAL = parseInt(INTERVAL, 10) || 5
 
@@ -89,6 +95,8 @@ PUSH = isEnvVarTrue(PUSH)
 PULL = isEnvVarTrue(PULL)
 WATCH = isEnvVarTrue(WATCH)
 EMOJI = isEnvVarTrue(EMOJI)
+ENABLE = isEnvVarTrue(ENABLE)
+DEBUG = isEnvVarTrue(DEBUG)
 
 const PROTOCOLS = {
   'http:': {
@@ -181,6 +189,8 @@ async function read (directory, type) {
 
     // Delete remote file if it exists, recreate it from local file
     return Promise.resolve()
+      .then(() => handle(type, filename, path, deleteFile))
+      .then(res => handleResponse(res, 'delete', isDeleted, type, path))
       .then(() => handle(type, filename, path, createFile))
       .then(res => handleResponse(res, 'create', isCreated, type, path))
       .catch(err => console.log(err))
@@ -189,41 +199,46 @@ async function read (directory, type) {
 
 async function write () {
   let files = await getFiles()
-  return Promise.all(
-    files.data.map(file => {
-      let fileName = file.name
-      let contents = file.contents + '\n'
-      let fileType = file.type + 's/'
-      let extension = file.type === 'spec'
-        ? getSpecExtension(contents)
-        : '.hbs'
 
-      let filePath = (DIRECTORY + fileType + fileName + extension)
+  for (var file of files.data) {
+    let fileName = file.name
+    let contents = file.contents + '\n'
+    let fileType = file.type + 's/'
+    let extension = file.type === 'spec'
+      ? (getSpecExtension(contents) || '.json')
+      : '.hbs'
 
-      if (extension === '' || !extension) {
-        console.log(`Error: Not able to determine extension of ${fileName}`)
-      }
+    let filePath = (DIRECTORY + fileType + fileName + extension)
+    let fileDirectory = dirname(filePath)
+    let shouldWriteFile = true
 
-      try {
-        let localContents = readFileSync(filePath, 'utf8')
-
-        if (localContents !== contents) {
-          console.log(`File Updated: ${filePath}`)
+    let fileExists = await exists(filePath)
+    if (fileExists) {
+      let localContents = await readFile(filePath, 'utf8')
+      if (localContents !== contents) {
+        console.log(`File Updated: ${filePath}`)
+      } else {
+        shouldWriteFile = false
+        if (DEBUG) {
+          console.log(`Contents unchanged. Skipping: ${filePath}`)
         }
-      } catch (e) {
-        console.log(`File Created: ${filePath}`)
       }
+    } else {
+      console.log(`File Created: ${filePath}`)
+    }
 
-      try {
-        writeFileSync(filePath, contents, {flag: 'w'})
-        return Promise.resolve()
-      } catch (e) {
-        console.log(e)
-        console.log(`Pull Failed: unable to write: ${filePath}`)
-        return Promise.resolve()
+    try {
+      if (shouldWriteFile) {
+        await ensureDir(fileDirectory)
+        await writeFile(filePath, contents, { flag: 'w' })
       }
-    })
-  )
+    } catch (e) {
+      console.log(`Pull Failed: unable to write: ${filePath}`)
+      console.log(``)
+      console.log(`\t`, e.message)
+      return false
+    }
+  }
 }
 
 // Helpers
@@ -298,6 +313,16 @@ function handle (type, name, path, action) {
   }
 
   return action(path, join(pathName, parse(name).name), type, auth)
+}
+
+// General API
+function enablePortal () {
+  const reqUrl = workspaceApiURL
+  return httpRequest(reqUrl, 'PATCH', JSON.stringify({
+    config: {
+      portal: true
+    }
+  }))
 }
 
 // File API
@@ -446,33 +471,59 @@ function getSpecExtension (content) {
 function promptForPermission(prompt) {
   return new Promise((resolve, reject) => {
     rl.question(prompt, (answer) => {
+      answer = answer.toLowerCase()
+
       if (answer === 'y' || answer ==='yes') {
+        console.log('')
         return resolve(true)
       }
-      console.log('action cancelled')
+
+      console.log('')
+      console.log('Action aborted.')
       return resolve(false)
     })
   })
 }
 
+function areYouSure (message) {
+  return NO_PROMPT || promptForPermission(`⚠️  ${message}\n(y/n) `)
+}
+
+function anErrorHasOccurredTryingTo (message, e, url = apiURL) {
+  console.log(`🔥 An error occurred while trying to ${message} on ${url}:`)
+  console.log(``)
+  console.log(`\t`, error.message)
+}
+
 async function init () {
+  if (ENABLE) {
+    try {
+      await enablePortal()
+      console.log('✅ Portal enabled.')
+    } catch (e) {
+      anErrorHasOccurredTryingTo('enable the portal', e, workspaceApiURL)
+    }
+    process.exit()
+  }
+
   // Delete all files at start if env flag DELETE_ALL is 'true' (converted to boolean locally)
   if (DELETE_ALL) {
-    let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to delete all files from ${apiURL}?\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+    let proceed = await areYouSure(`Are you sure you want to delete all files from "${apiURL}"?`)
     if (proceed) {
       try {
-        console.log(`deleting all files from: ${apiURL}`)
+        console.log(`Deleting all files from: ${apiURL}`)
         const {data: files} = await getFiles(TYPE)
         await deleteAllFiles(files)
-      } catch (err) {
-        console.log(`Error deleting files: ${apiURL}`)
+        console.log(`Done.`)
+      } catch (e) {
+        anErrorHasOccurredTryingTo('delete all files', e)
       }
     }
     process.exit()
   }
 
   if (WATCH) {
-    let proceed = NO_PROMPT ||  await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+    let proceed = await areYouSure(`Push changes to "${apiURL}" when a change is detected in "${DIRECTORY}"?`)
     if (proceed) {
       if (TYPE) {
         await read(DIRECTORY, TYPE)
@@ -487,21 +538,23 @@ async function init () {
   }
 
   if (PUSH) {
-    let proceed = NO_PROMPT || await promptForPermission(`\n!!!WARNING!!!\n\nYou are about to push all files located in ${DIRECTORY} to ${apiURL}?\nThis will replace remote files that share the same name and cannot be undone!\n\nProceed? (y/n).\n`)
+    let proceed = await areYouSure(`Push all files to "${apiURL}"?`)
     if (proceed) {
-      console.log(`pushing files to: ${apiURL}`)
+      console.log(`Pushing files to: ${apiURL}`)
       await read(DIRECTORY)
+      console.log(`Done.`)
     }
     process.exit()
   }
 
   if (PULL) {
-    console.log(`pulling files from: ${apiURL}`)
+    console.log(`Pulling files from: ${apiURL}`)
     await write()
+    console.log(`Done.`)
     process.exit()
   }
 
-  let proceed = await promptForPermission(`\n!!!WARNING!!!\n\nThis will watch your templates located in ${DIRECTORY} and push changes to ${apiURL} when a change is detected.\nThis is a destructive action and cannot be reversed.\n\nProceed? (y/n).\n`)
+  let proceed = await areYouSure(`Push changes to "${apiURL}" when a change is detected in "${DIRECTORY}"?`)
   if (proceed) {
     if (TYPE) {
       await read(DIRECTORY, TYPE)
