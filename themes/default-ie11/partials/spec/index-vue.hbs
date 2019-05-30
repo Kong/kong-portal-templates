@@ -5,7 +5,10 @@
 <div id="spec-index" :class="{ active: !isLoading }">
   <div class="page-header">
     <h1>API Catalog</h1>
-    <input name="filter" v-model="filterModel" placeholder="Search"/>
+    <span class="search">
+    {{> unauthenticated/assets/icons/search-widget }}
+    <input name="filter" v-model="filterModel" placeholder="Search">
+    </span>
   </div>
 
   <div v-if="filteredSpecs.length > 0" class="list-items">
@@ -20,263 +23,275 @@
       </div>
     </div>
   </div>
-  <div v-else class="no-results">
+  <div v-else="" class="no-results">
     <h1>No Results</h1>
   </div>
 </div>
 
 {{!-- component --}}
 <script>
-"use strict";
+  "use strict";
 
-window.registerApp(function () {
-  new window.Vue({
-    el: '#spec-index',
-    delimiters: ['${', '}'],
-    data: function data() {
-      return {
-        specFiles: [],
-        filteredSpecs: [],
-        filterModel: '',
-        isLoading: true,
-        buildUrl: function buildUrl() {
-          console.log('error: buildUrl helper failed to load');
-        },
-        goToPage: function goToPage() {
-          console.log('error: goToPage helper failed to load');
+  window.registerApp(function() {
+    new window.Vue({
+      el: '#spec-index',
+      delimiters: ['${', '}'],
+      data: function data() {
+        return {
+          specFiles: [],
+          filteredSpecs: [],
+          filterModel: '',
+          isLoading: true,
+          buildUrl: function buildUrl() {
+            console.log('error: buildUrl helper failed to load');
+          },
+          goToPage: function goToPage() {
+            console.log('error: goToPage helper failed to load');
+          }
+        };
+      },
+      mounted: function mounted() {
+        var _this = this;
+
+        if (window.helpers) {
+          this.buildUrl = window.helpers.buildUrl || this.buildUrl;
+          this.goToPage = window.helpers.goToPage || this.goToPage;
         }
-      };
-    },
-    mounted: function mounted() {
-      var _this = this;
 
-      if (window.helpers) {
-        this.buildUrl = window.helpers.buildUrl || this.buildUrl;
-        this.goToPage = window.helpers.goToPage || this.goToPage;
-      }
-
-      this.getFiles().then(function (resp) {
-        _this.specFiles = _this.fetchSpecs(resp.data.data);
-        _this.filteredSpecs = _this.filterSpecs();
-        _this.isLoading = false;
-      });
-    },
-    methods: {
-      getFiles: function getFiles() {
-        return window._kong.api.get('/files?type=spec', {
-          withCredentials: true
+        this.getFiles().then(function(resp) {
+          _this.specFiles = _this.fetchSpecs(resp.data.data);
+          _this.filteredSpecs = _this.filterSpecs();
+          _this.isLoading = false;
         });
       },
-      goToSpec: function goToSpec(path) {
-        var url = this.buildUrl("documentation/".concat(path));
-        this.goToPage(url);
-      },
-      filterSpecs: function filterSpecs() {
-        var _this2 = this;
-
-        if (this.filterModel !== '') {
-          return this.specFiles.filter(function (spec) {
-            var specContent = JSON.stringify(spec).toLowerCase();
-
-            var filterParam = _this2.filterModel.toLowerCase();
-
-            return specContent.includes(filterParam);
+      methods: {
+        getFiles: function getFiles() {
+          return window._kong.api.get('/files?type=spec', {
+            withCredentials: true
           });
-        }
+        },
+        goToSpec: function goToSpec(path) {
+          var url = this.buildUrl("documentation/".concat(path));
+          this.goToPage(url);
+        },
+        filterSpecs: function filterSpecs() {
+          var _this2 = this;
 
-        return this.specFiles;
-      },
-      fetchSpecs: function fetchSpecs(files) {
-        var _this3 = this;
+          if (this.filterModel !== '') {
+            return this.specFiles.filter(function(spec) {
+              var specContent = JSON.stringify(spec).toLowerCase();
 
-        var specFiles = files.filter(function (file) {
-          return file.type === 'spec';
-        });
-        return specFiles.map(function (spec) {
-          var specContents = _this3.parseSpec(spec.contents);
+              var filterParam = _this2.filterModel.toLowerCase();
 
-          var specInfo = specContents.info || {};
-          var filename = spec.name;
-
-          if (filename.includes('unauthenticated/')) {
-            filename = spec.name.split('unauthenticated/')[1];
+              return specContent.includes(filterParam);
+            });
           }
 
-          return {
-            title: specInfo.title || spec.name,
-            description: specInfo.description || '',
-            version: specInfo.version || 'unknown',
-            tags: specContents.tags || [],
-            filename: filename || ''
-          };
-        });
+          return this.specFiles;
+        },
+        fetchSpecs: function fetchSpecs(files) {
+          var _this3 = this;
+
+          var specFiles = files.filter(function(file) {
+            return file.type === 'spec';
+          });
+          return specFiles.map(function(spec) {
+            var specContents = _this3.parseSpec(spec.contents);
+
+            var specInfo = specContents.info || {};
+            var filename = spec.name;
+
+            if (filename.includes('unauthenticated/')) {
+              filename = spec.name.split('unauthenticated/')[1];
+            }
+
+            return {
+              title: specInfo.title || spec.name,
+              description: specInfo.description || '',
+              version: specInfo.version || 'unknown',
+              tags: specContents.tags || [],
+              filename: filename || ''
+            };
+          });
+        },
+        parseSpec: function parseSpec(item) {
+          if (!item) return {};
+          var parsedItem = this.parseJSON(item);
+
+          if (!parsedItem) {
+            parsedItem = this.parseYAML(item);
+          }
+
+          if (!parsedItem) {
+            parsedItem = {};
+          }
+
+          return parsedItem;
+        },
+        parseJSON: function parseJSON(item) {
+          try {
+            return JSON.load(item);
+          } catch (e) {
+            return false;
+          }
+        },
+        parseYAML: function parseYAML(item) {
+          try {
+            return window.YAML.load(item);
+          } catch (e) {
+            return false;
+          }
+        },
+        formatTags: function formatTags(tagObj) {
+          if (!tagObj) return '';
+          var tags = Object.keys(tagObj).map(function(tagKey) {
+            return tagObj[tagKey].name;
+          });
+          var tagStr = tags.slice(0, 3).join(', ');
+
+          if (tags.length > 3) {
+            var extraTags = tags.length - 3;
+            tagStr += "... (".concat(extraTags, " more)");
+          }
+
+          return tagStr;
+        }
       },
-      parseSpec: function parseSpec(item) {
-        if (!item) return {};
-        var parsedItem = this.parseJSON(item);
-
-        if (!parsedItem) {
-          parsedItem = this.parseYAML(item);
+      watch: {
+        filterModel: {
+          handler: function handler() {
+            this.filteredSpecs = this.filterSpecs();
+          }
         }
-
-        if (!parsedItem) {
-          parsedItem = {};
-        }
-
-        return parsedItem;
-      },
-      parseJSON: function parseJSON(item) {
-        try {
-          return JSON.load(item);
-        } catch (e) {
-          return false;
-        }
-      },
-      parseYAML: function parseYAML(item) {
-        try {
-          return window.YAML.load(item);
-        } catch (e) {
-          return false;
-        }
-      },
-      formatTags: function formatTags(tagObj) {
-        if (!tagObj) return '';
-        var tags = Object.keys(tagObj).map(function (tagKey) {
-          return tagObj[tagKey].name;
-        });
-        var tagStr = tags.slice(0, 3).join(', ');
-
-        if (tags.length > 3) {
-          var extraTags = tags.length - 3;
-          tagStr += "... (".concat(extraTags, " more)");
-        }
-
-        return tagStr;
       }
-    },
-    watch: {
-      filterModel: {
-        handler: function handler() {
-          this.filteredSpecs = this.filterSpecs();
-        }
-      }
-    }
+    });
   });
-});
-
 </script>
 
 {{!-- style --}}
 <style>
-#spec-index:not(.active) {
-  display: none;
-}
-
-#spec-index .list-items {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 0 132px 48px;
-}
-
-#spec-index .no-results {
-  text-align: center;
-  color: rgba(0,0,0,0.45);
-}
-
-#spec-index .page-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid #979797;
-  margin: 48px 148px;
-  padding-bottom: 48px;
-}
-
-#spec-index .page-header input {
-  padding-left: 30px;
-  font-size: 15px;
-  color: rgba(0,0,0,0.45);
-}
-
-#spec-index .list-item-container {
-  padding: 16px;
-   width: 33.3%;
-}
-
-@media all and (max-width: 1200px) {
-  #spec-index .list-item-container {
-    width: 50%;
+  #spec-index:not(.active) {
+    display: none;
   }
-}
 
-@media all and (max-width: 900px) {
   #spec-index .list-items {
-    margin: 0 48px 48px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 132px 48px;
+  }
+
+  #spec-index .no-results {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.45);
   }
 
   #spec-index .page-header {
-    flex-wrap: wrap;
-    margin: 48px 64px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #979797;
+    margin: 48px 148px;
+    padding-bottom: 48px;
+  }
+
+  #spec-index .search svg {
+    position: absolute;
+    margin: 12px 7px;
+    fill: rgba(0, 0, 0, 0.45);
+  }
+
+  #spec-index .page-header input {
+    padding-left: 30px;
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.45);
   }
 
   #spec-index .list-item-container {
-    width: 100%;
+    padding: 16px;
+    width: 33.3%;
   }
-}
 
-#spec-index .list-item {
-  display: flex;
-  flex-direction: column;
-  border: 1px solid rgba(0,0,0,0.12);
-  border-radius: 3px;
-  min-height: 190px;
-  padding: 24px;
-}
+  @media all and (max-width: 1200px) {
+    #spec-index .list-item-container {
+      width: 50%;
+    }
+  }
 
-#spec-index .list-item:hover {
-  cursor: pointer;
-}
+  @media all and (max-width: 900px) {
+    #spec-index .list-items {
+      margin: 0 48px 48px;
+    }
 
-#spec-index .list-item .title {
-  flex-direction: column;
-  flex-grow: 0;
-  font-size: 18px;
-  color: #1270B2;
-}
+    #spec-index .page-header {
+      flex-wrap: wrap;
+      margin: 48px 64px;
+    }
 
-#spec-index .list-item:hover .title {
-  text-decoration: underline;
-}
+    #spec-index .list-item-container {
+      width: 100%;
+    }
+  }
 
-#spec-index .list-item .description {
-  flex-grow: 1;
-  font-size: 16px;
-  color: rgba(0,0,0,0.70);
-  line-height: 24px;
-  max-height: 72px;
-  overflow: hidden;
-}
+  #spec-index .list-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 3px;
+    min-height: 190px;
+    padding: 24px;
+  }
 
-#spec-index .list-item .meta {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-grow: 0;
-  font-size: 14px;
-  color: rgba(0,0,0,0.45);
-  line-height: 20px;
-}
+  #spec-index .list-item:hover {
+    cursor: pointer;
+  }
 
-.list-item .meta p {
-  margin: 0
-}
+  #spec-index .list-item .title {
+    flex-direction: column;
+    flex-grow: 0;
+    font-size: 18px;
+    color: #1270B2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-.page-header input {
-  height: 40px;
-}
+  #spec-index .list-item:hover .title {
+    text-decoration: underline;
+  }
 
-.page-header h1 {
-  margin: 0;
-}
+  #spec-index .list-item .description {
+    flex-grow: 1;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.70);
+    line-height: 24px;
+    height: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #spec-index .list-item .meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-grow: 0;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.45);
+    line-height: 20px;
+  }
+
+  .list-item .meta p {
+    margin: 0;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .page-header input {
+    height: 40px;
+  }
+
+  .page-header h1 {
+    margin: 0;
+  }
 </style>
