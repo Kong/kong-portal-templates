@@ -13,6 +13,7 @@
     "compile": "node bin/transform"
   },
   "devDependencies": {
+    "fs-extra": "^8.0.1",
     "@babel/core": "7.4.4",
     "@babel/preset-env": "7.4.4",
     "jsdom": "15.1.0",
