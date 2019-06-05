@@ -48,7 +48,11 @@
   {{/if}}
   {{#unless isAuthenticated}}
   <li>
-    <a href="{{config.PORTAL_GUI_URL}}/login">Login</a>
+    {{#if (eq authData.authType 'openid-connect')}}
+      <a href="#" id="header-login">Login</a>
+    {{else}}
+      <a href="{{config.PORTAL_GUI_URL}}/login">Login</a>
+    {{/if}}
   </li>
   <li>
     <a href="{{config.PORTAL_GUI_URL}}/register" class="button button-transparent">Sign Up</a>
