@@ -68,7 +68,7 @@ const apiURL = WORKSPACE
 
 INTERVAL = parseInt(INTERVAL, 10) || 5
 
-DIRECTORY = DIRECTORY || 'themes/default/'
+DIRECTORY = DIRECTORY || 'master/test/'
 if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
   DIRECTORY = DIRECTORY += '/'
 }
@@ -126,20 +126,20 @@ async function read (directory, type) {
     LFTIMES[directory] = {}
   }
 
-  // Delete remote files that no longer exist locally
-  if (type) {
-    let promises = Object.keys(LFTIMES[directory])
-      .filter(filename => files.indexOf(filename) < 0)
-      .map((filename) => {
-        const path = join(directory, filename)
-        return Promise.resolve()
-          .then(() => handle(type, filename, join(directory, filename), deleteFile))
-          .then(res => handleResponse(res, 'delete', isDeleted, type, path))
-          .then(() => delete LFTIMES[directory][filename])
-          .catch((err) => console.log(err))
-      })
-    await Promise.all(promises)
-  }
+  // // Delete remote files that no longer exist locally
+  // if (type) {
+  //   let promises = Object.keys(LFTIMES[directory])
+  //     .filter(filename => files.indexOf(filename) < 0)
+  //     .map((filename) => {
+  //       const path = join(directory, filename)
+  //       return Promise.resolve()
+  //         .then(() => handle(type, filename, join(directory, filename), deleteFile))
+  //         .then(res => handleResponse(res, 'delete', isDeleted, type, path))
+  //         .then(() => delete LFTIMES[directory][filename])
+  //         .catch((err) => console.log(err))
+  //     })
+  //   await Promise.all(promises)
+  // }
 
   return Promise.all(files.map((filename, index) => {
     const path = join(directory, filename)
@@ -158,9 +158,9 @@ async function read (directory, type) {
     }
 
     // No content, return
-    if (!type || !stat.size) {
-      return Promise.resolve()
-    }
+    // if (!type || !stat.size) {
+    //   return Promise.resolve()
+    // }
 
     let ltime = LFTIMES[directory][filename]
     let time = stat.mtime.toString()
@@ -172,12 +172,12 @@ async function read (directory, type) {
 
     LFTIMES[directory][filename] = time
 
-    // File needs updating
-    if (ltime && ltime !== time) {
-      return handle(type, filename, path, updateFile)
-        .then((res) => handleResponse(res, 'update', isUpdated, type, path))
-        .catch(err => console.log(err))
-    }
+    // // File needs updating
+    // if (ltime && ltime !== time) {
+    //   return handle(type, filename, path, updateFile)
+    //     .then((res) => handleResponse(res, 'update', isUpdated, type, path))
+    //     .catch(err => console.log(err))
+    // }
 
     // Delete remote file if it exists, recreate it from local file
     return Promise.resolve()
@@ -288,16 +288,17 @@ function handle (type, name, path, action) {
   let pathName = path.replace(DIRECTORY.replace('./', ''), '').split('/')
   let auth
 
-  pathName.shift()
-  pathName.pop()
-  auth = !(pathName.length > 0 && pathName[0] === 'unauthenticated')
-  pathName = pathName.join('/')
+  // pathName.shift()
+  // pathName.pop()
+  // auth = !(pathName.length > 0 && pathName[0] === 'unauthenticated')
+  // pathName = pathName.join('/')
 
-  if (!isValidPage(type, name) && !isValidPartial(type, name) && !isValidSpec(type, name)) {
-    return Promise.resolve()
-  }
+  // if (!isValidPage(type, name) && !isValidPartial(type, name) && !isValidSpec(type, name)) {
+  //   return Promise.resolve()
+  // }
+  console.log(path)
 
-  return action(path, join(pathName, parse(name).name), type, auth)
+  return action(path)
 }
 
 // File API
@@ -313,17 +314,16 @@ function getFile (path, nameOrId, type, auth) {
     .then((res) => JSON.parse(res.body))
 }
 
-function createFile (path, name, type, auth) {
+function createFile (path) {
   const reqUrl = `${apiURL}/files`
-
-  if (CURL_OUTPUT) {
-    const args = `-F "name=${name}" -F "contents=@${path}" -F "type=${type}" -F "auth=${auth}"`
-    console.log(`curl -X POST "${reqUrl}" ${args}`)
-    return Promise.resolve()
-  }
-
+  // if (CURL_OUTPUT) {
+  //   const args = `-F "path=${path}" -F "contents=@${path}"`
+  //   console.log(`curl -X POST "${reqUrl}" ${args}`)
+  //   return Promise.resolve()
+  // }
   const contents = readFileSync(path, 'utf8')
-  return httpRequest(reqUrl, 'POST', JSON.stringify({name, contents, type, auth}))
+  return httpRequest(reqUrl, 'POST', JSON.stringify({ path: path.split('master/test/')[1]
+  , contents }))
 }
 
 function updateFile (path, name, type, auth) {

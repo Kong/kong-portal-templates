@@ -1,0 +1,16 @@
+# colors:
+#   primary: cyan
+#   secondary: yellow
+#   tertiary: grey
+#   text_dark: black
+#   text_light: black
+#   text_accent: "#003459"
+
+
+colors:
+  primary: "#112633"
+  secondary: "#072d47"
+  tertiary: "#112633"
+  text_dark: black
+  text_light: white
+  text_accent: "#003459"
