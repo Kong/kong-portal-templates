@@ -68,7 +68,7 @@ const apiURL = WORKSPACE
 
 INTERVAL = parseInt(INTERVAL, 10) || 5
 
-DIRECTORY = DIRECTORY || 'master/test/'
+DIRECTORY = DIRECTORY || 'master/example-site/' 
 if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
   DIRECTORY = DIRECTORY += '/'
 }
@@ -322,7 +322,7 @@ function createFile (path) {
   //   return Promise.resolve()
   // }
   const contents = readFileSync(path, 'utf8')
-  return httpRequest(reqUrl, 'POST', JSON.stringify({ path: path.split('master/test/')[1]
+  return httpRequest(reqUrl, 'POST', JSON.stringify({ path: path.split(DIRECTORY)[1]
   , contents }))
 }
 

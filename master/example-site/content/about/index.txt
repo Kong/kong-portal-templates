@@ -1,6 +1,5 @@
 ---
 layout: about.html
-auth: true
 title: About Page
 description: lame
 ---

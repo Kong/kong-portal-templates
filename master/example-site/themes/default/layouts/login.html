@@ -1,0 +1,24 @@
+{% layout = "layouts/base.html" %}
+
+{-header-}
+  {(partials/header.html)}
+{-header-}
+
+{-main-}
+<div class="main">
+  <form id="login">
+      <label for="username">Email</label>
+      <input id="username" type="text" name="username" required />
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required />
+      <button
+        id="login-button"
+        class="button button-primary"
+        type="submit">Login</button>
+  </form>
+</div>
+{-main-}
+
+{-footer-}
+  {(partials/footer.html)}
+{-footer-}
