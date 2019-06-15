@@ -64,7 +64,11 @@
 <script>
   "use strict";
 
-  document.getElementById('logout').addEventListener('click', function(e) {
-    e.preventDefault();
-  });
+  var $logout = document.getElementById('logout');
+
+  if ($logout) {
+    $logout.addEventListener('click', function(e) {
+      e.preventDefault();
+    });
+  }
 </script>

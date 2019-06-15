@@ -62,5 +62,8 @@
 {{/if}}
 
 <script>
-  document.getElementById('logout').addEventListener('click', e => { e.preventDefault() })
+  const $logout = document.getElementById('logout')
+  if ($logout) {
+    $logout.addEventListener('click', e => { e.preventDefault() })
+  }
 </script>
