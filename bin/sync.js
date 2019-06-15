@@ -268,10 +268,11 @@ function handleResponse (res, op, successCb, type, path) {
 
 function deleteExistingFile (res, type, path) {
   if (res && res.data && res.data[0]) {
-    return deleteFile(null, res.data[0].id, null).then(res => {
+    return deleteFile(null, res.data[0].id, null)
+    .then(res => {
       return handleResponse(res, 'delete', isDeleted, type, path)
     })
-    .catch(e => console.log('b', e))
+    .catch(e => console.log('Error deleting file:', e))
   }
   return false
 }
@@ -414,12 +415,12 @@ function httpRequest (reqUrl, method = 'GET', data = '', tries = 0) {
         // lets wait the ERROR_WAIT plus a random amount less than 1/4 seconds
         // retry up to two times.
         if (res.statusCode === 500 && tries < 2) {
-          await sleep(ERROR_WAIT + Math.random() * 250)
+          await sleep(ERROR_WAIT + Math.random() * 500)
           return resolve(httpRequest(reqUrl, method, data, tries))
         }
-        // hail mary your server must suck, lets try double the wait 2 more times
-        if (res.statusCode === 500 && tries < 4) {
-          await sleep(ERROR_WAIT * 2 + Math.random() * 500)
+        // if that fails we ramp up the wait time a bit
+        else if (res.statusCode === 500 && tries < 4) {
+          await sleep(ERROR_WAIT * 2 + Math.random() * 1000)
           return resolve(httpRequest(reqUrl, method, data, tries))
         }
 
@@ -430,6 +431,10 @@ function httpRequest (reqUrl, method = 'GET', data = '', tries = 0) {
         // lets retry up to two times then bail out.
         if (res.statusCode === 500 && tries < 2) {
           await sleep(ERROR_WAIT + Math.random() * 500)
+          return resolve(httpRequest(reqUrl, method, data, tries))
+        }
+        if (res.statusCode === 500 && tries < 4) {
+          await sleep(ERROR_WAIT * 2 + Math.random() * 1000)
           return resolve(httpRequest(reqUrl, method, data, tries))
         }
 
@@ -604,7 +609,7 @@ async function init () {
       try{
         await read(DIRECTORY, TYPE)
       } catch(e) {
-        console.log('bottom', e)
+        console.log('Error reading directory:', e)
       }
 
       WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
@@ -612,7 +617,7 @@ async function init () {
       try {
         await read(DIRECTORY)
       } catch(e) {
-        console.log('bottom 2', e)
+        console.log('Error reading directory:', e)
       }
       WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
     }
