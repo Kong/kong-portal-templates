@@ -150,7 +150,7 @@ async function read (directory, type) {
     try {
       await Promise.all(promises)
     } catch(e) {
-      console.log('error: ', e)
+      console.log('Error deleting remote files:', e)
     }
 
   }
