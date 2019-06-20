@@ -12,6 +12,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+
 // Help Output
 if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
@@ -37,6 +38,7 @@ if (process.argv[2] === '--help' || process.argv[2] === '-h') {
   console.log()
   console.log('     TYPE=<type>', '\t\t', 'type of files in scanned directories, otherwise use directory structure')
   console.log('     INTERVAL=<seconds>', '\t', 'duration of time in-between scans')
+  console.log('     ERROR_WAIT=<seconds>', '\t', 'duration of time in-between retrys after 500 error defaults to 2')
   console.log('     EMOJI=true', '\t\t', 'enable emoji symbols')
   console.log('     WATCH=true', '\t\t', 'enable file watch')
   console.log()
@@ -61,7 +63,7 @@ let {
   DIRECTORY, TYPE, INTERVAL, EMOJI,
   WATCH, DELETE_ALL, PULL, PUSH,
   KA_RBAC_TOKEN, WORKSPACE, NO_PROMPT,
-  ENABLE, DEBUG, KA_API_URL
+  ENABLE, DEBUG, KA_API_URL, ERROR_WAIT
 } = process.env
 
 WORKSPACE = WORKSPACE || 'default'
@@ -70,6 +72,7 @@ const apiURL = KA_API_URL + `/${WORKSPACE}`
 const workspaceApiURL = KA_API_URL + `/workspaces/${WORKSPACE}`
 
 INTERVAL = parseInt(INTERVAL, 10) || 5
+ERROR_WAIT = parseInt(ERROR_WAIT, 10) * 1000 || 2000
 
 DIRECTORY = DIRECTORY || 'themes/default/'
 if (DIRECTORY[DIRECTORY.length - 1] !== '/') {
@@ -144,7 +147,12 @@ async function read (directory, type) {
           .then(() => delete LFTIMES[directory][filename])
           .catch((err) => console.log(err))
       })
-    await Promise.all(promises)
+    try {
+      await Promise.all(promises)
+    } catch(e) {
+      console.log('Error deleting remote files:', e)
+    }
+
   }
 
   return Promise.all(files.map((filename, index) => {
@@ -260,9 +268,11 @@ function handleResponse (res, op, successCb, type, path) {
 
 function deleteExistingFile (res, type, path) {
   if (res && res.data && res.data[0]) {
-    return deleteFile(null, res.data[0].id, null).then(res => {
+    return deleteFile(null, res.data[0].id, null)
+    .then(res => {
       return handleResponse(res, 'delete', isDeleted, type, path)
     })
+    .catch(e => console.log('Error deleting file:', e))
   }
   return false
 }
@@ -294,6 +304,10 @@ function isValidPartial (type, name) {
 
 function isValidSpec (type, name) {
   return type === 'spec' && (name.includes('.json') || name.includes('.yaml'))
+}
+
+function sleep(ms = 1000) {
+  return new Promise(r => setTimeout(r, ms));
 }
 
 // File handler
@@ -334,6 +348,7 @@ function getFile (path, nameOrId, type, auth) {
 
   return httpRequest(reqUrl)
     .then((res) => JSON.parse(res.body))
+    .catch(err => console.log(err))
 }
 
 function createFile (path, name, type, auth) {
@@ -395,20 +410,32 @@ function httpRequest (reqUrl, method = 'GET', data = '', tries = 0) {
     const req = adapter.request(options, (res) => {
       let body = ''
       res.on('data', (chunk) => (body += chunk.toString('utf8')))
-      res.on('error', (err) => {
+      res.on('error', async (err) => {
         // Internal server error generally means database connection exhaustion
-        // lets retry up to two times then bail out.
+        // lets wait the ERROR_WAIT plus a random amount less than 1/4 seconds
+        // retry up to two times.
         if (res.statusCode === 500 && tries < 2) {
-          return httpRequest(reqUrl, method, data, tries)
+          await sleep(ERROR_WAIT + Math.random() * 500)
+          return resolve(httpRequest(reqUrl, method, data, tries))
+        }
+        // if that fails we ramp up the wait time a bit
+        else if (res.statusCode === 500 && tries < 4) {
+          await sleep(ERROR_WAIT * 2 + Math.random() * 1000)
+          return resolve(httpRequest(reqUrl, method, data, tries))
         }
 
         return reject(err)
       })
-      res.on('end', () => {
+      res.on('end', async () => {
         // Internal server error generally means database connection exhaustion
         // lets retry up to two times then bail out.
         if (res.statusCode === 500 && tries < 2) {
-          return httpRequest(reqUrl, method, data, tries)
+          await sleep(ERROR_WAIT + Math.random() * 500)
+          return resolve(httpRequest(reqUrl, method, data, tries))
+        }
+        if (res.statusCode === 500 && tries < 4) {
+          await sleep(ERROR_WAIT * 2 + Math.random() * 1000)
+          return resolve(httpRequest(reqUrl, method, data, tries))
         }
 
         if (res.statusCode >= 200 && res.statusCode <= 299) {
@@ -433,12 +460,16 @@ function getFiles (type) {
 
   return httpRequest(reqUrl)
     .then((res) => JSON.parse(res.body))
+    .catch(err => console.log(err))
 }
 
 function deleteAllFiles (files) {
   return Promise.all(files.map(file => {
     return deleteFile(null, file.id, null)
       .then(res => handleResponse(res, 'delete', isDeleted, file.type, file.name))
+      .catch(e => {
+        console.log('Error deleting file:', e)
+      })
   }))
 }
 
@@ -497,7 +528,7 @@ function anErrorHasOccurredTryingTo (message, error, url = apiURL) {
       `KA_API_URL=${KA_API_URL} KA_RBAC_TOKEN=${KA_RBAC_TOKEN} WORKSPACE=${WORKSPACE} ENABLE=true ./bin/sync.js`
     ].join('\n')
   }
-  
+
   console.log(``)
   console.log(`🔥 An error occurred while trying to ${message} on ${url}:`)
   console.log(``)
@@ -575,10 +606,19 @@ async function init () {
   let proceed = await areYouSure(`Push changes to "${apiURL}" when a change is detected in "${DIRECTORY}"?`)
   if (proceed) {
     if (TYPE) {
-      await read(DIRECTORY, TYPE)
+      try{
+        await read(DIRECTORY, TYPE)
+      } catch(e) {
+        console.log('Error reading directory:', e)
+      }
+
       WATCH_DIR && setInterval(() => read(DIRECTORY, TYPE), INTERVAL * 1000)
     } else {
-      await read(DIRECTORY)
+      try {
+        await read(DIRECTORY)
+      } catch(e) {
+        console.log('Error reading directory:', e)
+      }
       WATCH_DIR && setInterval(() => read(DIRECTORY), INTERVAL * 1000)
     }
   } else {
