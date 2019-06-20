@@ -468,7 +468,7 @@ function deleteAllFiles (files) {
     return deleteFile(null, file.id, null)
       .then(res => handleResponse(res, 'delete', isDeleted, file.type, file.name))
       .catch(e => {
-        console.log('error', e)
+        console.log('Error deleting file:', e)
       })
   }))
 }
