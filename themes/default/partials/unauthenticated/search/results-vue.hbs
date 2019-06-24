@@ -9,7 +9,7 @@
   <div class="search-item-container expanded">
     <div class="search-row item"
       v-for="file in activeResults"
-      @click="goToPage(file.path)">
+      @click="goToPage(buildUrl(file.path))">
       <h6 class="title">${ file.alias || file.title }</h6>
       <p class="url">${ buildUrl(file.path) }</p>
     </div>
@@ -27,7 +27,7 @@
       :class="{ active: activePageIdx === idx }"
       v-for="item, idx in Object.keys(paginatedResults)">
       ${ idx + 1 }
-    </button> 
+    </button>
     <button
       @click="rotatePagination(1)"
       class="next-item"

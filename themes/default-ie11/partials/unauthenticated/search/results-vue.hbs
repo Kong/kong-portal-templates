@@ -7,7 +7,7 @@
     <h1>${ searchResults.length } results for "${ searchModel }"</h1>
   </div>
   <div class="search-item-container expanded">
-    <div class="search-row item" v-for="file in activeResults" @click="goToPage(file.path)">
+    <div class="search-row item" v-for="file in activeResults" @click="goToPage(buildUrl(file.path))">
       <h6 class="title">${ file.alias || file.title }</h6>
       <p class="url">${ buildUrl(file.path) }</p>
     </div>
