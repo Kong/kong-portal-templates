@@ -64,7 +64,7 @@ to quickly swap between themes.
 
 Themes follow the following structure:
 
-- `workspace/<workspace-name>/themes/<theme-name>`
+- `workspace/<workspace-name>/themes/<theme-name>/`
   - [`assets/`](#Assets)
   - [`layouts/`](#Layouts)
   - [`partials/`](#Partials)
