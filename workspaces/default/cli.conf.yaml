@@ -1,0 +1,3 @@
+name: default
+upstream: http://localhost:8001/default
+rbac_token: ''

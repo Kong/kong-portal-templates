@@ -1,0 +1,32 @@
+{% layout = "layouts/base.html" %}
+
+{-header-}
+  {(partials/header.html)}
+{-header-}
+
+{-main-}
+<ul style="border: 1px solid #ccc; background: #f1f1f1; padding: 10px; margin: 10px; border-radius: 3px">
+{% for key, value in pairs(kong.workspace.config) do %}
+    <li>{{key}}: {{value}}</li>
+{% end %}
+</ul>
+  <div class="main">
+    
+
+    <form id="login">
+        <label for="username">Email</label>
+        <input id="username" type="text" name="username" required />
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required />
+        <button
+          id="login-button"
+          class="button button-primary"
+          type="submit">Login</button>
+    </form>
+
+  </div>
+{-main-}
+
+{-footer-}
+  {(partials/footer.html)}
+{-footer-}

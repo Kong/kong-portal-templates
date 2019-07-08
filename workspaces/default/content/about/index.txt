@@ -1,0 +1,5 @@
+---
+layout: about.html
+title: About Page
+description: Description of the Kong Developer Portal
+---

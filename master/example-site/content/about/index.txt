@@ -1,5 +1,0 @@
----
-layout: about.html
-title: About Page
-description: lame
----
