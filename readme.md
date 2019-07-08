@@ -27,12 +27,7 @@ Each Workspace follows the following structure:
 
 - `<workspace-name>/`
   - `content/`
-  - `themes/`
-    - `<theme-name>`
-      - `assets/`
-      - [`layouts/`](#Layouts)
-      - [`partials/`](#Partials)
-      - [`theme.conf.yaml`](#Theme-Configuration)
+  - [`themes/`](#Themes)
   - [`cli.conf.yaml`](#CLI-Configuration)
   - [`portal.conf.yaml`](#Portal-Configuration)
 
@@ -52,7 +47,28 @@ Workspace specific portal configuration.
 Values declared here will take priority over both `theme.conf.yaml` and values 
 defined in your Kong `kong.conf`.
 
+### Content
+
+Not yet documented.
+
 ### Themes
+
+Themes allow you to create a well structured site by separating the easily 
+editable content — Posts, Guides, Specifications — from the _theme_ of that 
+content. 
+
+Each portal maps to a single theme, however, you can create and store 
+as many themes in the themes folder as you want. After a theme has been uploaded 
+you can change the `theme: <theme-name>` property in your [`portal.conf.yaml`](#Portal-Configuration) 
+to quickly swap between themes.
+
+Themes follow the following structure:
+
+- `workspace/<workspace-name>/themes/<theme-name>`
+  - [`assets/`](#Assets)
+  - [`layouts/`](#Layouts)
+  - [`partials/`](#Partials)
+  - [`theme.conf.yaml`](#Theme-Configuration)
 
 #### Theme Configuration
 
