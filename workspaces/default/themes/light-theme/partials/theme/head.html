@@ -2,10 +2,11 @@
 <html>
   <head>
     <title>{{site.title}} - {{page.title}}</title>
+    <base href="/{{kong.workspace.name}}/" />
     {(partials/theme/style.html)}
-    <link href="/{{kong.workspace.name}}/assets/styles/normalize.min.css" rel="stylesheet">
-    <link href="/{{kong.workspace.name}}/assets/styles/framework.min.css" rel="stylesheet">
-    <link href="/{{kong.workspace.name}}/assets/styles/site.css" rel="stylesheet">
+    <link href="assets/styles/normalize.min.css" rel="stylesheet" />
+    <link href="assets/styles/framework.min.css" rel="stylesheet" />
+    <link href="assets/styles/site.css" rel="stylesheet" />
     {* blocks.page_css *}
   </head>
   <body>
