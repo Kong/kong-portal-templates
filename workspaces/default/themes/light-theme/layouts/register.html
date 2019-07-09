@@ -4,10 +4,13 @@
   <div class="auth-page">
     <section class="left-pane">
       <div class="inner">
-        <h3>Log into your account</h3>
-        <p>Use your credentials to access your account.</p>
+        <h3>Create an account</h3>
+        <p>Enter your information below to create an account.</p>
 
-        <form id="login">
+        <form id="register">
+          <label for="full_name">Full Name</label>
+          <input id="full_name" type="text" name="full_name" required />
+            
           <label for="username">Email</label>
           <input id="username" type="text" name="username" required />
           
@@ -17,10 +20,10 @@
           <button
             id="login-button"
             class="button button-primary"
-            type="submit">Login</button>
+            type="submit">Create Account</button>
         </form>
         
-        <p>Don't have an account? <a href="register">Register here</a>.</p>
+        <p>Already have an account? <a href="login">Login here</a>.</p>
         <p><a href="">← Go back home</a></p>
       </div>
     </section>
@@ -28,7 +31,7 @@
     <section class="right-pane">
       <div class="inner">
         <img src="assets/images/auth-placeholder.svg" />
-        <h4>Welcome back 🙌</h4>
+        <h4>Welcome to {{site.name}}</h4>
         <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
       </div>
     </section>

@@ -2,6 +2,12 @@
   box-sizing: border-box;
 }
 
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+
 /*****************************************
  * Utilities
  *****************************************/
@@ -60,7 +66,7 @@ a:hover {
  * Component -- Button
  *****************************************/
  
- .btn {
+.btn {
   padding: .8rem 1.5rem;
   border-radius: 3px;
   background: var(--tertiary);
@@ -68,8 +74,10 @@ a:hover {
   text-decoration: none;
 }
 
-.btn:hover {
-  background: #aaa;
+.btn:hover,
+.button:hover,
+.button.button-primary:hover {
+  background-color: #aaa;
   color: white;
 }
  
@@ -77,9 +85,11 @@ a:hover {
  * Component -- Primary Button
  *****************************************/
  
-.btn-primary {
-  background: var(--primary, black);
+.btn.btn-primary,
+.button.button-primary {
+  background-color: var(--primary, black);
   color: white;
+  border: none;
 }
  
 /*****************************************
@@ -439,5 +449,63 @@ a:hover {
 @media (min-width: 768px) {
   .error-404 .title {
     font-size: 2.5em
+  }
+}
+
+/*****************************************
+ * Page -- Auth (Basic Auth / Key Auth)
+ *****************************************/
+
+.auth-page {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.auth-page > section,
+.auth-page > div {
+  flex: 1;
+}
+
+.auth-page .left-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-page .left-pane .inner {
+  width: 40rem;
+}
+
+.auth-page .left-pane input {
+  width: 100%;
+}
+
+.auth-page .right-pane {
+  display: none;
+  background: black;
+  background: var(--primary, black);
+  color: white;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-page .right-pane .inner {
+  text-align: center;
+  width: 300px;
+}
+
+.auth-page .right-pane .inner h2,
+.auth-page .right-pane .inner h3,
+.auth-page .right-pane .inner h4,
+.auth-page .right-pane .inner h5 {
+  color: white;
+}
+
+@media (min-width: 768px) {
+  .auth-page .right-pane {
+    display: flex;
   }
 }
