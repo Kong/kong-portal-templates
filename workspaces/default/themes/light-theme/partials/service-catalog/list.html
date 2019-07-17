@@ -1,0 +1,10 @@
+<div class="catalog-list">
+  {% for _, spec in portal():specs():pairs() do %}
+    {(partials/service-catalog/item.html, spec.parsed)}
+  {% end %}
+</div>
+
+<div class="catalog-list__no-results toggle-content">
+  <h4>Nothing Found, Sorry</h4>
+  <p>No services matched your criteria.</p>
+</div>

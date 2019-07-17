@@ -2,11 +2,14 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Swagger Petstore",
+    "title": "User Billing API",
     "license": {
       "name": "MIT"
     }
   },
+  "tags": [{
+    "name": "Billing"
+  }],
   "host": "petstore.swagger.io",
   "basePath": "/v1",
   "schemes": [

@@ -1,4 +1,3 @@
----
 layout: homepage.html
 title: Home
----
+tagline: Hello World

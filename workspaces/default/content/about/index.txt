@@ -9,6 +9,9 @@ hero:
     - The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
     - Many desktop publishing packages and web page editors now use Lorem Ipsum.
 
+html: >
+  The hero title is {{page.hero.title}}
+
 team:
   title: Meet our (amazing) team
   slogan: >
@@ -27,6 +30,3 @@ team:
     - name: "Tohi B."
       title: "VP of Engineering"
       image: "https://images.unsplash.com/photo-1521119989659-a83eee488004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
-    - name: "Mubin P."
-      title: "VP of Happiness"
-      image: "https://images.unsplash.com/photo-1529259646408-5c50deb4cf6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"

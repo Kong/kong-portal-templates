@@ -1,7 +1,27 @@
 {% layout = "layouts/_page.html" %}
 
+{% context.tags = {} %}
+{% for _, spec in portal():specs():pairs() do %}
+  {% for _, tag in pairs(spec.parsed.tags or {}) do %}
+    {% if tags[tag.name] == nil then %}
+      {% tags[tag.name] = 1 %}
+    {% else %}
+      {% tags[tag.name] = tags[tag.name] + 1 %}
+    {% end %}
+  {% end %}
+{% end %}
+
 {-content-}
   <div class="service-catalog">
-    {(partials/homepage/catalog.html)}
+    <div class="container">
+      <div class="row">
+        <div class="three columns">
+          {(partials/service-catalog/sidebar.html, context)}
+        </div>
+        <div class="nine columns">
+          {(partials/service-catalog/list.html)}
+        </div>
+      </div>
+    </div>
   </div>
 {-content-}

@@ -1,7 +1,7 @@
-name: Kong
+name: "Kong"
 font: "Roboto"
 colors:
   primary: "#000"
-  secondary: "red"
-  tertiary: "rgba(0, 0, 0, 0.45)"
-  links: "#194B7C"
+  secondary: "#333"
+  tertiary: "#555"
+  links: "#000"
