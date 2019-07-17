@@ -1,3 +1,35 @@
 <div id="ui-wrapper" data-spec="{{spec}}">
   Loading....
 </div>
+<div class='loading'>
+  <h1> Loading... </h1>
+</div>
+
+<style>
+  .loading {
+    position: fixed;
+    width: 300px;
+    height: 200px;
+    z-index: 300;
+    top: 50%;
+    left: 50%;
+    margin: -100px 0 0 -150px;
+    background-color: blue;
+  }
+  .overlay{
+    display: block;
+  }
+</style>
+
+<script>
+  {{!-- document.querySelector("#ui-wrapper").style.display = "none"; --}}
+  function checkAndShowSwagger(interval) {
+    if (document.querySelector("#ui-wrapper .opblock-title")) {
+        document.querySelector(".overlay").style.display = "none";
+        document.querySelector(".loading").style.display = "none"
+        clearInterval(interval)
+    }
+
+  }
+  var interval = setInterval(()=> checkAndShowSwagger(interval), 100)
+</script>
