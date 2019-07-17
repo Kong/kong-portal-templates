@@ -44,10 +44,9 @@
 
       $CATALOG_ITEMS.each(function(i, elem) {
         var tags = elem.dataset.tags;
-        var value = 1;
+        var value = 0;
 
-        value = elem.classList.contains("is-visible") ? 1 : 0;
-        value = elem.classList.contains("tag-filtered") ? 1 : value;
+        value = elem.classList.contains("search-filtered") ? 0 : 1;
 
         if (tags) {
           tags = tags.split(",").filter(function(v) {
@@ -72,21 +71,15 @@
       var tags = generateTagList();
       var activeTag = $CATALOG_TAG_LINKS.filter(".is-active");
 
-
-      if (activeTag.length > 0) {
-        var tag = activeTag.data("tag");
+      Object.keys(tags).forEach(function(tag) {
+        var elem = $CATALOG_TAG_LINKS.filter('[data-tag="' + tag + '"]');
         var count = tags[tag];
-        activeTag.find(".tag-link--count").html(count);
-        if (count === 0) {
+        elem.find(".tag-link--count").html(count);
+
+        if (elem.hasClass('is-active') && count === 0) {
           $CATALOG_LIST_NO_RESULTS.show();
         }
-      } else {
-        Object.keys(tags).forEach(function(tag) {
-          var elem = $CATALOG_TAG_LINKS.filter('[data-tag="' + tag + '"]');
-          var count = tags[tag];
-          elem.find(".tag-link--count").html(count);
-        });
-      }
+      });
     };
 
     var filterArrayByTagData = function(tag) {
@@ -94,6 +87,14 @@
         return elem.dataset.tags.indexOf(tag) < 0;
       };
     };
+
+    var filterArrayByValue = function (value) {
+      return $CATALOG_ITEMS
+        .filter(":not(.tag-filtered)")
+        .filter(function(i, elem) {
+          return elem.innerText.toLowerCase().indexOf(value) < 0;
+        });
+    }
 
     var filterCatalogListByTag = function(tag) {
       $CATALOG_ITEMS
@@ -108,7 +109,6 @@
 
     var filterCatalogListByValue = function(value) {
       var filteredItems = $CATALOG_ITEMS
-        .filter(":not(.tag-filtered)")
         .filter(function(i, elem) {
           return elem.innerText.toLowerCase().indexOf(value) < 0;
         });
@@ -124,7 +124,6 @@
 
     var clearTagFilters = function(event) {
       $CATALOG_LIST_NO_RESULTS.hide();
-
       $CATALOG_TAG_LINKS.removeClass("is-active");
 
       $CATALOG_ITEMS
