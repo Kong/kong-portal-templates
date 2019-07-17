@@ -1,3 +1,57 @@
 <div id="ui-wrapper" data-spec="{{spec}}">
-  Loading....
 </div>
+<div class="page-loading-container">
+  <div class="loading"></div>
+</div>
+
+<style>
+  .page-loading-container {
+    position: fixed;
+    top: 50%;
+    left: 70%;
+    z-index: 15;
+    margin: -100px 0 0 -150px;
+  }
+
+  .page-loading-container .loading {
+    border: 25px solid #f3f3f3;
+    border-top: 25px solid #70C3FF;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    animation: loadspin 2s linear infinite;
+  }
+
+  .overlay {
+    display: block;
+  }
+
+  @keyframes loadspin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<script>
+  "use strict";
+
+  function checkAndShowSwagger(interval) {
+    if (document.querySelector("#ui-wrapper .opblock-title")) {
+      document.querySelector(".overlay").style.display = "none";
+      document.querySelector(".loading").style.display = "none";
+      clearInterval(interval);
+    }
+  }
+
+  var interval = setInterval(function() {
+    return checkAndShowSwagger(interval);
+  }, 100);
+  setTimeout(function() {
+    clearInterval(interval);
+  }, 15000);
+</script>
