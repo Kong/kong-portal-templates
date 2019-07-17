@@ -72,12 +72,10 @@
       var tags = generateTagList();
       var activeTag = $CATALOG_TAG_LINKS.filter(".is-active");
 
-      $CATALOG_TAG_LINKS.hide();
 
       if (activeTag.length > 0) {
         var tag = activeTag.data("tag");
         var count = tags[tag];
-        activeTag.show();
         activeTag.find(".tag-link--count").html(count);
         if (count === 0) {
           $CATALOG_LIST_NO_RESULTS.show();
@@ -86,12 +84,7 @@
         Object.keys(tags).forEach(function(tag) {
           var elem = $CATALOG_TAG_LINKS.filter('[data-tag="' + tag + '"]');
           var count = tags[tag];
-          if (count === 0) {
-            elem.hide();
-          } else {
-            elem.show();
-            elem.find(".tag-link--count").html(count);
-          }
+          elem.find(".tag-link--count").html(count);
         });
       }
     };
