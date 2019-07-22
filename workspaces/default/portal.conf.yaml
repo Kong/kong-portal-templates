@@ -1,2 +1,14 @@
 name: Kong Portal
 theme: light-theme
+
+auth:
+  # Redirect path without forward slash when user is not logged in,
+  # and content requires permission to access content
+  redirect_on_unauthenticated: 'login'
+
+  # Redirect path without forward slash when user is logged in,
+  # and doesn't have required permissions to access content
+  redirect_on_unauthorized: 'unauthorized'
+
+  # Redirect path without forward slash on successful login
+  redirect_on_login: 'dashboard'

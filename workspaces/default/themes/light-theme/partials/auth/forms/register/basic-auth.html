@@ -21,7 +21,7 @@
       var API_URL = "http://localhost:8004/{{kong.config.WORKSPACE}}/auth";
 
       // Determine whether to use Query String value or Default redirect value
-      var redirectToDefault = '{{site.auth.redirect_to}}'
+      var redirectToDefault = '{{site.auth.redirect_on_login}}'
       var redirectToQueryValue = getParameterByName('redirectTo')
       var redirectTo = redirectToQueryValue != null
         ? redirectToQueryValue
