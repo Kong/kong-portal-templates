@@ -22,10 +22,15 @@
 
       // Determine whether to use Query String value or Default redirect value
       var redirectToDefault = '{{site.auth.redirect_to}}'
-      var redirectToQueryValue = getParameterByName('redirectTo')
+      var redirectToQueryValue = getParameterByName('redirectTo').toLowerCase()
       var redirectTo = redirectToQueryValue != null
         ? redirectToQueryValue
-        : redirectToDefault === 'index' ? '' : redirectToDefault
+        : redirectToDefault
+
+      // Support various homepage name values such as "homepage" or "home"
+      redirectTo = ['index','homepage','home'].indexOf(redirecTo) > -1
+        ? ''
+        : redirectTo
 
       $FORM.submit(function (event) {
         event.preventDefault();
