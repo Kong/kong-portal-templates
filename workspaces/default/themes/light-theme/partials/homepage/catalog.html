@@ -1,7 +1,7 @@
 <section class="homepage-catalog">
   <div class="catalog-list">
     {% for _, spec in portal():specs():pairs() do %}
-      {(partials/service-catalog/item.html, spec.parsed)}
+      {(partials/service-catalog/item.html, spec)}
     {% end %}
   </div>
 

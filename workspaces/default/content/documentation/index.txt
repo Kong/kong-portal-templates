@@ -1,3 +1,10 @@
----
 layout: catalog.html
----
+
+locale:
+  catalog_no_results_header: "No Results Found"
+  catalog_no_results_content: "No services matched your criteria. Try another query?"
+  catalog_categories_header_text: "Category"
+
+sidebar:
+  hide_filter: false
+  hide_categories: false

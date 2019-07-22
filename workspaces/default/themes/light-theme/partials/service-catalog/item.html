@@ -1,19 +1,20 @@
 <a
-  data-tags="{% for _, tag in pairs(tags or {}) do %}{{tag.name:lower()}},{% end %}"
+  href="{{route}}"
+  data-tags="{% for _, tag in pairs(parsed.tags or {}) do %}{{tag.name:lower()}},{% end %}"
   class="catalog-item toggle-content is-visible">
   <div class="catalog-logo">
-    {{info.title:sub(0,2)}}
+    {{parsed.info.title:sub(0,2)}}
   </div>
 
   <div class="catalog-details">
-    <h5 class="catalog-title">{{info.title}}</h5>
+    <h5 class="catalog-title">{{parsed.info.title}}</h5>
 
-    {% if info.description then %}
-      <p class="catalog-desc">{{info.description}}</p>
+    {% if parsed.info.description then %}
+      <p class="catalog-desc">{{parsed.info.description}}</p>
     {% end %}
 
-    {% if info.version then %}
-      <small class="catalog-version">v{{info.version}}</small>
+    {% if parsed.info.version then %}
+      <small class="catalog-version">v{{parsed.info.version}}</small>
     {% end %}
 
     {% if tags then %}

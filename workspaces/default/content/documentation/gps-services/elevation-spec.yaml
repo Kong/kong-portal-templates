@@ -1,12 +1,13 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Elevation API
+  title: Kong Admin API
+  description: Administration API to administer your Kong Cluster
   license:
     name: MIT
 tags:
-  - name: Elevation
-  - name: Geography
+  - name: Administration
+  - name: Kong CE
 servers:
   - url: http://petstore.swagger.io/v1
 paths:
@@ -33,7 +34,7 @@ paths:
               schema:
                 type: string
           content:
-            application/json:    
+            application/json:
               schema:
                 $ref: "#/components/schemas/Pets"
         default:

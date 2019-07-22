@@ -1,0 +1,4 @@
+{% for i, field in portal():config():developer_meta_fields():pairs() do %}
+  <label for="{{field.name}}">{{field.label}}</label>
+  <input id="{{field.name}}" type="{{field.type}}" name="{{field.name}}" {{field.required and "required" or ""}} />
+{% end %}

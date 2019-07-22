@@ -4,35 +4,27 @@
   <div class="auth-page">
     <section class="left-pane">
       <div class="inner">
-        <h3>Create an account</h3>
-        <p>Enter your information below to create an account.</p>
+        <h3>{*(template.compile(page.locale.register_form_header)(context))*}</h3>
+        <p>{*(template.compile(page.locale.register_form_content)(context))*}</p>
 
-        <form id="register">
-          <label for="full_name">Full Name</label>
-          <input id="full_name" type="text" name="full_name" required />
-            
-          <label for="username">Email</label>
-          <input id="username" type="text" name="username" required />
-          
-          <label for="password">Password</label>
-          <input id="password" type="password" name="password" required />
-          
-          <button
-            id="login-button"
-            class="button button-primary"
-            type="submit">Create Account</button>
-        </form>
-        
-        <p>Already have an account? <a href="login">Login here</a>.</p>
-        <p><a href="">← Go back home</a></p>
+        {% if kong.config.PORTAL_AUTH == 'basic-auth' then %}
+          {(partials/auth/forms/register/basic-auth.html, context)}
+        {% end %}
+
+        {% if kong.config.PORTAL_AUTH == 'key-auth' then %}
+          {(partials/auth/forms/login/key-auth.html, context)}
+        {% end %}
+
+        <p>{{page.locale.register_login_text}} <a href="login">{{page.locale.register_login_link_text}}</a>.</p>
+        <p><a href="">{{page.locale.register_home_link_text}}</a></p>
       </div>
     </section>
 
     <section class="right-pane">
       <div class="inner">
         <img src="assets/images/auth-placeholder.svg" />
-        <h4>Welcome to {{site.name}}</h4>
-        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+        <h4>{*(template.compile(page.locale.register_side_header)(context))*}</h4>
+        <p>{*(template.compile(page.locale.register_side_content)(context))*}</p>
       </div>
     </section>
   </div>

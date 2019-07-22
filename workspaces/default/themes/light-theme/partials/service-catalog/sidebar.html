@@ -15,12 +15,15 @@
 %}
 
 <div class="catalog-sidebar">
+  {% if not page.sidebar.hide_filter then %}
   <div class="catalog-filter-component">
     <input class="catalog-filter" placeholder="Filter..." />
   </div>
+  {% end %}
 
+  {% if not page.sidebar.hide_categories then %}
   <div class="catalog-categories-component">
-    <h5>Category</h5>
+    <h5>{{page.locale.catalog_categories_header_text or "Category"}}</h5>
 
     {% for tag, count in sortByKey(tags) do %}
     <a data-tag="{{tag:lower()}}" class="tag-link">
@@ -29,6 +32,7 @@
     </a>
     {% end %}
   </div>
+  {% end %}
 </div>
 
 <script type="text/javascript">

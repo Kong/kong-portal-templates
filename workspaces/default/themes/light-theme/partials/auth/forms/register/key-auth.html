@@ -1,0 +1,43 @@
+  <form id="register" data-type="key-auth">
+    {(partials/auth/custom-fields.html, context)}
+
+    <label for="email">{{page.locale.register_form_email_label}}</label>
+    <input id="email" type="text" name="email" required />
+
+    <label for="key">{{page.locale.register_form_key_label}}</label>
+    <input id="key" type="password" name="key" required />
+
+    <button
+      id="login-button"
+      class="button button-primary"
+      type="submit">{{page.locale.register_form_button_text}}</button>
+  </form>
+
+  <script type="text/javascript">
+    window.addEventListener("load", function () {
+      var $FORM = $("#register");
+      var $FORM_ERROR = $FORM.find(".form-error-message")
+
+      var API_URL = "http://localhost:8004/{{kong.config.WORKSPACE}}/auth";
+
+      // Determine whether to use Query String value or Default redirect value
+      var redirectToDefault = '{{site.auth.redirect_to}}'
+      var redirectToQueryValue = getParameterByName('redirectTo')
+      var redirectTo = redirectToQueryValue != null
+        ? redirectToQueryValue
+        : redirectToDefault
+
+      $FORM.submit(function (event) {
+        event.preventDefault();
+
+        var fields = {};
+
+        $FORM_ERROR.removeClass('is-visible').html('');
+        $FORM.serializeArray().forEach(function (field) {
+          fields[field.name] = field.value;
+        });
+
+        console.log(fields);
+      })
+    })
+  </script>
