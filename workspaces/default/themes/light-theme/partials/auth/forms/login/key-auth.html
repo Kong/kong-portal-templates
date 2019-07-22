@@ -25,7 +25,7 @@
       var redirectToQueryValue = getParameterByName('redirectTo')
       var redirectTo = redirectToQueryValue != null
         ? redirectToQueryValue
-        : redirectToDefault
+        : redirectToDefault === 'index' ? '' : redirectToDefault
 
       $FORM.submit(function (event) {
         event.preventDefault();
