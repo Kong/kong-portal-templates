@@ -65,6 +65,14 @@ a:hover {
   margin-bottom: 15px;
 }
 
+.field-error {
+  color: #e20c0c;
+}
+
+input.has-error {
+  border-color: #e20c0c;
+}
+
 /*****************************************
  * Component -- Primary Button
  *****************************************/

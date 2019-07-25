@@ -178,7 +178,7 @@
 
     $CATALOG_FILTER.on(
       "keydown",
-      debounce(function() {
+      Kong.Utils.debounce(function() {
         onInputFilter();
       }, 80)
     );

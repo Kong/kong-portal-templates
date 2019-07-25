@@ -14,55 +14,45 @@
   </form>
 
   <script type="text/javascript">
-    window.addEventListener("load", function () {
+    window.addEventListener("load", function() {
       var $FORM = $("#login");
       var $FORM_ERROR = $FORM.find(".form-error-message")
 
-      var API_URL = "http://localhost:8004/{{kong.config.WORKSPACE}}/auth";
 
-      // Determine whether to use Query String value or Default redirect value
-      var redirectToDefault = '{{site.auth.redirect_on_login}}'
-      var redirectToQueryValue = getParameterByName('redirectTo')
-      var redirectTo = redirectToQueryValue != null
-        ? redirectToQueryValue
-        : redirectToDefault
+      // Submission variables
+      var baseApiUrl = "http://localhost:8004/{{kong.config.WORKSPACE}}";
+      var authType = Kong.Auth.BASIC_AUTH;
+      var redirectTo =  Kong.Auth.getRedirectTo('{{site.auth.redirect_on_login}}')
 
-      // Support various homepage name values such as "homepage" or "home"
-      redirectTo = ['index','homepage','home'].indexOf(redirecTo) > -1
-        ? ''
-        : redirectTo
 
-      $FORM.submit(function (event) {
+      // Handle form state
+      var onSubmit = function() {
+        $FORM_ERROR
+          .removeClass('is-visible')
+          .html('');
+
+        Kong.Auth.login({
+          baseUrl: baseApiUrl,
+          type: authType,
+          fields: $FORM.serializeArray()
+        }).then(onSuccess).catch(onError)
+      }
+
+      var onSuccess = function() {
+        window.location.href = redirectTo;
+      }
+
+      var onError = function(data) {
+        $FORM_ERROR
+          .addClass('is-visible')
+          .html(data.message || 'An unexpected error occurred. Please try again.');
+      }
+
+
+      // Handle form button press
+      $FORM.on('submit', function(event) {
         event.preventDefault();
-
-        var fields = {};
-
-        $FORM_ERROR.removeClass('is-visible').html('');
-        $FORM.serializeArray().forEach(function (field) {
-          fields[field.name] = field.value;
-        });
-
-        $.ajax({
-          type: 'GET',
-          url: API_URL,
-          headers: {
-            "Authorization": "Basic " + btoa(
-              fields.username + ":" + fields.password
-            )
-          },
-
-          success: function(data) {
-            window.location.href = redirectTo;
-          },
-
-          error: function (xhr, ajaxOptions, throwError) {
-            if (xhr.responseJSON) {
-              $FORM_ERROR
-                .addClass('is-visible')
-                .html(xhr.responseJSON.message);
-            }
-          }
-        });
+        onSubmit();
       })
     })
   </script>

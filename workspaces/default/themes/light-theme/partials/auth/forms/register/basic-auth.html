@@ -1,11 +1,15 @@
   <form id="register" data-type="basic-auth">
+    <p class="form-error-message toggle-content"></p>
+
     {(partials/auth/custom-fields.html, context)}
 
     <label for="email">{{page.locale.register_form_email_label}}</label>
     <input id="email" type="text" name="email" required />
+    <p class="field-error toggle-content" for="email"></p>
 
     <label for="password">{{page.locale.register_form_password_label}}</label>
     <input id="password" type="password" name="password" required />
+    <p class="field-error toggle-content" for="password"></p>
 
     <button
       id="login-button"
@@ -17,32 +21,74 @@
     window.addEventListener("load", function () {
       var $FORM = $("#register");
       var $FORM_ERROR = $FORM.find(".form-error-message")
+      var fields = null
 
-      var API_URL = "http://localhost:8004/{{kong.config.WORKSPACE}}/auth";
 
-      // Determine whether to use Query String value or Default redirect value
-      var redirectToDefault = '{{site.auth.redirect_on_login}}'
-      var redirectToQueryValue = getParameterByName('redirectTo')
-      var redirectTo = redirectToQueryValue != null
-        ? redirectToQueryValue
-        : redirectToDefault
+      // Messaging
+      var accountIsPendingEmailVerificationMessage = 'Thank you for registering! Please check your email to verify your account.'
+      var accountisPendingVerificationMessage = 'Thank you for registering! Your account is under admin review. You will be emailed once approved.'
+      var fallbackErrorMessage = 'An unexpected error occurred. Please try again.'
 
-      // Support various homepage name values such as "homepage" or "home"
-      redirectTo = ['index','homepage','home'].indexOf(redirecTo) > -1
-        ? ''
-        : redirectTo
 
-      $FORM.submit(function (event) {
+      // Submission variables
+      var baseApiUrl = "http://localhost:8004/{{kong.config.WORKSPACE}}";
+      var authType = Kong.Auth.BASIC_AUTH;
+      var redirectTo =  Kong.Auth.getRedirectTo('{{site.auth.redirect_on_login}}')
+
+
+      // Handle form state
+      var onSubmit = function() {
+        Kong.Auth.register({
+          baseUrl: baseApiUrl,
+          type: authType,
+          fields: fields
+        }).then(onSuccess).catch(onError)
+      }
+
+      var onSuccess = function(data) {
+        var accountIsApproved = data.developer.status === 0
+        var accountIsPendingEmailVerfication = data.developer.status === 5
+
+        if (accountIsApproved) {
+          Kong.Auth.login({
+            baseUrl: baseApiUrl,
+            type: authType,
+            fields: fields
+          }).then(() => {
+            window.location.href = redirectTo;
+          }).catch(onError)
+        } else if (accountIsPendingEmailVerfication) {
+          alert(accountIsPendingEmailVerificationMessage)
+        } else {
+          alert(accountisPendingVerificationMessage)
+        }
+      }
+
+      var onError = function(data) {
+        var response = data.xhr.responseJSON
+        if (response && response.fields) {
+          for (var field in response.fields) {
+            $("input[name='" + field + "']")
+              .addClass('has-error')
+            $(".field-error[for='" + field + "']")
+              .addClass('is-visible')
+              .html(response.fields[field])
+          }
+        } else {
+          $FORM_ERROR
+            .addClass('is-visible')
+            .html(data.message || fallbackErrorMessage);
+        }
+      }
+
+
+      // Handle form button press
+      $FORM.on('submit', function(event) {
         event.preventDefault();
-
-        var fields = {};
-
-        $FORM_ERROR.removeClass('is-visible').html('');
-        $FORM.serializeArray().forEach(function (field) {
-          fields[field.name] = field.value;
-        });
-
-        console.log(fields);
+        $('.has-error').removeClass('has-error');
+        $('.is-visible').removeClass('is-visible').html('');
+        fields = $FORM.serializeArray()
+        onSubmit();
       })
     })
   </script>
