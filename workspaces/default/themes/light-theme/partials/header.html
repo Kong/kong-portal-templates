@@ -9,8 +9,14 @@
         <a class="nav-link" href="documentation">Service Catalog</a>
         <a class="nav-link" href="guides">Tutorials</a>
         <a class="nav-link" href="about">About</a>
-        <a class="nav-link" href="login">Login</a>
-        <a class="nav-button btn" href="register">Sign Up</a>
+
+        {% if not user then %}
+          <a class="nav-link" href="login">Login</a>
+          <a class="nav-button btn" href="register">Sign Up</a>
+        {% else %}
+          <a class="nav-button btn" href="dashboard">Dashboard</a>
+          <a class="nav-link" href="logout">Logout</a>
+        {% end %}
       </nav>
     </div>
   </div>

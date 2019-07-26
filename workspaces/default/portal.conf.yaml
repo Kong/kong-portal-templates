@@ -12,3 +12,6 @@ auth:
 
   # Redirect path without forward slash on successful login
   redirect_on_login: 'dashboard'
+
+  # Redirect path on logout
+  redirect_on_logout: 'logout'

@@ -1,0 +1,18 @@
+{% layout = "layouts/_base.html" %}
+
+{-main-}
+<script>
+var baseApiUrl = "http://localhost:8004/{{kong.config.WORKSPACE}}";
+
+window.addEventListener("load", function () {
+  Kong.Auth.logout({
+    baseUrl: baseApiUrl,
+    type: '{{kong.config.PORTAL_AUTH}}'
+  }).then(() => {
+    window.location.href = ''
+  }).catch((e) => {
+    {# window.location.href = '' #}
+  })
+})
+</script>
+{-main-}

@@ -1,7 +1,7 @@
 {% layout = "layouts/_base.html" %}
 
 {-main-}
-  <div class="auth-page">
+  <div class="page auth-page">
     <section class="left-pane">
       <div class="inner">
         <h3>{*(template.compile(page.locale.login_form_header)(context))*}</h3>
@@ -13,6 +13,10 @@
 
         {% if kong.config.PORTAL_AUTH == 'key-auth' then %}
           {(partials/auth/forms/login/key-auth.html, context)}
+        {% end %}
+
+        {% if kong.config.PORTAL_AUTH == 'openid-connect' then %}
+          {(partials/auth/forms/login/oidc.html, context)}
         {% end %}
 
         <p>{{page.locale.login_register_text}} <a href="register">{{page.locale.login_register_link_text}}</a>.</p>

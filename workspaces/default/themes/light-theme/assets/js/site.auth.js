@@ -14,6 +14,7 @@ Kong.Auth.REGISTER_ENDPOINT = 'register'
 
 
 Kong.Auth.BASIC_AUTH = {
+  NAME: "basic-auth",
   FIELDS: ['email', 'password'],
   getHeaders: function(fields) {
     return {
@@ -23,6 +24,7 @@ Kong.Auth.BASIC_AUTH = {
 }
 
 Kong.Auth.KEY_AUTH = {
+  NAME: "key-auth",
   FIELDS: ['email', 'key'],
   getHeaders: function(fields) {
     return {
@@ -32,10 +34,30 @@ Kong.Auth.KEY_AUTH = {
 }
 
 Kong.Auth.OIDC = {
+  NAME: "openid-connect",
   FIELDS: ['email'],
   getHeaders: function() {
     return {};
   }
+}
+
+Kong.Auth.getRedirectTo = function (redirectTo) {
+  var queryValue = Kong.Utils.getParameterByName('redirectTo')
+
+  // Query value or default value
+  redirectTo = queryValue != null ? queryValue : redirectTo
+
+  // Is it a redirect alias?
+  redirectTo = Kong.Auth.REDIRECT_ALIASES[redirectTo] || redirectTo
+
+  return redirectTo
+}
+
+
+Kong.Auth.loginWithOpenIdConnect = function(options) {
+  document.cookie = 'redirect=' + options.redirectTo + ';path=/;max-age=' + (5 * 60);
+  window.location.href = [options.baseUrl, Kong.Auth.LOGIN_ENDPOINT].join('/');
+  return;
 }
 
 
@@ -59,10 +81,46 @@ Kong.Auth.login = function(options) {
       },
 
       error: function(xhr, ajaxOptions, throwError) {
-        if (xhr.responseText != "OK") {
-          xhr.responseJSON = JSON.parse(xhr.responseText)
+        if (xhr.responseText && xhr.responseText != "OK") {
+          try {
+            xhr.responseJSON = JSON.parse(xhr.responseText)
+          } catch (e) {}
         }
 
+        rej({
+          message: xhr.responseJSON ? xhr.responseJSON.message : null,
+          xhr: xhr,
+          ajaxOptions: ajaxOptions,
+          throwError: throwError
+        });
+      }
+    });
+  })
+}
+
+
+Kong.Auth.logout = function(options) {
+  var baseUrl = [options.baseUrl, Kong.Auth.LOGIN_ENDPOINT].join('/')
+
+  if (options.type === 'openid-connect') {
+    window.location = baseUrl + '?logout=true'
+    return
+  }
+
+  return new Promise((res, rej) => {
+    $.ajax({
+      type: 'DELETE',
+      url: baseUrl + '?session_logout=true',
+      crossDomain: true,
+      xhrFields: {
+        withCredentials: true
+      },
+
+      success: function(data) {
+        return res(data);
+      },
+
+      error: function(xhr, ajaxOptions, throwError) {
         rej({
           message: xhr.responseJSON ? xhr.responseJSON.message : null,
           xhr: xhr,
@@ -111,17 +169,4 @@ Kong.Auth.register = function(options) {
       }
     });
   })
-}
-
-
-Kong.Auth.getRedirectTo = function (redirectTo) {
-  var queryValue = Kong.Utils.getParameterByName('redirectTo')
-
-  // Query value or default value
-  redirectTo = queryValue != null ? queryValue : redirectTo
-
-  // Is it a redirect alias?
-  redirectTo = Kong.Auth.REDIRECT_ALIASES[redirectTo] || redirectTo
-
-  return redirectTo
 }

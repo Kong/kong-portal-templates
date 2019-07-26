@@ -12,7 +12,11 @@
         {% end %}
 
         {% if kong.config.PORTAL_AUTH == 'key-auth' then %}
-          {(partials/auth/forms/login/key-auth.html, context)}
+          {(partials/auth/forms/register/key-auth.html, context)}
+        {% end %}
+
+        {% if kong.config.PORTAL_AUTH == 'openid-connect' then %}
+          {(partials/auth/forms/register/oidc.html, context)}
         {% end %}
 
         <p>{{page.locale.register_login_text}} <a href="login">{{page.locale.register_login_link_text}}</a>.</p>
