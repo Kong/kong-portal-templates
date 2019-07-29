@@ -1,10 +1,12 @@
-Kong = {}
-Kong.Utils = {}
+console.log(window.Kong)
+
+window.Kong = window.Kong || {}
+window.Kong.Utils = window.Kong.Utils || {}
 
 
 // Taken from underscore.js | MIT
 // Used for input keydown events
-Kong.Utils.debounce = function(func, wait, immediate) {
+window.Kong.Utils.debounce = function(func, wait, immediate) {
 	var timeout;
 	return function() {
 		var context = this, args = arguments;
@@ -23,7 +25,7 @@ Kong.Utils.debounce = function(func, wait, immediate) {
 // Taken from StackOverflow | MIT
 // Used for QueryString parsing (ES3+ supported)
 // See login/register forms for usage
-Kong.Utils.getParameterByName = function(name, url) {
+window.Kong.Utils.getParameterByName = function(name, url) {
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, '\\$&');
   var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -34,7 +36,7 @@ Kong.Utils.getParameterByName = function(name, url) {
 }
 
 
-Kong.Utils.serializeFieldsArrayToObject = function(fieldsArray) {
+window.Kong.Utils.serializeFieldsArrayToObject = function(fieldsArray) {
   var output = {}
 
   for (var i = 0; i < fieldsArray.length; i++) {

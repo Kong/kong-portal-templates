@@ -1,19 +1,19 @@
-Kong = Kong || {}
-Kong.Auth = Kong.Auth || {}
+window.Kong = window.Kong || {}
+window.Kong.Auth = window.Kong.Auth || {}
 
 
-Kong.Auth.REDIRECT_ALIASES = {
+window.Kong.Auth.REDIRECT_ALIASES = {
   'index': '',
   'homepage': '',
   'home': ''
 }
 
 
-Kong.Auth.LOGIN_ENDPOINT = 'auth'
-Kong.Auth.REGISTER_ENDPOINT = 'register'
+window.Kong.Auth.LOGIN_ENDPOINT = 'auth'
+window.Kong.Auth.REGISTER_ENDPOINT = 'register'
 
 
-Kong.Auth.BASIC_AUTH = {
+window.Kong.Auth.BASIC_AUTH = {
   NAME: "basic-auth",
   FIELDS: ['email', 'password'],
   getHeaders: function(fields) {
@@ -23,7 +23,7 @@ Kong.Auth.BASIC_AUTH = {
   }
 }
 
-Kong.Auth.KEY_AUTH = {
+window.Kong.Auth.KEY_AUTH = {
   NAME: "key-auth",
   FIELDS: ['email', 'key'],
   getHeaders: function(fields) {
@@ -33,7 +33,7 @@ Kong.Auth.KEY_AUTH = {
   }
 }
 
-Kong.Auth.OIDC = {
+window.Kong.Auth.OIDC = {
   NAME: "openid-connect",
   FIELDS: ['email'],
   getHeaders: function() {
@@ -41,35 +41,35 @@ Kong.Auth.OIDC = {
   }
 }
 
-Kong.Auth.getRedirectTo = function (redirectTo) {
-  var queryValue = Kong.Utils.getParameterByName('redirectTo')
+window.Kong.Auth.getRedirectTo = function (redirectTo) {
+  var queryValue = window.Kong.Utils.getParameterByName('redirectTo')
 
   // Query value or default value
   redirectTo = queryValue != null ? queryValue : redirectTo
 
   // Is it a redirect alias?
-  redirectTo = Kong.Auth.REDIRECT_ALIASES[redirectTo] || redirectTo
+  redirectTo = window.Kong.Auth.REDIRECT_ALIASES[redirectTo] || redirectTo
 
   return redirectTo
 }
 
 
-Kong.Auth.loginWithOpenIdConnect = function(options) {
+window.Kong.Auth.loginWithOpenIdConnect = function(options) {
   document.cookie = 'redirect=' + options.redirectTo + ';path=/;max-age=' + (5 * 60);
-  window.location.href = [options.baseUrl, Kong.Auth.LOGIN_ENDPOINT].join('/');
+  window.location.href = [options.baseUrl, window.Kong.Auth.LOGIN_ENDPOINT].join('/');
   return;
 }
 
 
-Kong.Auth.login = function(options) {
+window.Kong.Auth.login = function(options) {
   var type = options.type
-  var fields = Kong.Utils.serializeFieldsArrayToObject(options.fields)
+  var fields = window.Kong.Utils.serializeFieldsArrayToObject(options.fields)
 
   return new Promise((res, rej) => {
     $.ajax({
       type: 'GET',
       dataType: 'text',
-      url: [options.baseUrl, Kong.Auth.LOGIN_ENDPOINT].join('/'),
+      url: [options.baseUrl, window.Kong.Auth.LOGIN_ENDPOINT].join('/'),
       headers: type.getHeaders(fields),
       crossDomain: true,
       xhrFields: {
@@ -99,8 +99,8 @@ Kong.Auth.login = function(options) {
 }
 
 
-Kong.Auth.logout = function(options) {
-  var baseUrl = [options.baseUrl, Kong.Auth.LOGIN_ENDPOINT].join('/')
+window.Kong.Auth.logout = function(options) {
+  var baseUrl = [options.baseUrl, window.Kong.Auth.LOGIN_ENDPOINT].join('/')
 
   if (options.type === 'openid-connect') {
     window.location = baseUrl + '?logout=true'
@@ -133,7 +133,7 @@ Kong.Auth.logout = function(options) {
 }
 
 
-Kong.Auth.register = function(options) {
+window.Kong.Auth.register = function(options) {
   var type = options.type
   var fields = { meta: {} }
 
@@ -152,7 +152,7 @@ Kong.Auth.register = function(options) {
   return new Promise((res, rej) => {
     $.ajax({
       type: 'POST',
-      url: [options.baseUrl, Kong.Auth.REGISTER_ENDPOINT].join('/'),
+      url: [options.baseUrl, window.Kong.Auth.REGISTER_ENDPOINT].join('/'),
       data: fields,
 
       success: function(data) {

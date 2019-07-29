@@ -1,1 +1,1 @@
-Kong = {}
+window.Kong = {}

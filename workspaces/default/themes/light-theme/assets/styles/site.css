@@ -445,6 +445,7 @@ a.tag-link.is-active {
 /*****************************************
  * Page -- Service Catalog
  *****************************************/
+
 .service-catalog {
   padding: 2em;
 }
@@ -517,7 +518,7 @@ a.tag-link.is-active {
 }
 
 /*****************************************
- * Page -- Auth (Basic Auth / Key Auth)
+ * Page -- Auth (Basic Auth / Key Auth / OIDC)
  *****************************************/
 
 .auth-page {
@@ -576,10 +577,18 @@ a.tag-link.is-active {
 }
 
 /*****************************************
+ * Page -- Auth (Basic Auth / Key Auth / OIDC)
+ *****************************************/
+
+ .page.dashboard {
+   padding: 2em 0;
+ }
+
+/*****************************************
  * Utilities
  *****************************************/
 
- .page {
+.page {
   min-height: calc(100vh - 9.9em);
 }
 
