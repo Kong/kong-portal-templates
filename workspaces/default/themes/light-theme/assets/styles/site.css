@@ -141,6 +141,7 @@ input.has-error {
   }
   .site-header .menu-toggle-checkbox:checked + nav {
     display: block;
+    width: 92%;
     margin-top: 3em;
     position: absolute;
     z-index: 1;
@@ -161,8 +162,11 @@ input.has-error {
   .site-header .menu-toggle-checkbox:checked + nav > li:first-of-type a {
     border-radius: 3px 3px 0 0;
   }
-  .site-header .menu-toggle-checkbox:checked + nav li:last-of-type a {
+  .site-header .menu-toggle-checkbox:checked + nav li:not(.has-dropdown):last-of-type a {
     border-radius: 0 0 3px 3px;
+  }
+  .site-header .menu-toggle-checkbox:checked + nav .has-dropdown {
+    border-top: 1px solid #eee;
   }
   .site-header .nav-button {
     margin: 0;
