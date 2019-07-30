@@ -1,3 +1,6 @@
 layout: homepage.html
 title: Home
-tagline: Hello World
+
+hero:
+  title: Built with Kong
+  tagline: Empowering developers across the globe.
