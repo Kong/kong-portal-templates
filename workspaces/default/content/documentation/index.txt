@@ -1,4 +1,5 @@
 layout: catalog.html
+title: Service Catalog
 
 locale:
   catalog_no_results_header: "No Results Found"

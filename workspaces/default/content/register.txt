@@ -1,8 +1,6 @@
 layout: register.html
 title: Register
 
-login_path: "login"
-
 locale:
   register_form_header: "Create an account"
   register_form_content: >

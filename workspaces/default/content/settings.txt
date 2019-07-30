@@ -1,0 +1,2 @@
+layout: settings.html
+title: Account Settings

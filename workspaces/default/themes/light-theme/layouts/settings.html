@@ -1,0 +1,28 @@
+{% layout = "layouts/_page.html" %}
+
+{-content-}
+<div class="page dashboard">
+  <div id="portal-dashboard" page="settings"></div>
+</div>
+
+<style>
+.modal-footer {
+  padding: 15px 0 0 !important
+}
+
+.modal-footer button,
+.table-header button {
+  padding: 0 30px !important;
+}
+</style>
+
+<script>
+  window.addEventListener("load", function () {
+    window.Kong.Utils.getApiUrl = function () {
+      return "http://localhost:8004/{{kong.config.WORKSPACE}}"
+    }
+  })
+</script>
+
+<script src="/{{kong.workspace.name}}/assets/js/dashboard-d83a09f.min.js"></script>
+{-content-}
