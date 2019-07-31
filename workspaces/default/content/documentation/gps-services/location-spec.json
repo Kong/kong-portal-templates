@@ -1,5 +1,6 @@
 {
   "swagger": "2.0",
+  "layout": "render-spec.html",
   "info": {
     "version": "1.0.0",
     "title": "Location API",
