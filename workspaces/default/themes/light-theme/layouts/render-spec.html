@@ -5,45 +5,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.17.0/swagger-ui.css">
     <link href="assets/styles/swagger-ui-kong-theme.css" rel="stylesheet" />
 
-    <div id="ui-wrapper-new" >
+    <div id="ui-wrapper" >
         Loading....
     </div>
-    <div> {{ page.spec }} </div>
+    <!-- <div> {* require('cjson').encode(page) *} </div> -->
 
 
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script src="https://unpkg.com/swagger-ui-dist@3.23.1/swagger-ui-bundle.js"></script>
     <script src="assets/js/swagger-ui-kong-theme.min.js"></script>
     <script>
-      function parseSpec (contents) {
-        let parsedSpec // Set empty varible to hold spec
-        let errorArray = [] // Set empty array to hold any errors
-
-        // Try to parse spec as JSON
-        // If parse fails push json error message into errors array
-        try {
-          parsedSpec = JSON.parse(contents)
-        } catch (jsonError) {
-          errorArray.push('Error trying to parse JSON:<br>' + jsonError)
-
-          // Try to parse spec as YAML
-          // If parse fails push yaml error message into errors array
-          try {
-            parsedSpec = YAML.load(contents)
-          } catch (yamlError) {
-            errorArray.push('Error trying to parse YAML:<br>' + yamlError)
-          }
-        }
-
-        // If parsed is undefined return errors, else return the parsed spec file
-        return parsedSpec === undefined ? errorArray : parsedSpec
-      }
-
       window.onload = function () {
+        var spec = ( {* require("cjson").encode(page) *} )
         var swaggerUIOptions = {
-          url: "https://petstore.swagger.io/v2/swagger.json",
-          // spec: parseSpec(window._kong.spec.contents), // Define data to be used
-          dom_id: '#ui-wrapper-new', // Determine what element to load swagger ui
+          // url: "https://petstore.swagger.io/v2/swagger.json",
+          spec: spec, // Define data to be used
+          dom_id: '#ui-wrapper', // Determine what element to load swagger ui
           docExpansion: 'list',
           deepLinking: true, // Enables dynamic deep linking for tags and operations
           filter: true,
@@ -56,6 +33,10 @@
             SwaggerUIBundle.plugins.DownloadUrl
           ],
           layout: 'KongLayout',
+          theme: {
+            hasSidebar: true,
+            swaggerAbsoluteTop: "90px"
+          }
         }
 
         var ui = SwaggerUIBundle(swaggerUIOptions)

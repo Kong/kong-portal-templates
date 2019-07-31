@@ -106,9 +106,14 @@ input.has-error {
  *****************************************/
 
 .site-header {
+  position: fixed;
+  top: 0px;
+  width: 100%;
   background: var(--header, black);
   color: var(--header_text, white);
   padding: 2.5rem 0;
+  height: 90px;
+
 }
 
 .site-header h1,
