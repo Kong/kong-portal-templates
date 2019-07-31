@@ -1,31 +1,16 @@
-{%
-  function sortByKey (t, f)
-    local a = {}
-    for n in pairs(t) do table.insert(a, n) end
-    table.sort(a, f)
-    local i = 0                                   -- iterator variable
-    local iter = function ()                      -- iterator function
-      i = i + 1
-      if a[i] == nil then return nil
-      else return a[i], t[a[i]]
-      end
-    end
-    return iter
-  end
-%}
-
 <div class="catalog-sidebar">
-  {% if not page.sidebar.hide_filter then %}
+  {{ page("sidebar.hide_filter"):p() }}
+  {% if not page("sidebar.hide_filter")() then %}
   <div class="catalog-filter-component">
     <input class="catalog-filter" placeholder="Filter..." />
   </div>
   {% end %}
 
-  {% if not page.sidebar.hide_categories then %}
+  {% if not page("sidebar.hide_categories")() then %}
   <div class="catalog-categories-component">
-    <h5>{{page.locale.catalog_categories_header_text or "Category"}}</h5>
+    <h5>{{page("locale.catalog_categories_header_text")() or "Category"}}</h5>
 
-    {% for tag, count in sortByKey(tags) do %}
+    {% for tag, count in base():table(tags):pairs() do %}
     <a data-tag="{{tag:lower()}}" class="tag-link">
       <span class="tag-link--name">{{ tag }}</span>
       <span class="tag-link--count">{{ count }}</span>

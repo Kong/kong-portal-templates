@@ -10,7 +10,7 @@ hero:
     - Many desktop publishing packages and web page editors now use Lorem Ipsum.
 
 html: >
-  The hero title is {{page.hero.title}}
+  The hero title is {{page("hero.title")()}}
 
 team:
   title: Meet our (amazing) team

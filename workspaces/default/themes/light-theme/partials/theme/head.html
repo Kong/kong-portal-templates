@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{site.name}} - {{page.title}}</title>
-    <base href="/{{kong.workspace.name}}/" />
+    <title>{{portal():name()()}} - {{page("title")()}}</title>
+    <base href="{{portal():urls():gui():path()()}}/" />
     {(partials/theme/style.html)}
     <link href="assets/styles/normalize.min.css" rel="stylesheet" />
     <link href="assets/styles/framework.min.css" rel="stylesheet" />

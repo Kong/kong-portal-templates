@@ -4,31 +4,31 @@
   <div class="auth-page">
     <section class="left-pane">
       <div class="inner">
-        <h3>{*(template.compile(page.locale.register_form_header)(context))*}</h3>
-        <p>{*(template.compile(page.locale.register_form_content)(context))*}</p>
+        <h3>{*(template.compile(page("locale.register_form_header")())(context)*}</h3>
+        <p>{*(template.compile(page("locale.register_form_content")())(context)*}</p>
 
-        {% if kong.config.PORTAL_AUTH == 'basic-auth' then %}
+        {% if portal():config("portal_auth")() == 'basic-auth' then %}
           {(partials/auth/forms/register/basic-auth.html, context)}
         {% end %}
 
-        {% if kong.config.PORTAL_AUTH == 'key-auth' then %}
+        {% if portal():config("portal_auth")() == 'key-auth' then %}
           {(partials/auth/forms/register/key-auth.html, context)}
         {% end %}
 
-        {% if kong.config.PORTAL_AUTH == 'openid-connect' then %}
+        {% if portal():config("portal_auth")() == 'openid-connect' then %}
           {(partials/auth/forms/register/oidc.html, context)}
         {% end %}
 
-        <p>{{page.locale.register_login_text}} <a href="login">{{page.locale.register_login_link_text}}</a>.</p>
-        <p><a href="">{{page.locale.register_home_link_text}}</a></p>
+        <p>{{page("locale.register_login_text")()}} <a href="login">{{page("locale.register_login_link_text")()}}</a>.</p>
+        <p><a href="">{{page("locale.register_home_link_text"()()}}</a></p>
       </div>
     </section>
 
     <section class="right-pane">
       <div class="inner">
         <img src="assets/images/auth-placeholder.svg" />
-        <h4>{*(template.compile(page.locale.register_side_header)(context))*}</h4>
-        <p>{*(template.compile(page.locale.register_side_content)(context))*}</p>
+        <h4>{*(template.compile(page("locale.register_side_header")())(context))*}</h4>
+        <p>{*(template.compile(page("locale.register_side_content")())(context))*}</p>
       </div>
     </section>
   </div>

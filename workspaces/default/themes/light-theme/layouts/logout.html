@@ -2,12 +2,12 @@
 
 {-main-}
 <script>
-var baseApiUrl = "http://localhost:8004/{{kong.config.WORKSPACE}}";
+var baseApiUrl = "portal():urls():api()()}}";
 
 window.addEventListener("load", function () {
   Kong.Auth.logout({
     baseUrl: baseApiUrl,
-    type: '{{kong.config.PORTAL_AUTH}}'
+    type: '{{portal():config("auth")()}}'
   }).then(() => {
     window.location.href = ''
   }).catch((e) => {

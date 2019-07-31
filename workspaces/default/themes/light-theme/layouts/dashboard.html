@@ -19,10 +19,10 @@
 <script>
   window.addEventListener("load", function () {
     window.Kong.Utils.getApiUrl = function () {
-      return "http://localhost:8004/{{kong.config.WORKSPACE}}"
+      return "{{portal():urls():api()()}}"
     }
   })
 </script>
 
-<script src="/{{kong.workspace.name}}/assets/js/dashboard-d83a09f.min.js"></script>
+<script src="/{{portal():urls():gui():path()()}}/assets/js/dashboard-d83a09f.min.js"></script>
 {-content-}

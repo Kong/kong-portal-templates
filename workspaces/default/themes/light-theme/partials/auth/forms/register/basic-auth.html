@@ -1,20 +1,20 @@
-  <form id="register" data-type="basic-auth">
+  <!-- <form id="register" data-type="basic-auth">
     <p class="form-error-message toggle-content"></p>
 
     {(partials/auth/custom-fields.html, context)}
 
-    <label for="email">{{page.locale.register_form_email_label}}</label>
+    <label for="email">{{page("locale.register_form_email_label")()}}</label>
     <input id="email" type="text" name="email" required />
     <p class="field-error toggle-content" for="email"></p>
 
-    <label for="password">{{page.locale.register_form_password_label}}</label>
+    <label for="password">{{page("locale.register_form_password_label")()}}</label>
     <input id="password" type="password" name="password" required />
     <p class="field-error toggle-content" for="password"></p>
 
     <button
       id="login-button"
       class="button button-primary"
-      type="submit">{{page.locale.register_form_button_text}}</button>
+      type="submit">{{page("locale.register_form_button_text")()}}</button>
   </form>
 
   <script type="text/javascript">
@@ -31,9 +31,9 @@
 
 
       // Submission variables
-      var baseApiUrl = "http://localhost:8004/{{kong.config.WORKSPACE}}";
+      var baseApiUrl = "{{portal():urls():api()()}}";
       var authType = Kong.Auth.BASIC_AUTH;
-      var redirectTo =  Kong.Auth.getRedirectTo('{{site.auth.redirect_on_login}}')
+      var redirectTo =  Kong.Auth.getRedirectTo('{{portal():redirect("login")()}}')
 
 
       // Handle form state
@@ -91,4 +91,4 @@
         onSubmit();
       })
     })
-  </script>
+  </script> -->

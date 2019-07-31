@@ -1,12 +1,11 @@
 layout: register.html
 title: Register
-
 locale:
   register_form_header: "Create an account"
   register_form_content: >
       Enter your information below to create an account.
 
-  register_side_header: "Welcome to {{site.name}}"
+  register_side_header: "Welcome to {{portal():name()()}}"
   register_side_content: >
       Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm.
       Lorem ipsum dolor sit amet, consectetuer adipiscing elit.

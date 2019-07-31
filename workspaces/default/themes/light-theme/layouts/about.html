@@ -5,9 +5,9 @@
     <section class="about-hero">
       <div class="container">
         <h6>About Us</h6>
-        <h2>{{page.hero.title}}</h2>
+        <h2>{{page("hero.title")()}}</h2>
         <ul>
-          {% for _, point in ipairs(page.hero.points) do %}
+          {% for _, point in page("hero.points"):pairs() do %}
             <li>{*point*}</li>
           {% end %}
         </ul>
@@ -16,12 +16,12 @@
 
     <section class="about-team">
       <div class="container">
-        <h4>{{page.team.title}}</h4>
-        <p>{*page.team.slogan*}</p>
+        <h4>{{page("team.title")()}}</h4>
+        <p>{*page("team.slogan")()*}</p>
 
         <div class="team-members">
           <div class="row">
-          {% for _, member in ipairs(page.team.members) do %}
+          {% for _, member in page("team.members"):pairs() do %}
             <div class="three columns">
               <div class="team-member">
                 <div class="member-image">

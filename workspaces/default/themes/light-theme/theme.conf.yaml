@@ -1,8 +1,5 @@
 name: "Kong"
 
-auth:
-  redirect_on_login: 'dashboard'
-
 fonts:
   base: "Roboto"
   code: "Roboto Mono"

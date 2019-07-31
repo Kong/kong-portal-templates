@@ -3,14 +3,14 @@
 
     {(partials/auth/custom-fields.html, context)}
 
-    <label for="email">{{page.locale.register_form_email_label}}</label>
+    <label for="email">{{page("locale.register_form_email_label")()}}</label>
     <input id="email" type="text" name="email" required />
     <p class="field-error toggle-content" for="email"></p>
 
     <button
       id="login-button"
       class="button button-primary"
-      type="submit">{{page.locale.register_form_button_text}}</button>
+      type="submit">{{page("locale.register_form_button_text")()}}</button>
   </form>
 
   <script type="text/javascript">
@@ -27,7 +27,7 @@
 
 
       // Submission variables
-      var baseApiUrl = "http://localhost:8004/{{kong.config.WORKSPACE}}";
+      var baseApiUrl = "{{portal():urls():api()()}}";
       var authType = Kong.Auth.OIDC;
 
 
@@ -45,7 +45,7 @@
         var accountIsPendingEmailVerfication = data.developer.status === 5
 
         if (accountIsApproved) {
-          window.location.href = "{{page.login_path}}";
+          window.location.href = "{{page():redirect('login')()}}";
         } else if (accountIsPendingEmailVerfication) {
           alert(accountIsPendingEmailVerificationMessage)
         } else {

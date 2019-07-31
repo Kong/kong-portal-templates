@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="four columns">
-        <h1 class="brand"><a href="#"><img src="assets/images/logo-white.svg" alt="{{site.name}}" /></a></h1>
+        <h1 class="brand"><a href="#"><img src="assets/images/logo-white.svg" alt="{{portal():name()()}}" /></a></h1>
       </div>
 
       <nav class="eight columns">
@@ -10,12 +10,12 @@
         <li><a href="guides">Tutorials</a></li>
         <li><a href="about">About</a></li>
 
-        {% if not user then %}
+        {% if not user():is_authenticated()() then %}
           <li><a href="login">Login</a></li>
           <li><a class="nav-button btn" href="register">Sign Up</a></li>
         {% else %}
           <li class="has-dropdown">
-            <a href="settings">{{user.email}}</a>
+            <a href="settings">{{user():info("email")()}}</a>
             <ul class="dropdown">
               <li><a href="dashboard">Dashboard</a></li>
               <li><a href="logout">Logout</a></li>
