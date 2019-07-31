@@ -2,10 +2,12 @@
   <div class="container">
     <div class="row">
       <div class="four columns">
+        <label for="header_nav" class="menu-toggle">Menu</label>
         <h1 class="brand"><a href="#"><img src="assets/images/logo-white.svg" alt="{{portal():name()()}}" /></a></h1>
       </div>
 
-      <nav class="eight columns">
+      <input type="checkbox" id="header_nav" class="menu-toggle-checkbox" />
+      <nav class="eight columns" role="navigation">
         <li><a href="documentation">Service Catalog</a></li>
         <li><a href="guides">Tutorials</a></li>
         <li><a href="about">About</a></li>
@@ -15,8 +17,8 @@
           <li><a class="nav-button btn" href="register">Sign Up</a></li>
         {% else %}
           <li class="has-dropdown">
-            <a href="settings">{{user():info("email")()}}</a>
-            <ul class="dropdown">
+            <a href="settings" aria-haspopup="true">{{user():info():val("email")()}}</a>
+            <ul class="dropdown" aria-label="submenu">
               <li><a href="dashboard">Dashboard</a></li>
               <li><a href="logout">Logout</a></li>
             </ul>
