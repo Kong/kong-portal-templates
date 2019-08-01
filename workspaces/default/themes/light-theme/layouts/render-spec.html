@@ -3,12 +3,12 @@
 {-content-}
   <div >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.17.0/swagger-ui.css">
+    <link href="assets/styles/framework-overrides.css" rel="stylesheet" />
     <link href="assets/styles/swagger-ui-kong-theme.css" rel="stylesheet" />
 
     <div id="ui-wrapper" >
         Loading....
     </div>
-    <!-- <div> {* require('cjson').encode(page) *} </div> -->
 
 
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
@@ -16,10 +16,9 @@
     <script src="assets/js/swagger-ui-kong-theme.min.js"></script>
     <script>
       window.onload = function () {
-        var spec = ( {* require("cjson").encode(page) *} )
         var swaggerUIOptions = {
           // url: "https://petstore.swagger.io/v2/swagger.json",
-          spec: spec, // Define data to be used
+          spec: {* page():json_encode()() *} , // Define data to be used
           dom_id: '#ui-wrapper', // Determine what element to load swagger ui
           docExpansion: 'list',
           deepLinking: true, // Enables dynamic deep linking for tags and operations
