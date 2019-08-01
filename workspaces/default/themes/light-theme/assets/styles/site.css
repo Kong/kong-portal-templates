@@ -108,11 +108,11 @@ input.has-error {
 .site-header {
   top: 0px;
   width: 100%;
+  position: fixed;
   background: var(--header, black);
   color: var(--header_text, white);
   padding: 2.5rem 0;
   height: 90px;
-
 }
 
 .site-header h1,
@@ -190,22 +190,22 @@ input.has-error {
   .site-header nav {
     text-align: right;
   }
-  
+
   .site-header nav {
     display: block;
     padding-top: .3em;
   }
-  
+
   .site-header nav li a:not(.nav-button) {
     padding: .5em .8em;
     color: var(--header_text, inherit);
   }
-  
+
   .site-header nav li a.nav-button {
     background: var(--header_button, rgba(0, 0, 0, 0.2));
     color: var(--header_text, inherit);
   }
-  
+
   .site-header .menu-toggle {
     display: none;
   }
@@ -214,7 +214,7 @@ input.has-error {
     margin-left: 1rem;
     margin-right: 0;
   }
-  
+
   /* Dropdown Menus */
   .site-header nav li {
     position: relative;
@@ -222,11 +222,11 @@ input.has-error {
     margin-bottom: 0;
     transition-duration: 0.5s;
   }
-   
+
   .site-header nav li:hover {
     cursor: pointer;
   }
-   
+
   .site-header nav li ul {
     visibility: hidden;
     opacity: 0;
@@ -240,19 +240,19 @@ input.has-error {
     padding-top: 1em;
     display: none;
   }
-  
+
   .site-header nav > .has-dropdown:hover > a {
     background: rgba(255,255,255,0.15);
     border-radius: 3px;
   }
-   
+
   .site-header nav li:hover > ul,
   .site-header nav li ul:hover {
     visibility: visible;
     opacity: 1;
     display: block;
   }
-  
+
   /* Keyboard user support */
   .site-header nav li:focus-within > ul {
     visibility: visible;
@@ -264,7 +264,7 @@ input.has-error {
     clear: both;
     width: 100%;
   }
-  
+
   .site-header nav li ul li a:not(.nav-button) {
     padding: .5em 1em;
     width: 100%;
@@ -272,15 +272,15 @@ input.has-error {
     color: var(--accent_500, blue);
     display: block;
   }
-  
+
   .site-header nav li ul li a:not(.nav-button):hover {
     background: var(--accent_100, #f1f1f1);
   }
-  
+
   .site-header nav li ul li:first-of-type a {
     border-radius: 3px 3px 0 0;
   }
-  
+
   .site-header nav li ul li:last-of-type a {
     border-radius: 0 0 3px 3px;
   }
@@ -291,6 +291,11 @@ input.has-error {
  *****************************************/
 
 .site-footer {
+  position: absolute;
+  width: 100%;
+  /* swagger-ui-kong-theme sidebar has z-index: 15 */
+  z-index: 20;
+  bottom: 0;
   background: var(--header, black);
   color: var(--header_text, rgba(255,255,255,0.45));
   padding: 2.5rem 0;
@@ -727,7 +732,9 @@ a.tag-link.is-active {
  *****************************************/
 
 .page {
-  min-height: calc(100vh - 9.9em);
+  /* 90px for header 74px for footer */
+  min-height: calc(100vh - 90px - 74px);
+  padding-top: 90px;
 }
 
 .align-container {
