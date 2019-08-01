@@ -291,8 +291,7 @@ input.has-error {
  *****************************************/
 
 .site-footer {
-  position: absolute;
-  width: 100%;
+  position: relative;
   /* swagger-ui-kong-theme sidebar has z-index: 15 */
   z-index: 20;
   bottom: 0;
@@ -489,13 +488,14 @@ a.tag-link.is-active {
  * Page -- Homepage
  *****************************************/
 
+
+/*
 .homepage .site-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  commented out for now, because of bringing .page to homepage
+  may bring back later.
   background: transparent;
 }
+*/
 
 /*
  * Homepage Component -- Hero
@@ -733,7 +733,7 @@ a.tag-link.is-active {
 
 .page {
   /* 90px for header 74px for footer */
-  min-height: calc(100vh - 90px - 74px);
+  min-height: calc(100vh - 74px);
   padding-top: 90px;
 }
 
