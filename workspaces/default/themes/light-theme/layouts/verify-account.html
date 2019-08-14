@@ -1,22 +1,28 @@
 {% layout = "layouts/_page.html" %}
 
 {-content-}
-  <div class="container">
-    {% if developer then %}
-      {% if developer.status == 0 then %}
-        <h1>Account Verified</h1>
-        <p>Your account has been verified.</p>
-        <a class="button" href="login">Go to Login</a>
-      {% else %}
-        <h1>Account Verified, Pending Approval</h1>
-        <p>Thank you for verifying your email.</p>
-        <p>Your account is pending approval. We will email when your account is approved.</p>
-        <a class="button" href="">Back to homepage</a>
-      {% end %}
-    {% else %}
-      <h1>Invalid Verification Request</h1>
-      <p>The code you used is no longer valid.</p>
-      <a class="button" href="resend-verification">Resend Verification Code</a>
-    {% end %}
-  </div>
+<div class="page dashboard">
+  <div id="portal-dashboard" page="verify-account"></div>
+</div>
+
+<style>
+.modal-footer {
+  padding: 15px 0 0 !important
+}
+
+.modal-footer button,
+.table-header button {
+  padding: 0 30px !important;
+}
+</style>
+
+<script>
+  window.addEventListener("load", function () {
+    window.Kong.Utils.getApiUrl = function () {
+      return "{{portal():urls():api()()}}"
+    }
+  })
+</script>
+
+<script src="{{portal():urls():gui():path()()}}/assets/js/dashboard-d83a09f.min.js"></script>
 {-content-}
