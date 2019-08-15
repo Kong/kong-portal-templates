@@ -1,5 +1,3 @@
-console.log(window.Kong)
-
 window.Kong = window.Kong || {}
 window.Kong.Utils = window.Kong.Utils || {}
 
