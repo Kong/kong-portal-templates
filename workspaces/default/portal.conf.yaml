@@ -1,18 +1,27 @@
+# Portal site name
+# @required
 name: 'kong portal'
 
+# Portal theme configuration
+# @required
 theme:
+  # Theme to be used
+  # @required
   name: 'light-theme'
 
   # List of overrides for the theme colors
-  # Theme colors can be found under the theme's theme.conf.yaml
-  # colors:
-  #   - accent_900: "#000"
+  # @note Theme colors can be found under the theme's theme.conf.yaml
+  #colors:
+  #  - accent_900: "#000"
 
   # List of overrides for the theme fonts
-  # Theme fonts can be found under the theme's theme.conf.yaml
-  # fonts:
-  #   - base: "Roboto"
+  # @note Theme fonts can be found under the theme's theme.conf.yaml
 
+  #fonts:
+  #  - base: "Roboto"
+
+# Portal auth redirects
+# @required
 redirect:
   # Redirect path without forward slash when user is not logged in,
   # and content requires permission to access content
