@@ -12,17 +12,19 @@
         <li><a href="guides">Tutorials</a></li>
         <li><a href="about">About</a></li>
 
-        {% if not user():is_authenticated()() then %}
-          <li><a href="login">Login</a></li>
-          <li><a class="nav-button btn" href="register">Sign Up</a></li>
-        {% else %}
-          <li class="has-dropdown">
-            <a href="settings" aria-haspopup="true">{{user():info():val("email")}}</a>
-            <ul class="dropdown" aria-label="submenu">
-              <li><a href="dashboard">Dashboard</a></li>
-              <li><a href="logout">Logout</a></li>
-            </ul>
-          </li>
+        {% if portal():config("auth")() and portal():config("auth")() ~= "" then %}
+          {% if not user():is_authenticated()() then %}
+            <li><a href="login">Login</a></li>
+            <li><a class="nav-button btn" href="register">Sign Up</a></li>
+          {% else %}
+            <li class="has-dropdown">
+              <a href="settings" aria-haspopup="true">{{user():info("email")()}}</a>
+              <ul class="dropdown" aria-label="submenu">
+                <li><a href="dashboard">Dashboard</a></li>
+                <li><a href="logout">Logout</a></li>
+              </ul>
+            </li>
+          {% end %}
         {% end %}
       </nav>
     </div>

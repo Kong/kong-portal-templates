@@ -121,6 +121,11 @@ window.Kong.Auth.logout = function(options) {
       },
 
       error: function(xhr, ajaxOptions, throwError) {
+        // when response is empty, Jquery throws error
+        if (xhr.responseText === "") {
+          return res({});
+        }
+
         rej({
           message: xhr.responseJSON ? xhr.responseJSON.message : null,
           xhr: xhr,

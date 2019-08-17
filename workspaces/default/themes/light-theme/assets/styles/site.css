@@ -507,7 +507,7 @@ a.tag-link.is-active {
   text-align: center;
 
   background: var(--header, #000000);
-  background-image: url("/{{portal():urls():gui():path()()}}/assets/images/bg-pattern.svg");
+  background-image: url("{*portal():urls():gui():path()()*}/assets/images/bg-pattern.svg");
   color: var(--header_text, #FFFFFF);
 }
 

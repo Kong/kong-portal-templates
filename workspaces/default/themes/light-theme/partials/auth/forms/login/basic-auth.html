@@ -22,9 +22,9 @@
 
 
       // Submission variables
-      var baseApiUrl = "portal():urls():api()()";
+      var baseApiUrl = "{*portal():urls():api()()*}";
       var authType = Kong.Auth.BASIC_AUTH;
-      var redirectTo =  Kong.Auth.getRedirectTo('{{portal():redirect("login")}}')
+      var redirectTo =  Kong.Auth.getRedirectTo('{{portal():redirect("login")()}}')
 
 
       // Handle form state

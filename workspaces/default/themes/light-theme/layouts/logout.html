@@ -2,16 +2,19 @@
 
 {-main-}
 <script>
-var baseApiUrl = "portal():urls():api()()}}";
+var baseApiUrl = "{*portal():urls():api()()*}";
 
 window.addEventListener("load", function () {
+  var redirectTo = Kong.Auth.getRedirectTo('{{portal():redirect("logout")()}}')
+
   Kong.Auth.logout({
     baseUrl: baseApiUrl,
     type: '{{portal():config("auth")()}}'
   }).then(() => {
-    window.location.href = ''
+    window.location.href = redirectTo
   }).catch((e) => {
-    {# window.location.href = '' #}
+    // TODO handle actual error
+    window.location.href = redirectTo
   })
 })
 </script>

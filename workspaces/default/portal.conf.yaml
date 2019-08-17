@@ -19,7 +19,7 @@ redirect:
   login: 'dashboard'
   # Redirect path without forward slash on successful login
 
-  logout: 'logout'
+  logout: ''
   # Redirect path on logout
 
 # config:
@@ -35,7 +35,7 @@ redirect:
                               #
                               #       portal_auth = openid-connect
 
-  #auth_conf: 
+  #auth_conf:
                               # Developer Portal Authentication Plugin Config (JSON)
                               #
                               # Here you may specify the plugin configuration object
@@ -107,7 +107,7 @@ redirect:
                               # associated with the account.
                               # Default `nil`
 
-  #emails_reply_to: 
+  #emails_reply_to:
                               # Email address for the `Reply-To` header for
                               # portal emails
                               #
