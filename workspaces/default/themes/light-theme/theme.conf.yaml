@@ -1,10 +1,13 @@
+# Site name.
 name: "Kong"
 
+# List of theme fonts. Required.
 fonts:
   base: "Roboto"
   code: "Roboto Mono"
   headings: "Lato"
 
+# List of theme colors. Required.
 colors:
   accent_900: "#0653b2"
   accent_500: "#0a68cd"

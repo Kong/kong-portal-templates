@@ -2,119 +2,28 @@ name: 'kong portal'
 
 theme:
   name: 'light-theme'
+
+  # List of overrides for the theme colors
+  # Theme colors can be found under the theme's theme.conf.yaml
   # colors:
-  #   # list of color overrides
+  #   - accent_900: "#000"
+
+  # List of overrides for the theme fonts
+  # Theme fonts can be found under the theme's theme.conf.yaml
   # fonts:
-  #   # list of font overrides
+  #   - base: "Roboto"
 
 redirect:
-  unauthenticated: 'login'
   # Redirect path without forward slash when user is not logged in,
   # and content requires permission to access content
+  unauthenticated: 'login'
 
-  unauthorized: 'unauthorized'
   # Redirect path without forward slash when user is logged in,
   # and doesn't have required permissions to access content
+  unauthorized: 'unauthorized'
 
-  login: 'dashboard'
   # Redirect path without forward slash on successful login
+  login: 'dashboard'
 
-  logout: ''
   # Redirect path on logout
-
-# config:
-  #auth:
-                              # Developer Portal Authentication Plugin Name
-                              # Supported Plugins:
-                              #
-                              #   - Basic Authentication:
-                              #
-                              #       portal_auth = basic-auth
-                              #
-                              #   - OIDC Authentication:
-                              #
-                              #       portal_auth = openid-connect
-
-  #auth_conf:
-                              # Developer Portal Authentication Plugin Config (JSON)
-                              #
-                              # Here you may specify the plugin configuration object
-                              # in JSON format to be applied to your Developer
-                              # Portal authentication.
-                              #
-                              # For information about Plugin Configuration
-                              # consult the associated plugin documentation.
-                              #
-                              # Example for `basic-auth`:
-                              #
-                              #  portal_auth_conf = { "hide_credentials": true }
-
-  #session_conf:
-                              #
-                              # Here you may specify the configuration for the
-                              # Session plugin as used by Kong Portal.
-                              #
-                              # For information about Plugin Configuration consult
-                              # the Kong Session Plugin documentation.
-                              #
-                              # Example:
-                              #
-                              # portal_session_conf = { "cookie_name": "portal_session", \
-                              #                          "secret": "changeme", \
-                              #                          "storage": "kong" }
-
-  #auto_approve:
-                              # Developer Portal Auto Approve Access
-                              #
-                              # When this flag is set to "on", a developer will
-                              # automatically be marked as "approved" after completing
-                              # registration. Access can still be revoked through the
-                              # Admin GUI or API.
-  #token_exp:
-                              # Duration in seconds for the expiration of portal
-                              # reset token.
-                              # Default `21600` (6 hours)
-
-  #invite_email:
-                              # Enable or disable portal_invite_email
-                              # Default `true`
-
-  #access_request_email:
-                              # Enable or disable portal_access_request_email
-                              # Default `true`
-
-  #approved_email:
-                              # Enable or disable portal_approved_email
-                              # Default `true`
-
-  #reset_email:
-                              # Enable or disable portal_reset_email
-                              # Default `true`
-
-  #reset_success_email:
-                              # Enable or disable portal_reset_success_email
-                              # Default `true`
-
-  #emails_from:
-                              # The name and email address for the `From` header
-                              # for portal emails
-                              #
-                              # Example
-                              # portal_emails_from = Your Name <example@example.com>
-                              #
-                              # Note: Some SMTP servers will not use
-                              # this value, but instead insert the email and name
-                              # associated with the account.
-                              # Default `nil`
-
-  #emails_reply_to:
-                              # Email address for the `Reply-To` header for
-                              # portal emails
-                              #
-                              # Example
-                              # portal_emails_reply_to = example@example.com
-                              #
-                              # Note: Some SMTP servers will not use
-                              # this value, but instead insert the email
-                              # associated with the account.
-                              # Default `nil`
+  logout: ''
