@@ -16,7 +16,6 @@ theme:
 
   # List of overrides for the theme fonts
   # @note Theme fonts can be found under the theme's theme.conf.yaml
-
   #fonts:
   #  - base: "Roboto"
 
