@@ -27,7 +27,7 @@
 
 
       // Submission variables
-      var baseApiUrl = "{*portal():urls():api()()*}";
+      var baseApiUrl = window.Kong.getApiUrl();
       var authType = Kong.Auth.OIDC;
 
 

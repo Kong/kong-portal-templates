@@ -113,6 +113,7 @@ input.has-error {
   color: var(--header_text, white);
   padding: 2.5rem 0;
   height: 90px;
+  z-index: 90;
 }
 
 .site-header h1,
@@ -232,7 +233,7 @@ input.has-error {
     opacity: 0;
     position: absolute;
     transition: all 0.5s ease;
-    z-index: 1;
+    z-index: 99;
     left: 0;
     right: 0;
     border-radius: 8px;

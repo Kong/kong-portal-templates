@@ -3,6 +3,26 @@
     <script src="assets/js/site.js"></script>
     <script src="assets/js/site.utils.js"></script>
     <script src="assets/js/site.auth.js"></script>
+    <script>
+      // Get api url
+      window.Kong.getApiUrl = window.Kong.Utils.getApiUrl = function () {
+        const API_PORT = window.location.protocol.toLowerCase() === 'https:'
+          ? '{*kong():config()().PORTAL_API_SSL_PORT*}'
+          : '{*kong():config()().PORTAL_API_PORT*}'
+
+        let url = "{*portal():urls()().api*}"
+        if (!url) {
+          url = `${window.location.protocol}//${window.location.hostname}:${API_PORT}`
+        }
+
+        return url
+      }
+
+      // Get portal authentication type
+      window.Kong.Utils.getAuthType = function() {
+        return "{{portal():config('auth')()}}"
+      }
+    </script>
     {* blocks.page_js *}
   </body>
 </html>
