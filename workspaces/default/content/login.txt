@@ -1,4 +1,4 @@
-layout: login.html
+layout: system/login.html
 title: Login
 
 locale:

@@ -1,0 +1,29 @@
+{# /!\ REQUIRED SCRIPTS. REMOVE / EDIT AT OWN RISK. /!\ #}
+<script src="assets/js/third-party/jquery.min.js"></script>
+<script src="assets/js/kong/kong.js"></script>
+<script src="assets/js/kong/kong.utils.js"></script>
+<script src="assets/js/kong/kong.auth.js"></script>
+
+<script>
+  // Build API url when not set
+  // /!\ If using subdomains, please set PORTAL_API_URL in `kong.conf`. /!\
+  window.Kong.getApiUrl = window.Kong.Utils.getApiUrl = function () {
+    const API_PORT = window.location.protocol.toLowerCase() === 'https:'
+      ? '{*kong():config()().PORTAL_API_SSL_PORT*}'
+      : '{*kong():config()().PORTAL_API_PORT*}'
+
+    let url = "{*portal():urls()().api*}"
+    if (!url) {
+      url = `${window.location.protocol}//${window.location.hostname}:${API_PORT}`
+    }
+
+    return url + `/{*kong():config()().WORKSPACE*}`
+  }
+
+
+  // Get portal authentication type
+  window.Kong.Utils.getAuthType = function() {
+    return "{{portal():config('auth')()}}"
+  }
+</script>
+{# /!\ REQUIRED SCRIPTS. REMOVE / EDIT AT OWN RISK. /!\ #}

@@ -1,2 +1,2 @@
-layout: dashboard.html
+layout: system/dashboard.html
 title: Dashboard

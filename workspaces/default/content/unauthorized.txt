@@ -1,1 +1,1 @@
-layout: unauthorized.html
+layout: system/401.html

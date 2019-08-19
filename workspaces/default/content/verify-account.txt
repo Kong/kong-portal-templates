@@ -1,1 +1,1 @@
-layout: verify-account.html
+layout: system/verify-account.html

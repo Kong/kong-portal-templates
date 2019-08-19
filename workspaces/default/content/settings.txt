@@ -1,2 +1,2 @@
-layout: settings.html
+layout: system/settings.html
 title: Account Settings

@@ -1,2 +1,2 @@
-layout: logout.html
+layout: system/logout.html
 title: Logout
