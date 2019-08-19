@@ -1,6 +1,5 @@
 {
   "swagger": "2.0",
-  "readable_by": ["nope"],
   "layout": "render-spec.html",
   "info": {
     "version": "1.0.0",
