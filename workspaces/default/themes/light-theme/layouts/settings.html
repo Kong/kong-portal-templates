@@ -18,6 +18,10 @@
 
 <script>
   window.addEventListener("load", function () {
+    window.Kong.Utils.getAuthType = function() {
+      return "{{portal():config('auth')()}}"
+    }
+
     window.Kong.Utils.getApiUrl = function () {
       return "{*portal():urls():api()()*}"
     }
