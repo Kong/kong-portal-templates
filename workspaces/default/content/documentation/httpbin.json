@@ -1,6 +1,5 @@
 {
   "layout": "render-spec.html",
-  "readable_by": ["nope"],
   "basePath": "/",
   "definitions": {},
   "host": "httpbin.org",
