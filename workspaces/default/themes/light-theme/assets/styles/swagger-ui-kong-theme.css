@@ -137,6 +137,7 @@
 }
 .sidebar-list ul li.submenu {
   padding: .3rem .2rem;
+  margin: 0;
 }
 .sidebar-list ul li.submenu.active ul {
   height: auto;
