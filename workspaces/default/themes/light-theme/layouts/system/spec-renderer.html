@@ -1,55 +1,61 @@
 {% layout = "layouts/_page.html" %}
 
 {-content-}
-  <div >
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.17.0/swagger-ui.css">
-    <link href="assets/styles/framework-overrides.css" rel="stylesheet" />
-    <link href="assets/styles/swagger-ui-kong-theme.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.17.0/swagger-ui.css">
+  <link href="assets/styles/framework-overrides.css" rel="stylesheet" />
+  <link href="assets/styles/swagger-ui-kong-theme.css" rel="stylesheet" />
 
-    <div id="ui-wrapper" >
-        Loading....
+  <div id="ui-wrapper">
+    <div class="loading">
+      <div class="sidebar">
+        <div class="bar x1"></div>
+        <div class="bar x3"></div>
+      </div>
+      
+      <div class="content">
+        <div class="bar x1"></div>
+        <div class="bar x3"></div>
+      </div>
     </div>
-
-
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/swagger-ui-dist@3.23.1/swagger-ui-bundle.js"></script>
-    <script src="assets/js/swagger-ui-kong-theme.min.js"></script>
-    <script>
-      window.onload = function () {
-        var swaggerUIOptions = {
-          spec: {* page():json_encode()() *} , // Define data to be used
-          dom_id: '#ui-wrapper', // Determine what element to load swagger ui
-          docExpansion: 'list',
-          deepLinking: true, // Enables dynamic deep linking for tags and operations
-          filter: true,
-          presets: [
-            SwaggerUIBundle.presets.apis,
-            SwaggerUIBundle.SwaggerUIStandalonePreset
-          ],
-          plugins: [
-            SwaggerUIKongTheme.SwaggerUIKongTheme,
-            SwaggerUIBundle.plugins.DownloadUrl
-          ],
-          layout: 'KongLayout',
-          theme: {
-            hasSidebar: true,
-            swaggerAbsoluteTop: "90px"
-          }
-        }
-
-        var ui = SwaggerUIBundle(swaggerUIOptions)
-
-        /** Export to window for use in custom js */
-        window.ui = ui
-      }
-
-    </script>
-
-    <style>
-      .page {
-        min-height: calc(100vh - 104px);
-      }
-    </style>
-
   </div>
+
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@3.23.1/swagger-ui-bundle.js"></script>
+  <script src="assets/js/swagger-ui-kong-theme.min.js"></script>
+  <script>
+    window.onload = function () {
+      var swaggerUIOptions = {
+        spec: {* helpers.json_encode(page) *}, // Define data to be used
+        dom_id: '#ui-wrapper', // Determine what element to load swagger ui
+        docExpansion: 'list',
+        deepLinking: false, // Enables dynamic deep linking for tags and operations
+        filter: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIKongTheme.SwaggerUIKongTheme,
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: 'KongLayout',
+        theme: {
+          hasSidebar: true,
+          swaggerAbsoluteTop: "90px"
+        }
+      }
+
+      var ui = SwaggerUIBundle(swaggerUIOptions)
+
+      /** Export to window for use in custom js */
+      window.ui = ui
+    }
+
+  </script>
+
+  <style>
+    .page {
+      min-height: calc(100vh - 104px);
+    }
+  </style>
 {-content-}

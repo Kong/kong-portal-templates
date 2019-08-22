@@ -3,7 +3,7 @@
 {-main-}
 <script>
 window.addEventListener("load", function () {
-  var redirectTo = Kong.Auth.getRedirectTo('{{portal():redirect("logout")()}}')
+  var redirectTo = Kong.Auth.getRedirectTo('{{portal.redirect.logout}}')
 
   Kong.Auth.logout({
     baseUrl: window.Kong.Utils.getApiUrl(),

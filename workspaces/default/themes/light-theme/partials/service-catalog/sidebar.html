@@ -1,23 +1,18 @@
+{% if not page.hide_categories then %}
 <div class="catalog-sidebar">
-  {% if not page("sidebar.hide_filter")() then %}
-  <div class="catalog-filter-component">
-    <input class="catalog-filter" placeholder="Filter..." />
-  </div>
-  {% end %}
-
-  {% if not page("sidebar.hide_categories")() then %}
   <div class="catalog-categories-component">
-    <h5>{{page("locale.catalog_categories_header_text")() or "Category"}}</h5>
+    <h5>{{ l("catalog_categories_header_text", "Category") }}</h5>
 
-    {% for tag, count in base():table(tags):pairs() do %}
-    <a data-tag="{{tag:lower()}}" class="tag-link">
+    {% for tag, count in each(tags) do %}
+    <a data-tag="{{ tag:lower() }}" class="tag-link">
       <span class="tag-link--name">{{ tag }}</span>
       <span class="tag-link--count">{{ count }}</span>
     </a>
     {% end %}
   </div>
-  {% end %}
 </div>
+{% end %}
+
 
 <script type="text/javascript">
   window.addEventListener("load", function() {

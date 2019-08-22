@@ -1,5 +1,5 @@
 {
-  "layout": "render-spec.html",
+  "layout": "system/spec-renderer.html",
   "basePath": "/",
   "definitions": {},
   "host": "httpbin.org",

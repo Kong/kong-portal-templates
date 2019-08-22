@@ -1,0 +1,85 @@
+<div id="cookie-notice">
+  <span>
+    We would like to use third party cookies and scripts to improve the
+    functionality of this website. 
+    <strong><a href="/privacy">More info</a></strong>
+  </span>
+  
+  <a id="cookie-notice-accept" class="btn btn-primary btn-sm">Approve</a>
+</div>
+
+<script type="text/javascript">
+  function createCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+  }
+  
+  function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+  
+  function eraseCookie(name) {
+    createCookie(name, "", -1);
+  }
+
+  if (readCookie("cookie-notice-dismissed") == "true") {
+    {* blocks.cookie_scripts *}
+  } else {
+    document.getElementById("cookie-notice").style.display = "block";
+  }
+
+  document.getElementById("cookie-notice-accept").onclick = function(e) {
+    e.preventDefault();
+    createCookie("cookie-notice-dismissed", "true", 31);
+    document.getElementById("cookie-notice").style.display = "block";
+    location.reload();
+  };
+</script>
+
+<style>
+  #cookie-notice {
+    padding: 20px;
+    display: none;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #000;
+    color: white;
+  }
+  #cookie-notice a.btn {
+    cursor: pointer;
+    margin-left: 10px;
+    background: white;
+    color: black;
+  }
+  #cookie-notice strong a {
+    color: white;
+  }
+  #cookie-notice a.btn:hover {
+    opacity: 0.9;
+  }
+  @media (max-width: 767px) {
+    #cookie-notice span {
+      display: block;
+      padding-top: 3px;
+      margin-bottom: 13px;
+    }
+    #cookie-notice a {
+      position: relative;
+      bottom: 4px;
+    }
+  }
+</style>
