@@ -1,19 +1,18 @@
   <form id="register" data-type="key-auth">
-
     {(partials/auth/custom-fields.html, context)}
 
-    <label for="email">{{page("locale.register_form_email_label")()}}</label>
+    <label for="email">{{l("register_form_email_label", "Email")}}</label>
     <input id="email" type="text" name="email" required />
     <p class="field-error toggle-content" for="email"></p>
 
-    <label for="key">{{page("locale.register_form_key_label")()}}</label>
+    <label for="key">{{l("register_form_key_label", "Key")}}</label>
     <input id="key" type="password" name="key" required />
     <p class="field-error toggle-content" for="key"></p>
 
     <button
       id="login-button"
       class="button button-primary"
-      type="submit">{{page("locale.register_form_button_text")()}}</button>
+      type="submit">{{l("register_form_button_text", "Sign Up")}}</button>
   </form>
 
   <script type="text/javascript">
@@ -32,7 +31,7 @@
       // Submission variables
       var baseApiUrl = window.Kong.getApiUrl();
       var authType = Kong.Auth.KEY_AUTH;
-      var redirectTo =  Kong.Auth.getRedirectTo('{{portal():redirect("login")()}}')
+      var redirectTo =  Kong.Auth.getRedirectTo('{{portal.redirect.login}}')
 
 
       // Handle form state

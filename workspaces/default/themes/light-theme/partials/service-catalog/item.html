@@ -18,7 +18,7 @@
     {% end %}
 
     {% if tags then %}
-      {% for _, tag in pairs(tags) do %}
+      {% for _, tag in each(tags) do %}
         <small class="catalog-tag">{{tag.name}}</small>
       {% end %}
     {% end %}

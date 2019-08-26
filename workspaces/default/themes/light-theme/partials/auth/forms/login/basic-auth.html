@@ -1,18 +1,22 @@
   <form id="login" data-type="basic-auth">
     <p class="form-error-message toggle-content"></p>
 
-    <label for="email">{{page("locale.login_form_email_label")()}}</label>
+    <label for="email">{{l("login_form_email_label", "Email")}}</label>
     <input id="email" type="text" name="email" required />
 
-    <label for="password">{{page("locale.login_form_password_label")()}}</label>
+    <label for="password">{{l("login_form_password_label", "Password")}}</label>
     <input id="password" type="password" name="password" required />
 
-    <p><a href="reset-password">Forgot Password?</a></p>
+    <p>
+      <a href="reset-password">
+        {{l("login_form_forgot_password", "Forgot Password?")}}
+      </a>
+    </p>
 
     <button
       id="login-button"
       class="button button-primary"
-      type="submit">{{page("locale.login_form_button_text")()}}</button>
+      type="submit">{{l("login_form_button_text", "Login")}}</button>
   </form>
 
   <script type="text/javascript">
@@ -20,12 +24,10 @@
       var $FORM = $("#login");
       var $FORM_ERROR = $FORM.find(".form-error-message")
 
-
       // Submission variables
       var baseApiUrl = window.Kong.getApiUrl();
       var authType = Kong.Auth.BASIC_AUTH;
-      var redirectTo =  Kong.Auth.getRedirectTo('{{portal():redirect("login")()}}')
-
+      var redirectTo =  Kong.Auth.getRedirectTo('{{portal.redirect.login}}')
 
       // Handle form state
       var onSubmit = function() {

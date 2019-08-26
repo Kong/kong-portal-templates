@@ -1,10 +1,10 @@
 <div class="catalog-list">
-  {% for _, spec in portal():specs():pairs() do %}
+  {% for _, spec in each(portal.specs) do %}
     {(partials/service-catalog/item.html, spec)}
   {% end %}
 </div>
 
 <div class="catalog-list__no-results toggle-content">
-  <h4>{{page("locale.catalog_no_results_header")() or "Nothing Found, Sorry"}}</h4>
-  <p>{{page("locale.catalog_no_results_content")() or "No services matched your criteria."}}</p>
+  <h4>{{ l("catalog_no_results_header", "Nothing Found, Sorry") }}</h4>
+  <p>{{ l("catalog_no_results_content", "No services matched your criteria.") }}</p>
 </div>

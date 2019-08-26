@@ -342,16 +342,45 @@ input.has-error {
 }
 
 /*****************************************
- * Component - Catalog Sidebar
+ * Component - Catalog Filter
  *****************************************/
+ 
+.service-catalog.fixed-filter {
+  padding-top: 220px !important;
+}
+ 
+.service-catalog.fixed-filter .catalog-filter-component {
+ position: fixed;
+ left: 0;
+ right: 0;
+ z-index: 1;
+ top: 90px;
+}
+
+.catalog-filter-component {
+  padding: 2em 0 1.3em;
+  background: var(--header, #000);
+  margin-bottom: 3em;
+  border-bottom: 1px solid #eee;
+}
+
+.catalog-filter-component h2 {
+  color: white !important;
+  font-size: 32px;
+}
 
 .catalog-filter {
   padding: 1rem;
-  border: 1px solid var(--grey_300);
+  border: 1px solid #ccc;
   border-radius: 3px;
   width: 100%;
+  font-size: 24px;
 }
 
+/*****************************************
+ * Component - Catalog Sidebar Tags
+ *****************************************/
+ 
 a.tag-link {
   display: block;
   padding: .5rem 1rem;
@@ -381,7 +410,16 @@ a.tag-link.is-active {
 
 .catalog-list .catalog-item {
   width: 100%;
+  min-height: 156px;
   margin: 1rem 0;
+}
+
+.catalog-list .catalog-item .catalog-desc {
+  display: block;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 @media(min-width: 749px) {
@@ -492,8 +530,6 @@ a.tag-link.is-active {
 
 /*
 .homepage .site-header {
-  commented out for now, because of bringing .page to homepage
-  may bring back later.
   background: transparent;
 }
 */
@@ -508,7 +544,7 @@ a.tag-link.is-active {
   text-align: center;
 
   background: var(--header, #000000);
-  background-image: url("{*portal():urls():gui():path()()*}/assets/images/bg-pattern.svg");
+  background-image: url("{*portal.url*}/assets/images/bg-pattern.svg");
   color: var(--header_text, #FFFFFF);
 }
 
@@ -591,7 +627,15 @@ a.tag-link.is-active {
  *****************************************/
 
 .service-catalog {
-  padding: 2em;
+  padding-top: 0 !important;
+}
+
+.service-catalog .catalog-item {
+  min-height: 156px;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.06);
+  border-radius: 3px;
+  text-decoration: none;
+  border: 1px solid #ddd;
 }
 
 /*****************************************

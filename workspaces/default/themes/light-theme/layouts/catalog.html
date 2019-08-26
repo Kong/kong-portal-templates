@@ -1,8 +1,8 @@
 {% layout = "layouts/_page.html" %}
 
 {% context.tags = {} %}
-{% for _, spec in portal():specs():pairs() do %}
-  {% for _, tag in pairs(spec.parsed.tags or {}) do %}
+{% for _, spec in each(portal.specs) do %}
+  {% for _, tag in each(spec.parsed.tags or {}) do %}
     {% if tags[tag.name] == nil then %}
       {% tags[tag.name] = 1 %}
     {% else %}
@@ -12,7 +12,9 @@
 {% end %}
 
 {-content-}
-  <div class="page service-catalog">
+  <div class="page service-catalog fixed-filter">
+    {(partials/service-catalog/filter.html, context)}
+
     <div class="container">
       <div class="row">
         <div class="three columns">

@@ -1,10 +1,10 @@
-  <form id="login" data-type="key-auth">
+  <form id="login" data-type="openid-connect">
     <p class="form-error-message toggle-content"></p>
 
     <button
       id="login-button"
       class="button button-primary"
-      type="submit">{{page("locale.login_form_button_text")()}}</button>
+      type="submit">{{l("login_form_button_text", "Login")}}</button>
   </form>
 
   <script type="text/javascript">
@@ -12,11 +12,9 @@
       var $FORM = $("#login");
       var $FORM_ERROR = $FORM.find(".form-error-message")
 
-
       // Submission variables
       var baseApiUrl = window.Kong.getApiUrl();
-      var redirectTo = Kong.Auth.getRedirectTo('{{portal():redirect("login")()}}')
-
+      var redirectTo = Kong.Auth.getRedirectTo('{{portal.redirect.login}}')
 
       // Handle form state
       var onSubmit = function() {

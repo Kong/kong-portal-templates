@@ -1,31 +1,22 @@
-# Site name.
-name: "Kong"
-
-# List of theme fonts. Required.
+name: Kong
 fonts:
-  base: "Roboto"
-  code: "Roboto Mono"
-  headings: "Lato"
-
-# List of theme colors. Required.
+  base: Roboto
+  code: Roboto Mono
+  headings: Lato
 colors:
-  accent_900: "#0653b2"
-  accent_500: "#0a68cd"
-  accent_100: "#e2f9e4"
-
-  grey_900: "#000000"
-  grey_700: "#888888"
-  grey_500: "#c6c6c6"
-  grey_300: "#e8e8e8"
-  grey_100: "#ffffff"
-
-  header: "var(--grey_900)"
-  header_text: "var(--grey_100)"
-  header_link: "var(--accent_500)"
-  header_button: "var(--accent_500)"
-
-  text_500: "var(--grey_900)"
-  text_100: "var(--grey_100)"
-
-  headings: "var(--grey_900)"
-  links: "var(--accent_500)"
+  accent_900: '#0653b2'
+  accent_500: '#0a68cd'
+  accent_100: '#e2f9e4'
+  grey_900: '#000000'
+  grey_700: '#888888'
+  grey_500: '#c6c6c6'
+  grey_300: '#e8e8e8'
+  grey_100: '#ffffff'
+  header: var(--grey_900)
+  header_text: var(--grey_100)
+  header_link: var(--accent_500)
+  header_button: var(--accent_500)
+  text_500: var(--grey_900)
+  text_100: var(--grey_100)
+  headings: var(--grey_900)
+  links: var(--accent_500)

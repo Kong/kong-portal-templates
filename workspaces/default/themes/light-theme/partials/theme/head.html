@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{portal():name()()}} - {{page("title")() or page("info.title")()}}</title>
-    <base href="{*portal():urls():gui():path()()*}/" />
+    <title>{{portal.name}} - {{ page.title or (page.info and page.info.title) or page.path }}</title>
+    <base href="{*portal.url*}/" />
     {(partials/theme/style.html)}
     <link href="assets/styles/normalize.min.css" rel="stylesheet" />
     <link href="assets/styles/framework.min.css" rel="stylesheet" />

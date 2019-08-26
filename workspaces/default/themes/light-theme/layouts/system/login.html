@@ -4,31 +4,36 @@
   <div class="auth-page">
     <section class="left-pane">
       <div class="inner">
-        <h3>{*(template.compile(page("locale.login_form_header")())(context))*}</h3>
-        <p>{*(template.compile(page("locale.login_form_header")())(context))*}</p>
+        <h3>{* l("login_form_header", "Login") *}</h3>
+        <p>{* l("login_form_content", "Use your credentials to access your account.") *}</p>
 
-        {% if portal():config("auth")() == 'basic-auth' then %}
+        {% if portal.auth == 'basic-auth' then %}
           {(partials/auth/forms/login/basic-auth.html, context)}
         {% end %}
 
-        {% if portal():config("auth")() == 'key-auth' then %}
+        {% if portal.auth == 'key-auth' then %}
           {(partials/auth/forms/login/key-auth.html, context)}
         {% end %}
 
-        {% if portal():config("auth")() == 'openid-connect' then %}
+        {% if portal.auth == 'openid-connect' then %}
           {(partials/auth/forms/login/oidc.html, context)}
         {% end %}
 
-        <p>{{page("locale.login_register_text")()}} <a href="register">{{page("locale.login_register_link_text")()}}</a>.</p>
-        <p><a href="">{{page("locale.login_home_link_text")()}}</a></p>
+        <p>
+          {{ l("login_register_text", "Don't have an account?") }} 
+          <a href="register">{{ l("login_register_link_text", "Register here") }}</a>.
+        </p>
+
+        <p><a href="">{{ l("login_home_link_text", "← Go back home") }}</a></p>
       </div>
     </section>
 
     <section class="right-pane">
       <div class="inner">
         <img src="assets/images/auth-placeholder.svg" />
-        <h4>{*(template.compile(page("locale.login_side_header")())(context))*}</h4>
-        <p>{*(template.compile(page("locale.login_side_content")())(context))*}</p>
+
+        <h4>{* l("login_side_header", "") *}</h4>
+        <p>{* l("login_side_content", "") *}</p>
       </div>
     </section>
   </div>
