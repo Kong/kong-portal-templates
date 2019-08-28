@@ -20,3 +20,5 @@ colors:
   text_100: var(--grey_100)
   headings: var(--grey_900)
   links: var(--accent_500)
+images:
+  logo: assets/images/logo-white.svg

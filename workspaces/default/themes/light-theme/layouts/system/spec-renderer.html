@@ -11,7 +11,7 @@
         <div class="bar x1"></div>
         <div class="bar x3"></div>
       </div>
-      
+
       <div class="content">
         <div class="bar x1"></div>
         <div class="bar x3"></div>
@@ -25,7 +25,7 @@
   <script>
     window.onload = function () {
       var swaggerUIOptions = {
-        spec: {* helpers.json_encode(page) *}, // Define data to be used
+        spec: {* helpers.json_encode(page.contents) *}, // Define data to be used
         dom_id: '#ui-wrapper', // Determine what element to load swagger ui
         docExpansion: 'list',
         deepLinking: false, // Enables dynamic deep linking for tags and operations
