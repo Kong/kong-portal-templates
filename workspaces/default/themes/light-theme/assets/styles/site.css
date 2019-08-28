@@ -123,6 +123,10 @@ input.has-error {
   margin: 0;
 }
 
+.site-header .brand .logo {
+  max-height: 64px;
+}
+
 .site-header nav {
   display: none;
   position: relative;
@@ -288,7 +292,7 @@ input.has-error {
 }
 
 /*****************************************
- * Component -- Site Header
+ * Component -- Site Footer
  *****************************************/
 
 .site-footer {
@@ -344,11 +348,11 @@ input.has-error {
 /*****************************************
  * Component - Catalog Filter
  *****************************************/
- 
+
 .service-catalog.fixed-filter {
   padding-top: 220px !important;
 }
- 
+
 .service-catalog.fixed-filter .catalog-filter-component {
  position: fixed;
  left: 0;
@@ -380,7 +384,7 @@ input.has-error {
 /*****************************************
  * Component - Catalog Sidebar Tags
  *****************************************/
- 
+
 a.tag-link {
   display: block;
   padding: .5rem 1rem;
