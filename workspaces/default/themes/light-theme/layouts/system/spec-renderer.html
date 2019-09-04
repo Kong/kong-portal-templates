@@ -28,7 +28,7 @@
         spec: {* helpers.json_encode(page.contents) *}, // Define data to be used
         dom_id: '#ui-wrapper', // Determine what element to load swagger ui
         docExpansion: 'list',
-        deepLinking: false, // Enables dynamic deep linking for tags and operations
+        deepLinking: true, // Enables dynamic deep linking for tags and operations
         filter: true,
         presets: [
           SwaggerUIBundle.presets.apis,
@@ -51,6 +51,10 @@
       window.ui = ui
     }
 
+    // overwrite push state to not break deeplinking
+    window.history.pushState = function(state, title, url) {
+      window.location.hash = url;
+    }
   </script>
 
   <style>
