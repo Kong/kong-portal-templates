@@ -37,17 +37,17 @@ a:hover {
  *****************************************/
 
 .btn {
+  line-height: 1.15;
   padding: .5rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 3px;
-  background: var(--grey_900, #555);
+  background: #555;
   color: white;
   text-decoration: none;
 }
 
-.btn:hover,
-.button:hover {
-  background-color: var(--grey_500, #000);
+.btn:hover {
+  background-color:#000;
   color: white;
   text-decoration: none;
 }
@@ -77,19 +77,16 @@ input.has-error {
  * Component -- Primary Button
  *****************************************/
 
-.btn.btn-primary,
-.button.button-primary {
-  background-color: var(--accent_500, black);
+.btn-primary {
+  background-color: var(--primary_button, blue);
   border: 1px solid transparent;
-  color: white;
+  color: var(--primary_button_text, white)
 }
 
-.btn.btn-primary:hover,
-.button.button-primary:hover {
-  background-color: var(--accent_900, black);
+.btn-primary:hover {
+  background-color: var(--primary_button_hover, lightblue);
   border: 1px solid transparent;
-  color: white;
-  text-decoration: none;
+  color: var(--primary_button_text, white)
 }
 
 /*****************************************
@@ -97,8 +94,12 @@ input.has-error {
  *****************************************/
 
 .btn-secondary {
-  border-color: var(--accent_500, black);
-  color: var(--grey_900, black);
+  background-color: var(--secondary_button, lightgrey);
+  color: var(--secondary_button_text, grey);
+}
+.btn-secondary:hover {
+  background-color: var(--secondary_button_hover, gray);
+  color: var(--secondary_button_text, grey);
 }
 
 /*****************************************
@@ -207,8 +208,13 @@ input.has-error {
   }
 
   .site-header nav li a.nav-button {
-    background: var(--header_button, rgba(0, 0, 0, 0.2));
-    color: var(--header_text, inherit);
+    background: var(--primary_button, rgba(0, 0, 0, 0.2));
+    color: var(--primary_button_text, inherit);
+  }
+
+  .site-header nav li a.nav-button:hover {
+    background: var(--primary_button_hover, rgba(0, 0, 0, 0.2));
+    color: var(--primary_button_text, inherit);
   }
 
   .site-header .menu-toggle {
@@ -274,12 +280,12 @@ input.has-error {
     padding: .5em 1em;
     width: 100%;
     background: white;
-    color: var(--accent_500, blue);
+    color: var(accent, blue);
     display: block;
   }
 
   .site-header nav li ul li a:not(.nav-button):hover {
-    background: var(--accent_100, #f1f1f1);
+    background: var(accent, #f1f1f1);
   }
 
   .site-header nav li ul li:first-of-type a {
@@ -463,7 +469,7 @@ a.tag-link.is-active {
   text-align: center;
   font-size: 24px;
   color: white;
-  background-color: var(--accent_500, #888);
+  background-color: var(--accent, #888);
   border-radius: 3px;
 }
 
@@ -564,8 +570,6 @@ a.tag-link.is-active {
 }
 
 .homepage-hero .hero-footer .btn {
-  background: var(--accent_500, #FFFFFF);
-  color: var(--text_100, #000000);
   font-size: 16px;
   padding: .6em 2em;
 }
@@ -662,7 +666,7 @@ a.tag-link.is-active {
 }
 
 .about .about-hero h2 {
-  color: var(--accent_500);
+  color: var(--accent);
 }
 
 .about .about-hero li {
