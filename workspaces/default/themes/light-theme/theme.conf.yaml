@@ -4,33 +4,34 @@ fonts:
   code: Roboto Mono
   headings: Lato
 colors:
-  header: black
-  header_text: white
+  header:
+    value: '#0B2E4B'
   accent:
-    description: 'Color used for about headings, catalog preview, etc.'
-    value: '#6EB2FF'
+    description: 'Color used for secondary headings, catalog preview, etc.'
+    value: '#C7E3F6'
+  links:
+    value: '#29509F'
+  primary_button:
+    description:  'Background color for Primary Button'
+    value: 'green'
+  primary_button_hover:
+    description: Hover color for Primary Button
+    value: '#D9E5ED'
+  primary_button_text:
+    description: Text color for Primary Button
+    value: '#FFFFFF'
+  secondary_button:
+    description: Background color for Secondary Button
+    value: '#0D4E7F'
+  secondary_button_hover:
+    description: Hover color for Secondary Button
+    value: '#3A86C3'
+  secondary_button_text:
+    description: Text color for Secondary Button
+    value: var(--primary_button_text)
   text_500: black
   text_100: black
   headings: black
-  links: blue
-  primary_button:
-    description: Background color for Primary Button
-    value: '#0A68CD'
-  primary_button_hover:
-    description: Hover color for Primary Button
-    value: '#E8E8E8'
-  primary_button_text:
-    description: Text color for Primary Button
-    value: '#E8E8E8'
-  secondary_button:
-    description: Background color for Secondary Button
-    value: '#E8E8E8'
-  secondary_button_hover:
-    description: Hover color for Secondary Button
-    value: '#E8E8E8'
-  secondary_button_text:
-    description: Text color for Secondary Button
-    value: '#888888'
 
 images:
   logo: assets/images/logo-white.svg

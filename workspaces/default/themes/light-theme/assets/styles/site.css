@@ -182,7 +182,7 @@ input.has-error {
     margin: 0;
   }
   .site-header .menu-toggle-checkbox:checked + nav a:hover {
-    background: var(--grey_300, #eee);
+    background: var(--accent, #eee);
     text-decoration: none;
   }
   .site-header .dropdown {
@@ -407,7 +407,7 @@ a.tag-link .tag-link--count {
 }
 
 a.tag-link.is-active {
-  background: var(--grey_300);
+  background: var(--accent);
 }
 
 /*****************************************
@@ -484,7 +484,7 @@ a.tag-link.is-active {
 
 .catalog-item .catalog-details .catalog-desc {
   margin: 0;
-  color: var(--grey_700, #888888);
+  color: var(--aacent, #888888);
 }
 
 /*****************************************
@@ -509,7 +509,7 @@ a.tag-link.is-active {
   width: 100%;
   height: 160px;
   overflow: hidden;
-  background: var(--grey_300);
+  background: var(--accent);
 }
 
 .team-member .member-image img {
@@ -525,12 +525,12 @@ a.tag-link.is-active {
 }
 
 .team-member .member-name {
-  color: var(--grey_900);
+  color: var(--aacent);
   margin-bottom: 0;
 }
 
 .team-member .member-title {
-  color: var(--grey_700);
+  color: var(--aacent);
 }
 
 /*****************************************
@@ -566,7 +566,7 @@ a.tag-link.is-active {
 .homepage-hero p {
   font-size: 24px;
   font-weight: 500;
-  color: var(--grey_100, #888888);
+  color: var(--accent, #888888);
 }
 
 .homepage-hero .hero-footer .btn {
