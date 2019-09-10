@@ -1,6 +1,6 @@
-{% layout = "layouts/_base.html" %}
+{% layout = "layouts/_page.html" %}
 
-{-main-}
+{-content-}
   <div class="auth-page">
     <section class="left-pane">
       <div class="inner">
@@ -20,7 +20,7 @@
         {% end %}
 
         <p>
-          {{ l("login_register_text", "Don't have an account?") }} 
+          {{ l("login_register_text", "Don't have an account?") }}
           <a href="register">{{ l("login_register_link_text", "Register here") }}</a>.
         </p>
 
@@ -37,4 +37,4 @@
       </div>
     </section>
   </div>
-{-main-}
+{-content-}
