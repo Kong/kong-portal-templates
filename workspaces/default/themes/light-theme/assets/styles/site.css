@@ -783,6 +783,8 @@ a.tag-link.is-active {
 .page {
   /* 90px for header 74px for footer */
   min-height: calc(100vh - 74px);
+  /* needed to set height 100% on children */
+  height: 1px;
   padding-top: 90px;
 }
 
