@@ -1,3 +1,4 @@
+---
 layout: system/login.html
 title: Login
 
@@ -20,3 +21,4 @@ locale:
 
   login_register_text: "Don't have an account?"
   login_register_link_text: "Register here"
+---
