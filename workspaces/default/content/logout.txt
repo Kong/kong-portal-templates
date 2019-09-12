@@ -1,2 +1,4 @@
+---
 layout: system/logout.html
 title: Logout
+---
