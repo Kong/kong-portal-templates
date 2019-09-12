@@ -38,7 +38,7 @@ a:hover {
 
 .btn {
   line-height: 1.15;
-  padding: .5rem 1.5rem;
+  padding: 0.3rem 1.5rem;
   border: 1px solid transparent;
   border-radius: 3px;
   background: #555;
@@ -111,7 +111,8 @@ input.has-error {
   width: 100%;
   position: fixed;
   background: var(--header, black);
-  color: var(--header_text, white);
+  color: var(--accent, white);
+  box-shadow: 0 1px 0 var(--border, grey);
   padding: 2.5rem 0;
   height: 90px;
   z-index: 90;
@@ -119,7 +120,7 @@ input.has-error {
 
 .site-header h1,
 .site-header h1 a {
-  color: var(--header_text, white);
+  color: var(--accent, white);
   font-size: 2rem;
   margin: 0;
 }
@@ -141,7 +142,6 @@ input.has-error {
   /* Mobile Toggle */
   .site-header .menu-toggle {
     float: right;
-    color: white;
     border-radius: 3px;
     padding: .5em 1em;
     cursor: pointer;
@@ -204,7 +204,7 @@ input.has-error {
 
   .site-header nav li a:not(.nav-button) {
     padding: .5em .8em;
-    color: var(--header_text, inherit);
+    color: var(--accent, inherit);
   }
 
   .site-header nav li a.nav-button {
@@ -307,7 +307,8 @@ input.has-error {
   z-index: 20;
   bottom: 0;
   background: var(--header, black);
-  color: var(--header_text, rgba(255,255,255,0.45));
+  color: var(--accent, rgba(255,255,255,0.45));
+  box-shadow: 0 -1px 0 var(--border, grey);
   padding: 2.5rem 0;
 }
 
@@ -321,15 +322,15 @@ input.has-error {
 .site-footer .nav-link {
   font-size: 1.4rem;
   font-weight: 500;
-  color: var(--header_text, rgba(255,255,255,0.45));
+  color: var(--accent, rgba(255,255,255,0.45));
   text-transform: uppercase;
   text-decoration: none;
   margin-right: 1rem;
 }
 
 .site-footer .nav-button {
-  background: var(--header_text, rgba(0, 0, 0, 0.2));
-  color: var(--header_text, inherit);
+  background: var(--primary_button, rgba(0, 0, 0, 0.2));
+  color: var(--primary_button_text, inherit);
   margin-right: 1rem;
 }
 
@@ -375,7 +376,7 @@ input.has-error {
 }
 
 .catalog-filter-component h2 {
-  color: white !important;
+  color: var(--accent, white);
   font-size: 32px;
 }
 
@@ -452,7 +453,7 @@ a.tag-link.is-active {
   padding: 3rem;
   align-items: start;
   background: rgba(255,255,255);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1), 0 0 10px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 2px var(--border, grey);
   border-radius: 3px;
   text-decoration: none;
 }
@@ -464,6 +465,7 @@ a.tag-link.is-active {
 .catalog-item .catalog-logo {
   display: inline-block;
   width: 64px;
+  height: 64px;
   padding: 1rem 0;
   margin: .8rem 2rem 0 0;
   text-align: center;
@@ -474,7 +476,7 @@ a.tag-link.is-active {
 }
 
 .catalog-item .catalog-details {
-  width: 80%;
+  width: 70%;
   text-align: left;
 }
 
@@ -553,14 +555,14 @@ a.tag-link.is-active {
   padding: 120px 0;
   text-align: center;
 
-  background: var(--header, #000000);
+  background: var(--hero, #000000);
   background-image: url("{*portal.url*}/assets/images/bg-pattern.svg");
-  color: var(--header_text, #FFFFFF);
+  color: var(--headings, #FFFFFF);
 }
 
 .homepage-hero h2 {
   margin-bottom: 1rem;
-  color: var(--header_text, #FFFFFF);
+  color: var(--headings, #FFFFFF);
 }
 
 .homepage-hero p {
@@ -656,13 +658,13 @@ a.tag-link.is-active {
 
 .about .about-hero {
   padding: 5em 0;
-  background: var(--header);
+  background: var(--hero);
 }
 
 .about .about-hero h6 {
   margin-bottom: .5em;
   text-transform: uppercase;
-  color: var(--header_text);
+  color: var(--accent);
 }
 
 .about .about-hero h2 {
@@ -670,7 +672,7 @@ a.tag-link.is-active {
 }
 
 .about .about-hero li {
-  color: var(--header_text);
+  color: var(--accent);
 }
 
 
@@ -718,7 +720,7 @@ a.tag-link.is-active {
  *****************************************/
 
 .auth-page {
-  height: 100%;
+  height: calc(100vh - 74px - 90px);
   display: flex;
   flex-direction: row;
 }
@@ -746,7 +748,7 @@ a.tag-link.is-active {
 .auth-page .right-pane {
   display: none;
   background: black;
-  background: var(--primary, black);
+  background: var(--hero, black);
   color: white;
   text-align: center;
   align-items: center;
@@ -762,8 +764,9 @@ a.tag-link.is-active {
 .auth-page .right-pane .inner h2,
 .auth-page .right-pane .inner h3,
 .auth-page .right-pane .inner h4,
-.auth-page .right-pane .inner h5 {
-  color: white;
+.auth-page .right-pane .inner h5,
+.auth-page .right-pane .inner p {
+  color: var(--accent, white);
 }
 
 @media (min-width: 768px) {
@@ -788,8 +791,8 @@ a.tag-link.is-active {
   /* 90px for header 74px for footer */
   min-height: calc(100vh - 74px);
   /* needed to set height 100% on children */
-  height: 1px;
   padding-top: 90px;
+  background-color: var(--page, white)
 }
 
 .align-container {

@@ -12,7 +12,7 @@ colors:
   links:
     value: '#29509F'
   primary_button:
-    description:  'Background color for Primary Button'
+    description: 'Background color for Primary Button'
     value: 'green'
   primary_button_hover:
     description: Hover color for Primary Button
@@ -31,7 +31,9 @@ colors:
     value: var(--primary_button_text)
   text_500: black
   text_100: black
-  headings: black
-
+  headings: '#5F5F5F'
+  page: '#3A86C3'
+  border: '#c5dae8'
+  hero: '#062b45'
 images:
   logo: assets/images/logo-white.svg
