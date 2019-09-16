@@ -6,7 +6,7 @@ body,
 html {
   height: 100%;
   width: 100%;
-  color: var(--primary_text, #000000)
+  color: var(--primary_text, #000000);
 }
 
 /*****************************************
@@ -694,7 +694,7 @@ a.tag-link.is-active {
 }
 
 .about .member-title {
-  color: var(--text_secondary, #8C8C8C)
+  color: var(--text_secondary, #8C8C8C);
 }
 
 /*****************************************
@@ -804,7 +804,7 @@ a.tag-link.is-active {
   min-height: calc(100vh - 74px);
   /* needed to set height 100% on children */
   padding-top: 90px;
-  background-color: var(--page, white)
+  background-color: var(--page, white);
 }
 
 .align-container {
