@@ -535,12 +535,12 @@ a.tag-link.is-active {
 }
 
 .team-member .member-name {
-  color: var(--aacent);
+  color: var(--accent);
   margin-bottom: 0;
 }
 
 .team-member .member-title {
-  color: var(--aacent);
+  color: var(--accent);
 }
 
 /*****************************************
