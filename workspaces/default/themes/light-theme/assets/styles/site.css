@@ -282,12 +282,12 @@ input.has-error {
     padding: .5em 1em;
     width: 100%;
     background: white;
-    color: var(accent, blue);
+    color: var(--accent, blue);
     display: block;
   }
 
   .site-header nav li ul li a:not(.nav-button):hover {
-    background: var(accent, #f1f1f1);
+    background: var(--accent, #f1f1f1);
   }
 
   .site-header nav li ul li:first-of-type a {
