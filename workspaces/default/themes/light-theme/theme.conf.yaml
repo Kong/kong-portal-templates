@@ -5,35 +5,55 @@ fonts:
   headings: Lato
 colors:
   header:
-    value: '#0B2E4B'
-  accent:
-    description: 'Color used for secondary headings, catalog preview, etc.'
-    value: '#C7E3F6'
-  links:
-    value: '#29509F'
-  primary_button:
-    description: 'Background color for Primary Button'
-    value: 'green'
-  primary_button_hover:
-    description: Hover color for Primary Button
-    value: '#D9E5ED'
-  primary_button_text:
-    description: Text color for Primary Button
     value: '#FFFFFF'
-  secondary_button:
-    description: Background color for Secondary Button
-    value: '#0D4E7F'
-  secondary_button_hover:
-    description: Hover color for Secondary Button
-    value: '#3A86C3'
-  secondary_button_text:
-    description: Text color for Secondary Button
-    value: var(--primary_button_text)
-  text_500: black
-  text_100: black
-  headings: '#5F5F5F'
-  page: '#3A86C3'
-  border: '#c5dae8'
-  hero: '#062b45'
+    description: 'Background for header'
+  page:
+    value: '#FFFFFF'
+    description: 'Background on pages'
+  hero:
+    value: '#003459'
+    description: 'Background for hero text on hompage, about, login, contact us...'
+  text_hero:
+    value: '#FFFFFF'
+    description: Text on top of hero, used on homepage, about, login, contact us...
+  footer:
+    value: '#F7F9FA'
+    description: 'Background on footer'
+  accent:
+    value: '#57BBD6'
+    description: 'Borders and catalog preview icons'
+  text_primary:
+    value: '#404040'
+    description: 'Main text'
+  text_secondary:
+    value: '#8C8C8C'
+    description: 'Supporting text, hints, etc.'
+  text_headings:
+    value: '#005999'
+    description: 'Headings'
+  text_links:
+    value: '#1782CF'
+    descrption: 'Link color'
+  button_primary_fill:
+    value: '#3FA66A'
+    description: 'Background for Primary Button'
+  button_primary_fill_hover:
+    value: '#3DCC91'
+    description: 'Hover background for Primary Button'
+  button_primary_text:
+    value: '#FFFFF'
+    description: 'Text for Primary Button'
+  button_secondary_fill:
+    description: 'Background for Secondary Button'
+    value: '#FFFFFF'
+  button_secondary_fill_hover:
+    description: 'Hover background for Secondary Button'
+    value: '#F0F9FF'
+  button_secondary_border:
+    description: 'Border Secondary Button'
+    value: '#A3D9FF'
+  button_secondary_text:
+    description: Text for Secondary Button
+    value: '#21A66F'
 images:
-  logo: assets/images/logo-white.svg
+  logo: assets/images/logo-developers-light.svg

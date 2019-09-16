@@ -6,7 +6,7 @@ body,
 html {
   height: 100%;
   width: 100%;
-  color: var(--text_500, #000000)
+  color: var(--primary_text, #000000)
 }
 
 /*****************************************
@@ -14,7 +14,7 @@ html {
  *****************************************/
 
 h1, h2, h3, h4, h5 {
-  color: var(--headings,  #888888);
+  color: var(--text_headings,  #888888);
 }
 
 /*****************************************
@@ -22,13 +22,13 @@ h1, h2, h3, h4, h5 {
  *****************************************/
 
 a {
-  color: var(--links, blue);
+  color: var(--text_links, blue);
   cursor: pointer;
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--links, blue);
+  color: var(--text_links, blue);
   text-decoration: underline;
 }
 
@@ -78,15 +78,15 @@ input.has-error {
  *****************************************/
 
 .btn-primary {
-  background-color: var(--primary_button, blue);
+  background-color: var(--button_primary_fill, blue);
   border: 1px solid transparent;
-  color: var(--primary_button_text, white)
+  color: var(--button_primary_text, white);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary_button_hover, lightblue);
+  background-color: var(--button_primary_fill_hover, lightblue);
   border: 1px solid transparent;
-  color: var(--primary_button_text, white)
+  color: var(--button_primary_text, white);
 }
 
 /*****************************************
@@ -94,12 +94,14 @@ input.has-error {
  *****************************************/
 
 .btn-secondary {
-  background-color: var(--secondary_button, lightgrey);
-  color: var(--secondary_button_text, grey);
+  background-color: var(--button_secondary_fill, lightgrey);
+  border: 1px var(--button_secondary_border, #A3D9FF);
+  color: var(--button_secondary_text, grey);
 }
 .btn-secondary:hover {
-  background-color: var(--secondary_button_hover, gray);
-  color: var(--secondary_button_text, grey);
+  background-color: var(--secondary_button_hover_fill, gray);
+  border: 1px var(--button_secondary_border, #A3D9FF);
+  color: var(--button_secondary_text, grey);
 }
 
 /*****************************************
@@ -111,8 +113,8 @@ input.has-error {
   width: 100%;
   position: fixed;
   background: var(--header, black);
-  color: var(--accent, white);
-  box-shadow: 0 1px 0 var(--border, grey);
+  color: var(--text_primary, white);
+  box-shadow: 0 1px 0 var(--accent, grey);
   padding: 2.5rem 0;
   height: 90px;
   z-index: 90;
@@ -120,7 +122,7 @@ input.has-error {
 
 .site-header h1,
 .site-header h1 a {
-  color: var(--accent, white);
+  color: var(--text_primary, white);
   font-size: 2rem;
   margin: 0;
 }
@@ -204,7 +206,7 @@ input.has-error {
 
   .site-header nav li a:not(.nav-button) {
     padding: .5em .8em;
-    color: var(--accent, inherit);
+    color: var(--text_primary, inherit);
   }
 
   .site-header nav li a.nav-button {
@@ -306,9 +308,8 @@ input.has-error {
   /* swagger-ui-kong-theme sidebar has z-index: 15 */
   z-index: 20;
   bottom: 0;
-  background: var(--header, black);
-  color: var(--accent, rgba(255,255,255,0.45));
-  box-shadow: 0 -1px 0 var(--border, grey);
+  background: var(--footer, black);
+  color: var(--text_secondary, rgba(255,255,255,0.45));
   padding: 2.5rem 0;
 }
 
@@ -322,7 +323,7 @@ input.has-error {
 .site-footer .nav-link {
   font-size: 1.4rem;
   font-weight: 500;
-  color: var(--accent, rgba(255,255,255,0.45));
+  color: var(--text_secondary, rgba(255,255,255,0.45));
   text-transform: uppercase;
   text-decoration: none;
   margin-right: 1rem;
@@ -370,13 +371,13 @@ input.has-error {
 
 .catalog-filter-component {
   padding: 2em 0 1.3em;
-  background: var(--header, #000);
+  background: var(--hero, #000);
   margin-bottom: 3em;
   border-bottom: 1px solid #eee;
 }
 
 .catalog-filter-component h2 {
-  color: var(--accent, white);
+  color: var(--text_hero, white);
   font-size: 32px;
 }
 
@@ -396,6 +397,8 @@ a.tag-link {
   display: block;
   padding: .5rem 1rem;
   border-radius: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 a.tag-link .tag-link--name {
@@ -481,12 +484,17 @@ a.tag-link.is-active {
 }
 
 .catalog-item .catalog-details .catalog-title {
+  color: var(--text_links, blue);
   margin-bottom: 1rem;
 }
 
 .catalog-item .catalog-details .catalog-desc {
   margin: 0;
-  color: var(--aacent, #888888);
+  color: var(--text_primary, #888888);
+}
+
+.catalog-item .catalog-version {
+  color: var(--text_secondary, #8C8C8C)
 }
 
 /*****************************************
@@ -557,18 +565,18 @@ a.tag-link.is-active {
 
   background: var(--hero, #000000);
   background-image: url("{*portal.url*}/assets/images/bg-pattern.svg");
-  color: var(--headings, #FFFFFF);
+  color: var(--text_hero, #FFFFFF);
 }
 
 .homepage-hero h2 {
   margin-bottom: 1rem;
-  color: var(--headings, #FFFFFF);
+  color: var(--text_hero, #FFFFFF);
 }
 
 .homepage-hero p {
   font-size: 24px;
-  font-weight: 500;
-  color: var(--accent, #888888);
+  font-weight: 400;
+  color: var(--text_hero, #888888);
 }
 
 .homepage-hero .hero-footer .btn {
@@ -664,15 +672,15 @@ a.tag-link.is-active {
 .about .about-hero h6 {
   margin-bottom: .5em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text_hero);
 }
 
 .about .about-hero h2 {
-  color: var(--accent);
+  color: var(--text_hero);
 }
 
 .about .about-hero li {
-  color: var(--accent);
+  color: var(--text_hero);
 }
 
 
@@ -683,6 +691,10 @@ a.tag-link.is-active {
 .about .about-team {
   padding: 3em 0;
   text-align: center;
+}
+
+.about .member-title {
+  color: var(--text_secondary, #8C8C8C)
 }
 
 /*****************************************
