@@ -4,21 +4,56 @@ fonts:
   code: Roboto Mono
   headings: Lato
 colors:
-  accent_900: '#0653b2'
-  accent_500: '#0a68cd'
-  accent_100: '#e2f9e4'
-  grey_900: '#000000'
-  grey_700: '#888888'
-  grey_500: '#c6c6c6'
-  grey_300: '#e8e8e8'
-  grey_100: '#ffffff'
-  header: var(--grey_900)
-  header_text: var(--grey_100)
-  header_link: var(--accent_500)
-  header_button: var(--accent_500)
-  text_500: var(--grey_900)
-  text_100: var(--grey_100)
-  headings: var(--grey_900)
-  links: var(--accent_500)
+  header:
+    value: '#FFFFFF'
+    description: 'Background for header'
+  page:
+    value: '#FFFFFF'
+    description: 'Background on pages'
+  hero:
+    value: '#003459'
+    description: 'Background for hero text on hompage, about, login, contact us...'
+  text_hero:
+    value: '#FFFFFF'
+    description: Text on top of hero, used on homepage, about, login, contact us...
+  footer:
+    value: '#F7F9FA'
+    description: 'Background on footer'
+  accent:
+    value: '#57BBD6'
+    description: 'Borders and catalog preview icons'
+  text_primary:
+    value: '#404040'
+    description: 'Main text'
+  text_secondary:
+    value: '#8C8C8C'
+    description: 'Supporting text, hints, etc.'
+  text_headings:
+    value: '#005999'
+    description: 'Headings'
+  text_links:
+    value: '#1782CF'
+    descrption: 'Link color'
+  button_primary_fill:
+    value: '#3FA66A'
+    description: 'Background for Primary Button'
+  button_primary_fill_hover:
+    value: '#3DCC91'
+    description: 'Hover background for Primary Button'
+  button_primary_text:
+    value: '#FFFFFF'
+    description: 'Text for Primary Button'
+  button_secondary_fill:
+    description: 'Background for Secondary Button'
+    value: '#FFFFFF'
+  button_secondary_fill_hover:
+    description: 'Hover background for Secondary Button'
+    value: '#F0F9FF'
+  button_secondary_border:
+    description: 'Border Secondary Button'
+    value: '#A3D9FF'
+  button_secondary_text:
+    description: Text for Secondary Button
+    value: '#21A66F'
 images:
-  logo: assets/images/logo-white.svg
+  logo: assets/images/logo-developers-light.svg
