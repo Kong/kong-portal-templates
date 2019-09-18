@@ -94,13 +94,13 @@ input.has-error {
  *****************************************/
 
 .btn-secondary {
-  background-color: var(--button_secondary_fill, lightgrey);
-  border: 1px var(--button_secondary_border, #A3D9FF);
+  background-color: var(--button_secondary_fill_hover, gray);
+  border: 1px solid var(--button_secondary_border, #A3D9FF);
   color: var(--button_secondary_text, grey);
 }
 .btn-secondary:hover {
   background-color: var(--secondary_button_hover_fill, gray);
-  border: 1px var(--button_secondary_border, #A3D9FF);
+  border: 1px solid var(--button_secondary_border, #A3D9FF);
   color: var(--button_secondary_text, grey);
 }
 
@@ -207,16 +207,6 @@ input.has-error {
   .site-header nav li a:not(.nav-button) {
     padding: .5em .8em;
     color: var(--text_primary, inherit);
-  }
-
-  .site-header nav li a.nav-button {
-    background: var(--primary_button, rgba(0, 0, 0, 0.2));
-    color: var(--primary_button_text, inherit);
-  }
-
-  .site-header nav li a.nav-button:hover {
-    background: var(--primary_button_hover, rgba(0, 0, 0, 0.2));
-    color: var(--primary_button_text, inherit);
   }
 
   .site-header .menu-toggle {

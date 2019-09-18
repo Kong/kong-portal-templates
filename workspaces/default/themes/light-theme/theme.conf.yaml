@@ -41,7 +41,7 @@ colors:
     value: '#3DCC91'
     description: 'Hover background for Primary Button'
   button_primary_text:
-    value: '#FFFFF'
+    value: '#FFFFFF'
     description: 'Text for Primary Button'
   button_secondary_fill:
     description: 'Background for Secondary Button'
