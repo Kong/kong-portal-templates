@@ -94,12 +94,12 @@ input.has-error {
  *****************************************/
 
 .btn-secondary {
-  background-color: var(--button_secondary_fill_hover, gray);
+  background-color: var(--button_secondary_fill, gray);
   border: 1px solid var(--button_secondary_border, #A3D9FF);
   color: var(--button_secondary_text, grey);
 }
 .btn-secondary:hover {
-  background-color: var(--secondary_button_hover_fill, gray);
+  background-color: var(--button_secondary_fill_hover, gray);
   border: 1px solid var(--button_secondary_border, #A3D9FF);
   color: var(--button_secondary_text, grey);
 }
