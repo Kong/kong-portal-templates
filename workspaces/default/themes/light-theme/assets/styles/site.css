@@ -288,6 +288,10 @@ input.has-error {
   .site-header nav li ul li:last-of-type a {
     border-radius: 0 0 3px 3px;
   }
+
+  .dropdown {
+    width: 150px;
+  }
 }
 
 /*****************************************
