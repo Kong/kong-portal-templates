@@ -277,7 +277,8 @@ input.has-error {
   }
 
   .site-header nav li ul li a:not(.nav-button):hover {
-    background: var(--accent, #f1f1f1);
+    background: var(--accent, blue);
+    color: var(--button_primary_text, white);
   }
 
   .site-header nav li ul li:first-of-type a {
@@ -286,6 +287,10 @@ input.has-error {
 
   .site-header nav li ul li:last-of-type a {
     border-radius: 0 0 3px 3px;
+  }
+
+  .dropdown {
+    width: 150px;
   }
 }
 

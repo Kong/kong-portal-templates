@@ -15,7 +15,7 @@
         {% if portal.auth and portal.auth ~= "" then %}
           {% if user.is_authenticated() then %}
             <li class="has-dropdown">
-              <a href="settings" aria-haspopup="true">{{user.email}}</a>
+              <a href="settings" aria-haspopup="true">{{user.get("email")}}</a>
               <ul class="dropdown" aria-label="submenu">
                 <li><a href="dashboard">Dashboard</a></li>
                 <li><a href="logout">Logout</a></li>
