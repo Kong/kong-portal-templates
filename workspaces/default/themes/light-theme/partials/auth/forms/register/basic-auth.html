@@ -33,7 +33,6 @@
       // Submission variables
       var baseApiUrl = window.Kong.getApiUrl();
       var authType = Kong.Auth.BASIC_AUTH;
-      var redirectTo =  Kong.Auth.getRedirectTo('{{portal.redirect.login}}')
 
 
       // Handle form state
@@ -55,12 +54,14 @@
             type: authType,
             fields: fields
           }).then(() => {
-            window.location.href = redirectTo;
+            window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.login}}');
           }).catch(onError)
         } else if (accountIsPendingEmailVerfication) {
           alert(accountIsPendingEmailVerificationMessage)
+          window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.pending_email_verification}}');
         } else {
           alert(accountisPendingVerificationMessage)
+          window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.pending_approval}}');
         }
       }
 

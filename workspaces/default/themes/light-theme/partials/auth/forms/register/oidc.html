@@ -45,11 +45,13 @@
         var accountIsPendingEmailVerfication = data.developer.status === 5
 
         if (accountIsApproved) {
-          window.location.href = "{{page():redirect('login')()}}";
+          window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.login}}');
         } else if (accountIsPendingEmailVerfication) {
           alert(accountIsPendingEmailVerificationMessage)
+          window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.pending_email_verification}}');
         } else {
           alert(accountisPendingVerificationMessage)
+          window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.pending_approval}}');
         }
       }
 
