@@ -48,8 +48,10 @@
           window.location.href = "{{page():redirect('login')()}}";
         } else if (accountIsPendingEmailVerfication) {
           alert(accountIsPendingEmailVerificationMessage)
+          window.location.href = '';
         } else {
           alert(accountisPendingVerificationMessage)
+          window.location.href = '';
         }
       }
 
