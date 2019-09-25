@@ -6,3 +6,5 @@ redirect:
   unauthorized: unauthorized
   login: dashboard
   logout: ''
+  pending_approval: ''
+  pending_email_verification: ''

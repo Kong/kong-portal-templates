@@ -58,10 +58,10 @@
           }).catch(onError)
         } else if (accountIsPendingEmailVerfication) {
           alert(accountIsPendingEmailVerificationMessage)
-          window.location.href = '';
+          window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.pending_email_verification}}');
         } else {
           alert(accountisPendingVerificationMessage)
-          window.location.href = '';
+          window.location.href = Kong.Auth.getRedirectTo('{{portal.redirect.pending_approval}}');
         }
       }
 
