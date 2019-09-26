@@ -1,5 +1,5 @@
 <a
-  href="{{route}}"
+  href="{{string.sub(route, 2)}}"
   data-tags="{% for _, tag in pairs(parsed.tags or {}) do %}{{tag.name:lower()}},{% end %}"
   class="catalog-item toggle-content is-visible">
   <div class="catalog-logo">
