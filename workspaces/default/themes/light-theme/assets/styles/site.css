@@ -405,6 +405,14 @@ a.tag-link .tag-link--count {
   color: #888;
 }
 
+a.tag-link.is-active .tag-link--count {
+  color: #ffffff;
+}
+
+a.tag-link.is-active {
+  color: #ffffff;
+}
+
 a.tag-link.is-active {
   background: var(--accent);
 }
