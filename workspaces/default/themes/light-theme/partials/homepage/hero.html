@@ -9,6 +9,8 @@
   </div>
 
   <div class="hero-footer">
-    <a class="btn btn-primary" href="register">Create a Developer Account</a>
+    {% if portal.auth and portal.auth ~= "" then %}
+      <a class="btn btn-primary" href="register">Create a Developer Account</a>
+    {% end %}
   </div>
 </section>
