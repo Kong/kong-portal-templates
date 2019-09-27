@@ -1,0 +1,11 @@
+# Workspace name
+# @required
+name: default
+
+# Workspace Upstream URL
+# @required
+upstream: http://localhost:8001/default
+
+# Workspace RBAC Token
+# @optional
+rbac_token: ''

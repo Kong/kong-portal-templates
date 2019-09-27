@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{portal.name}} - {{ page.title or (page.info and page.info.title) or page.path }}</title>
+    <base href="{*portal.url*}/" />
+    {(partials/theme/style.html)}
+    <link href="assets/styles/normalize.min.css" rel="stylesheet" />
+    <link href="assets/styles/framework.min.css" rel="stylesheet" />
+    <link href="assets/styles/site.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="{{theme.images.favicon}}" type="image/x-icon">
+    {* blocks.page_css *}
+  </head>
+  <body>
+      {* blocks.header *}

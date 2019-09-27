@@ -1,0 +1,25 @@
+th,
+td {
+  padding: 0;
+  border-bottom: 0;
+}
+
+table{
+  margin-bottom: 0;
+}
+
+code {
+  padding: 0;
+  margin: 0 ;
+  font-size: unset;
+  white-space: unset;
+  background: unset;
+  border: 0;
+  border-radius: 0;
+}
+
+pre > code {
+  display: unset;
+  padding: 0;
+  white-space: pre;
+}

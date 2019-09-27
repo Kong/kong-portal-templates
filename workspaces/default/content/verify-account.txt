@@ -1,0 +1,3 @@
+---
+layout: system/verify-account.html
+---

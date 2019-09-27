@@ -1,0 +1,62 @@
+  <form id="login" data-type="basic-auth">
+    <p class="form-error-message toggle-content"></p>
+
+    <label for="email">{{l("login_form_email_label", "Email")}}</label>
+    <input id="email" type="text" name="email" required />
+
+    <label for="password">{{l("login_form_password_label", "Password")}}</label>
+    <input id="password" type="password" name="password" required />
+
+    <p>
+      <a href="reset-password">
+        {{l("login_form_forgot_password", "Forgot Password?")}}
+      </a>
+    </p>
+
+    <button
+      id="login-button"
+      class="btn btn-primary"
+      type="submit">{{l("login_form_button_text", "Login")}}</button>
+  </form>
+
+  <script type="text/javascript">
+    window.addEventListener("load", function() {
+      var $FORM = $("#login");
+      var $FORM_ERROR = $FORM.find(".form-error-message")
+
+      // Submission variables
+      var baseApiUrl = window.Kong.getApiUrl();
+      var authType = Kong.Auth.BASIC_AUTH;
+      var redirectTo =  Kong.Auth.getRedirectTo('{{portal.redirect.login}}')
+
+      // Handle form state
+      var onSubmit = function() {
+        $FORM_ERROR
+          .removeClass('is-visible')
+          .html('');
+
+        Kong.Auth.login({
+          baseUrl: baseApiUrl,
+          type: authType,
+          fields: $FORM.serializeArray()
+        }).then(onSuccess).catch(onError)
+      }
+
+      var onSuccess = function() {
+        window.location.href = redirectTo;
+      }
+
+      var onError = function(data) {
+        $FORM_ERROR
+          .addClass('is-visible')
+          .html(data.message || 'An unexpected error occurred. Please try again.');
+      }
+
+
+      // Handle form button press
+      $FORM.on('submit', function(event) {
+        event.preventDefault();
+        onSubmit();
+      })
+    })
+  </script>

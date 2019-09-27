@@ -1,0 +1,1021 @@
+/* Loading State */
+.loading .sidebar {
+  position: fixed;
+  z-index: 2;
+  top: 80px;
+  width: 260px;
+  height: calc(100vh - 80px);
+  background: grey;
+  overflow-y: auto;
+  border-right: 1px solid #eee;
+}
+
+.loading .content {
+  margin-right: 260px;
+  width: 100%;
+  height: calc(100vh - 80px);
+}
+.loading .bar {
+  border-radius: 3px;
+}
+.loading .bar::before {
+  content: " ";
+  display: block;
+  width: 80px;
+  height: 100%;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-animation: horizontalScan 1.2s 0s ease-in-out infinite;
+          animation: horizontalScan 1.2s 0s ease-in-out infinite;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 );
+}
+
+.loading .bar.x1 {
+  height: 30px;
+}
+
+@keyframes horizontalScan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+@-webkit-keyframes horizontalScan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Container */
+.wide {
+  width: 100%;
+  left: 0px;
+}
+
+/* sidebar */
+#sidebar {
+  font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
+
+#sidebar .sidebar-menu {
+  position: fixed;
+  z-index: 2;
+  top: 80px;
+  width: 260px;
+  height: calc(100vh - 80px);
+  background: #fff;
+  overflow-y: auto;
+  border-right: 1px solid #eee;
+}
+#sidebar a {
+  text-decoration: none;
+  transition: all 300ms ease;
+}
+#sidebar #spec-sidebar {
+  padding-bottom: 100px;
+}
+#sidebar .sidebar-list li.list-title {
+  font-weight: bold;
+  color: rgb(38, 38, 38);
+  font-size: 16px;
+}
+#sidebar .sidebar-list li.spec.list-title {
+  padding-left: 1.8rem;
+}
+#sidebar .sidebar-list {
+  padding: 0;
+  margin-top: 2rem;
+}
+#sidebar .sidebar-list.info {
+  padding-left: 1.8rem;
+}
+#sidebar .filter-container input{
+  width: 200px;
+  height: 32px;
+  font-size: 15px;
+  padding-left: 10px;
+  margin: 10px 0 16px 1.8rem;
+}
+.sidebar-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar-list .method{
+  border-radius: 3px;
+  margin: 0 1rem 0.5rem;
+  padding: 1rem .8rem 1rem 1.6rem;
+}
+.sidebar-list .method:hover {
+  background-color: rgba(237, 30, 30, 0.12);
+}
+.sidebar-list .method a {
+  cursor: pointer;
+  position: relative;
+  padding-left: 40px;
+}
+.sidebar-list ul li {
+  padding: 0.3rem 0.2rem 0.3rem 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: hsl(205, 13%, 40%);
+}
+.sidebar-list ul li a {
+  color: hsl(205, 13%, 40%);
+  /* text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
+}
+.sidebar-list ul li a:hover {
+  color: hsl(205, 13%, 20%);
+}
+.sidebar-list ul li.submenu {
+  padding: .3rem .2rem;
+  margin: 0;
+}
+.sidebar-list ul li.submenu.active ul {
+  height: auto;
+  max-height: 9999px;
+  padding-top: .5rem;
+}
+.sidebar-list ul li .submenu-title {
+  position: relative;
+  display: block;
+  font-weight: 500;
+  color: hsl(205, 13%, 30%);
+  cursor: pointer;
+  padding: 0.3rem 0.3rem 0.3rem 2.3rem;
+  border-radius: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-list ul li .submenu-title:hover{
+  color: hsl(205, 13%, 20%);
+  background: hsl(205, 13%, 95%);
+}
+.sidebar-list ul li .submenu-title:before {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 0;
+  height: 0;
+  top: 8px;
+  left: 10px;
+  right: auto;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid hsl(205, 10%, 70%);
+}
+.sidebar-list ul li.active .submenu-title:before {
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid hsl(205, 10%, 70%);
+  top: 12px;
+  left: 8px;
+}
+.sidebar-list ul li .submenu-items {
+  max-height: 0;
+  overflow: hidden;
+}
+.sidebar-list ul li .submenu-items a {
+  display: block;
+  line-height: 1.2;
+  font-weight: normal;
+  /* text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
+}
+.sidebar-list li.active > a {
+  font-weight: 500;
+}
+.sidebar-list ul li .method-post:before,
+.sidebar-list ul li .method-put:before,
+.sidebar-list ul li .method-get:before,
+.sidebar-list ul li .method-delete:before,
+.sidebar-list ul li .method-patch:before,
+.sidebar-list ul li .method-head:before,
+.sidebar-list ul li .method-options:before {
+  color: white;
+  font-size: 9px;
+  padding: .28rem .1rem;
+  position: absolute;
+  top: 0px;
+  left: -9px;
+  border-radius: 3px;
+  font-weight: 600;
+  width: 38px;
+  display: inline-block;
+  text-align: center;
+  font-family: monospace;
+  margin-right: 5px;
+}
+.sidebar-list ul li .method-post:before {
+  content: "POST";
+  background: #49cc90;
+}
+.sidebar-list ul li .method-put:before {
+  content: "PUT";
+  background: #fca130;
+}
+.sidebar-list ul li .method-get:before {
+  content: "GET";
+  background: #61affe;
+}
+.sidebar-list ul li .method-delete:before {
+  content: "DELETE";
+  background: #f93e3e;
+}
+.sidebar-list ul li .method-patch:before {
+  content: "PATCH";
+  background: #50e3c2;
+}
+.sidebar-list ul li .method-head:before {
+  content: "HEAD";
+  background: #9012fe;
+}
+.sidebar-list ul li .method-options:before {
+  content: "OPTIONS";
+  background: #0d5aa7;
+}
+
+@media all and (max-width: 1200px) {
+  #sidebar {
+    position: fixed;
+    top: 40px;
+    right: 0;
+    transform: translateX(100%);
+    transition: all 400ms ease;
+    z-index: 2;
+  }
+  #sidebar.open {
+    transform: translateX(0);
+  }
+  #sidebar.open .sidebar-menu {
+    height: 100vh;
+    width: 300px;
+    right: 0;
+    border-right: none;
+  }
+
+  .sidebar-toggle {
+    position: fixed;
+    display: flex;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    justify-content: left;
+    background: #eee;
+    z-index: 2;
+    transition: background 300ms ease;
+    cursor: pointer;
+  }
+  .sidebar-toggle:hover {
+    background: #f6f6f6;
+  }
+  .swagger-ui.has-sidebar {
+    margin-top: 40px;
+  }
+}
+
+@media all and (min-width: 1201px) {
+  .sidebar-toggle {
+    display: none;
+  }
+  .overlay.on {
+    display: none;
+  }
+  .swagger-ui {
+    margin-top: 0;
+  }
+  .swagger-ui.has-sidebar {
+    margin-left: 260px;
+  }
+}
+
+/* sidebar overlay */
+.overlay {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+.overlay.open {
+  display: block;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* main */
+
+.swagger-ui .main-container {
+  margin: 0 32px;
+}
+
+.swagger-ui .scheme-container {
+  padding: 30px 20px 20px;
+  box-shadow: none;
+  border-bottom: 1px solid #eee;
+  background: #fafafa;
+}
+
+.swagger-ui .wrapper{
+  max-width: none;
+}
+
+.swagger-ui .info {
+  word-break: break-word !important;
+}
+
+.swagger-ui .main .title{
+  font-size: 38px;
+  font-weight: 300;
+  border-bottom: 2px solid #E6E6E6;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+}
+
+.swagger-ui .opblock {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #E6E6E6 !important;;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  margin-top: 32px;
+  padding-bottom: 5px;
+  background-color: white !important;
+
+}
+
+.swagger-ui .opblock-body .opblock-description-wrapper,
+.swagger-ui .opblock-description-wrapper,
+.swagger-ui .opblock-external-docs-wrapper,
+.swagger-ui .opblock-title_normal {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+.swagger-ui .opblock-description-wrapper p,
+.swagger-ui .opblock-external-docs-wrapper p,
+.swagger-ui .opblock-title_normal p {
+  font-size: 16px;
+}
+
+/* opblock-section-header is used for both parameters and responses
+  this one applies to  both */
+.swagger-ui .opblock .opblock-section-header{
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* this one just applies to parameters (left side) */
+.swagger-ui .opblock .opblock-section > .opblock-section-header {
+  border-bottom: 1px solid #E6E6E6;
+  padding-right: 0;
+}
+
+.swagger-ui .opblock .responses-wrapper .opblock-section-header > label > span{
+  display: none;
+}
+
+.swagger-ui .opblock .opblock-section-header h4 {
+  font-size: 16px;
+}
+
+.swagger-ui .opblock .body-param {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.swagger-ui .opblock-tag {
+  padding: 12px 0;
+}
+
+.swagger-ui .opblock-tag .nostyle span {
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.swagger-ui .opblock-tag small {
+  font-family: sans-serif;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+  padding-left: 10px;
+}
+
+.swagger-ui .opblock .body-param .body-param-options label {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background-color: rgb(245, 245, 245);
+  border-radius: 3px 3px 0 0;
+  border: 1px solid rgb(230, 230, 230);
+  margin: 0;
+  padding: 8px 10px 8px 16px;
+  font-size: 13px;
+  text-transform: capitalize;
+}
+
+.swagger-ui .opblock .body-param .body-param-options span {
+  padding: 8px 5px;
+}
+.swagger-ui .opblock .body-param .body-param-options select {
+  min-width: unset;
+  margin-right: 5px;
+}
+
+.swagger-ui .opblock-body pre span{
+  color: unset !important
+}
+
+.swagger-ui .opblock-section pre{
+  background-color: white;
+  color: rgba(0, 0, 0, 0.7);
+  border-radius: 0 0 3px;
+  border: 1px solid rgb(230, 230, 230);
+}
+
+/*  needed to remove  max width on small screen width*/
+@media (max-width: 768px) {
+  .swagger-ui input[type=email], .swagger-ui input[type=file], .swagger-ui input[type=password], .swagger-ui input[type=search], .swagger-ui input[type=text], .swagger-ui textarea {
+      max-width: unset;
+  }
+}
+.swagger-ui .opblock textarea,
+.swagger-ui textarea[disabled]{
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgb(250, 250, 250);
+  border-radius: 0 0 3px;
+  border: 1px solid rgb(230, 230, 230);
+  margin: 0;
+}
+
+.swagger-ui .opblock-section .table-container {
+  padding: 0;
+}
+
+/* parameters */
+
+.swagger-ui .parameters {
+  table-layout: fixed;
+}
+
+@media (max-width: 768px) {
+  .swagger-ui .parameters {
+    table-layout: auto
+  }
+}
+
+/* this is required to align the execute button (both .execute-wrapper and .btn-group)
+  Might lead to uglyness if we have a really long parameter name */
+.swagger-ui table.parameters thead tr td,
+.swagger-ui table.parameters tbody tr td:first-of-type {
+  width: 13em;
+}
+
+.swagger-ui .parameters thead {
+  display: none;
+}
+
+.swagger-ui .parameters .parameters-col_name {
+  text-align: right;
+  padding-right: 32px;
+}
+
+.swagger-ui .parameters .parameters-col_name .parameter__name{
+  margin-right: 0;
+  overflow-wrap: break-word;
+  font-family: monospace;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+}
+
+.swagger-ui .parameters .parameters-col_name .parameter__name:not(.required){
+  margin-bottom: 4px;
+}
+
+
+.swagger-ui .parameters .parameters-col_name .parameter__name.required {
+  display: flex;
+  flex-direction: column;
+}
+
+.swagger-ui .parameters .parameters-col_name .parameter__name.required::after {
+  padding: 10px 0 0 0;
+  font-size: 13px;
+  font-family: sans-serif;
+  font-weight: normal;
+  text-transform: capitalize;
+}
+
+.swagger-ui .parameters .parameters-col_name .parameter__name.required span {
+  display: none;
+}
+
+.swagger-ui .parameters .parameters-col_name .parameter__type {
+  padding-top: 0;
+  font-size: 13px;
+  font-family: sans-serif;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.45)
+}
+
+.swagger-ui .parameters .parameters-col_name .prop-format{
+  color: inherit;
+  font-family: sans-serif;
+}
+
+.swagger-ui .parameters .parameters-col_name .parameter__in {
+  font-size: 13px;
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.45)
+}
+
+.swagger-ui .parameters .parameter__deprecated {
+  font-size: 13px;
+}
+
+.swagger-ui .parameters select {
+  width: 100%;
+}
+
+.swagger-ui .parameters input[type=email],
+.swagger-ui .parameters input[type=password],
+.swagger-ui .parameters input[type=search],
+.swagger-ui .parameters input[type=text],
+.swagger-ui .parameters textarea {
+  width: 100%;
+  padding: 8px 0px 8px 10px;
+  max-width: unset;
+}
+
+.swagger-ui .parameters input[type=file] {
+  /* needed because without calc width overflows at least on chrome */
+  width: calc(100% - 10px);
+  padding: 8px 0px 8px 10px;
+  max-width: unset;
+}
+
+
+
+.swagger-ui .opblock-body .responses-wrapper pre {
+  background-color: #ebf7ff;
+  color: rgba(0, 0, 0, 0.7);
+  padding-left: 30px;
+}
+
+.swagger-ui .swagger-ui .responses-table {
+  color: white !important;
+  padding-left: 0;
+}
+
+.swagger-ui .opblock-body .responses-table > thead {
+  display: none;
+}
+
+.swagger-ui .opblock-body .live-responses-table tr{
+  display: flex;
+  flex-direction: column;
+}
+
+.swagger-ui .opblock-body .live-responses-table thead tr td{
+  border-radius: 4px;
+  border: 0.5em solid white;
+  font-family: monospace;
+}
+
+.swagger-ui .opblock-body .responses-table .response-col_status  {
+  background-color: #ebf7ff;
+  display: block;
+  max-width: unset;
+  text-align: center;
+  border-radius: 4px 0 0 4px;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 15px;
+  /* this padding is not perfect, less than a pixel of alignment from right side */
+  padding: 9px 0;
+}
+.swagger-ui .opblock-body .live-responses-table .response-col_status  {
+  display: flex;
+  text-align: center;
+  padding-left: 30px;
+  margin-bottom: 30px;
+  width: 100%
+}
+.swagger-ui .opblock-body .live-responses-table .response-col_status:empty {
+  display: none;
+}
+
+.swagger-ui .opblock-body .live-responses-table .response-col_description .highlight-code{
+  margin-bottom: 1em;
+}
+
+.swagger-ui .opblock-body .responses-table .response-col_description {
+  padding: 0;
+  background-color: #ebf7ff;
+  border-radius: 4px;
+  width: 100%;
+  font-family: monospace;
+}
+
+.swagger-ui .opblock-body .responses-table .response-col_description .response-col_description__inner .markdown {
+  padding-top: 10px;
+}
+
+.swagger-ui .opblock-body .responses-table .response-col_description .response-col_description__inner .renderedMarkdown > p{
+  margin-top: 10px;
+}
+.swagger-ui .response-col_status .response-undocumented {
+  padding-left: 30px;
+}
+
+.swagger-ui .opblock-body .responses-table .response-col_description div > h5{
+  display: none;
+}
+
+.swagger-ui .responses-inner .responses-table:not(.live-responses-table) tr.response{
+  display: flex;
+  /* background-color: #ebf7ff; */
+  border-radius: 4px;
+  border-bottom: 30px solid transparent;
+  font-family: monospace;
+}
+
+.swagger-ui .swagger-ui .response-col_description__inner div.markdown,
+.swagger-ui .response-col_description__inner div.renderedMarkdown,
+.swagger-ui .swagger-ui .response-col_description__inner div.markdown p,
+.swagger-ui .response-col_description__inner div.renderedMarkdown p,
+.swagger-ui .response-col_description__inner div.markdown {
+  background-color: #ebf7ff;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 15px;
+}
+
+.swagger-ui .responses-inner{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.swagger-ui .responses-inner .request-url{
+  margin-bottom: 30px;
+}
+
+.swagger-ui .responses-inner .request-url pre{
+  font-size: 15px;
+}
+
+.swagger-ui .responses-inner table.responses-table {
+  padding: 0;
+}
+/* hides the "Responses", "Url", "Server Response" above the example responses hidden by js when live response is active   */
+.swagger-ui .responses-inner div h4 {
+  display: none;
+}
+
+.swagger-ui .opblock-body .right-side-wrapper pre span {
+  color: inherit !important;
+  color: unset !important;
+}
+
+.swagger-ui .opblock .opblock-summary {
+  display: grid !important;
+  display: -ms-grid !important;
+  grid-template-columns: 80px auto 30px;
+  grid-template-rows: 50px auto;
+  -ms-grid-columns: 80px 1fr 30px;
+  -ms-grid-rows: 50px auto;
+  border: none !important;
+  border-bottom: none !important;
+  background-color: white !important;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 33px;
+}
+
+.swagger-ui .opblock .opblock-summary .opblock-summary-method {
+  grid-column-start: 1;
+  -ms-grid-column: 1;
+  grid-row-start: 2;
+  -ms-grid-row: 2;
+  /* I have no clue why this is needed #ie */
+  display: -ms-grid;
+
+  border-radius: 3px 0 0 3px;
+  min-width: unset;
+  height: 36px;
+  line-height: 36px;
+  padding: 0;
+}
+
+.swagger-ui .opblock .opblock-summary .opblock-summary-description{
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 1;
+
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  -ms-grid-row: 1;
+
+  /* font-family: Roboto !important; */
+  font-size: 20px;
+  font-weight: 500;
+  padding-bottom: 5px;
+}
+
+.swagger-ui .opblock .opblock-summary .authorization__btn {
+  grid-column-start: 3;
+  grid-row-start: 1;
+
+  -ms-grid-column: 3;
+  -ms-grid-row: 1
+}
+
+.swagger-ui .opblock .opblock-summary .opblock-summary-path,
+.swagger-ui .opblock .opblock-summary .opblock-summary-path__deprecated {
+  grid-column-start: 2;
+  grid-column-end: 4;
+
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 2;
+  -ms-grid-row: 2;
+
+  background-color: rgb(245, 245, 245);
+  height: 36px;
+  font-size: 16px;
+}
+
+.swagger-ui .opblock-body {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+@media (min-width: 1000px) {
+  /* we ie does not support implicet grids so we have to work around
+      it also does not support grid-gaps so we use a extra col instead */
+  .swagger-ui .opblock-body {
+    display: grid;
+    grid-column-gap: 64px;
+    grid-template-columns: 45% 55%;
+    grid-auto-rows: min-content;
+
+    display: -ms-grid;
+    -ms-grid-columns: 45% 64px 55%;
+    -ms-grid-rows: min-content min-content min-content min-content min-content;
+  }
+  .swagger-ui .right-side-wrapper {
+    /* 64 pixes to compensate for grid col gap */
+    margin-right: 64px;
+  }
+
+}
+
+.swagger-ui .opblock-body .btn-group {
+  /* grid-row-start: 3; */
+  -ms-grid-row: 3;
+  grid-column-start: 1;
+  -ms-grid-column: 1;
+  padding: 16px 0 20px 13em;
+  height: 71px;
+}
+
+.swagger-ui .opblock-body .execute-wrapper {
+  /* grid-row-start: 3; */
+  -ms-grid-row: 3;
+  grid-column-start: 1;
+  -ms-grid-column: 1;
+  padding-top: 16px;
+  padding-right: 0;
+  padding-left: 13em;
+}
+
+@media (max-width: 768px) {
+  .swagger-ui .opblock-body .btn-group,
+  .swagger-ui .opblock-body .execute-wrapper {
+    padding-left: 0;
+  }
+}
+
+.swagger-ui .opblock-section {
+  grid-column-start: 1;
+  -ms-grid-column: 1;
+  /* having this grid row seems to make it stack in some specs  */
+  /* grid-row-start: 2; */
+  -ms-grid-row: 2;
+}
+
+.swagger-ui .loading-container {
+  grid-column-start: 1;
+  grid-row-start: 3;
+  -ms-grid-column: 1;
+  -ms-grid-row: 4;
+}
+
+.swagger-ui .right-side-wrapper {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  grid-row-end: 5;
+
+  -ms-grid-column: 3;
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 4;
+}
+
+.swagger-ui .opblock-body {
+  width: 100%
+}
+
+
+/* code snippets */
+.swagger-ui .code-snippet {
+  margin: 0 0 34px 0;
+}
+
+.swagger-ui .code-snippet .tabs-component ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  min-height: 30px;
+  border-radius: 3px 0px 0px;
+  background-color: rgb(0, 48, 82);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.swagger-ui .code-snippet .tabs-component li{
+  line-height: 2.5;
+  display: inline;
+  margin: 0 5px 0 0;
+}
+
+.swagger-ui .code-snippet .tabs-component a {
+  color: rgb(255, 255, 255);
+  /* font-family: 'Roboto-Medium'; */
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.swagger-ui .code-snippet .tabs-component .is-active a{
+  color: rgb(255, 255, 255);
+  font-family: 'Roboto-Medium';
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.swagger-ui .code-snippet .tabs-component-panels > section > pre {
+  border-radius: 0 0 3px 3px;
+  background-color: rgb(0, 36, 61);
+}
+
+.swagger-ui .code-snippet .tabs-component-panels > section > pre span :before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  border-right: 1px solid #ddd;
+  padding: 0 .5em;
+  margin-right: .5em;
+  color: #888
+}
+
+
+/**************************************************************************
+ * From templates repo, not sure if needed, consildating all css in one spot before removing
+ * swagger-ui container
+ */
+
+
+.swagger-ui .information-container *,
+.swagger-ui .operations-container .col:not(.end) *,
+.swagger-ui .operations-container .opblock .response-code pre,
+.swagger-ui .operations-container .col.end .opblock .response-code,
+.swagger-ui .operations-container .opblock .response-code .markdown {
+  white-space: normal !important;
+  word-break: break-all !important;
+}
+
+.swagger-ui .operations-container .opblock .opblock-summary,
+.swagger-ui .operations-container .opblock .response-code,
+.swagger-ui .operations-container .col.end .opblock .response-code,
+.swagger-ui .operations-container .opblock .response-code .markdown {
+  height: auto;
+}
+
+.swagger-ui .operations-container .opblock .response-code pre {
+  margin: 0;
+}
+
+.swagger-ui .operations-container .opblock .opblock-summary {
+  min-height: 36px;
+  position: relative;
+}
+
+.swagger-ui .operations-container .opblock .opblock-summary-path {
+  margin-left: 80px;
+}
+
+.swagger-ui .operations-container .opblock .opblock-summary-method {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .swagger-ui .operations-container .opblock .opblock-summary-path {
+    margin-left: 0;
+  }
+
+  .swagger-ui .operations-container .opblock .opblock-summary-method {
+    position: relative;
+  }
+}
+
+.swagger-ui .opblock-description-wrapper > p {
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 3px;
+  margin: 30px 0;
+}
+.swagger-ui .opblock-description-wrapper .markdown > p {
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 3px;
+  margin-bottom: 30px;
+}
+.swagger-ui .parameters-col_description .markdown p {
+  margin-bottom: 0;
+}
+.swagger-ui .response-col_description__inner div.markdown p {
+  color: #3b4151;
+}
+
+/**************************************************************************
+ * swagger-ui operation panel theming
+ */
+.swagger-ui .side-panel { background: hsl(220, 8%, 19%); }
+.swagger-ui .model-example-wrapper { overflow: auto; }
+.swagger-ui .code-block { background: hsla(220, 8%, 10%, 1); }
+.swagger-ui .operations-container select { border-color: rgba(255,255,255,0.1); }
+
+/**************************************************************************
+ * swagger-ui operation panel fixes
+ */
+.swagger-ui .code-block { max-height: 600px !important }
+.swagger-ui .opblock-body pre { padding: 30px; }
+
+/*******************************************************************************
+ * Code Snippet Theme - Twilight
+ */
+/* .swagger-ui .opblock-body .right-side-wrapper pre span.token.cdata,.swagger-ui .opblock-body .right-side-wrapper pre span.token.comment,.swagger-ui .opblock-body .right-side-wrapper pre span.token.doctype,.swagger-ui .opblock-body .right-side-wrapper pre span.token.prolog{color:#787878 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.namespace,.swagger-ui .opblock-body .right-side-wrapper pre span.token.punctuation{opacity:.7 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.boolean,.swagger-ui .opblock-body .right-side-wrapper pre span.token.deleted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.number,.swagger-ui .opblock-body .right-side-wrapper pre span.token.tag{color:#cf694a !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.builtin,.swagger-ui .opblock-body .right-side-wrapper pre span.token.constant,.swagger-ui .opblock-body .right-side-wrapper pre span.token.keyword,.swagger-ui .opblock-body .right-side-wrapper pre span.token.property,.swagger-ui .opblock-body .right-side-wrapper pre span.token.selector,.swagger-ui .opblock-body .right-side-wrapper pre span.token.symbol{color:#f9ee9a !important}
+.swagger-ui .opblock-body .right-side-wrapper pre.language-css span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre.style span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-name,.swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-value,.swagger-ui .opblock-body .right-side-wrapper pre span.token.char,.swagger-ui .opblock-body .right-side-wrapper pre span.token.entity,.swagger-ui .opblock-body .right-side-wrapper pre span.token.inserted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.operator,.swagger-ui .opblock-body .right-side-wrapper pre span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre span.token.url,.swagger-ui .opblock-body .right-side-wrapper pre span.token.variable{color:#919e6b !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.atrule{color:#7386a5 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.important,.swagger-ui .opblock-body .right-side-wrapper pre span.token.regex{color:#e9c163 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.bold,.swagger-ui .opblock-body .right-side-wrapper pre span.token.important{font-weight:700 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.italic{font-style:italic !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.entity{cursor:help !important} */
+
+/*******************************************************************************
+ * Code Snippet Theme - Dracula
+ */
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.cdata,.swagger-ui .opblock-body .right-side-wrapper pre span.token.comment,.swagger-ui .opblock-body .right-side-wrapper pre span.token.doctype,.swagger-ui .opblock-body .right-side-wrapper pre span.token.prolog{color:#6272a4 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.punctuation{color:#f8f8f2 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.namespace{opacity:.7 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.constant,.swagger-ui .opblock-body .right-side-wrapper pre span.token.deleted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.property,.swagger-ui .opblock-body .right-side-wrapper pre span.token.symbol,.swagger-ui .opblock-body .right-side-wrapper pre span.token.tag{color:#ff79c6 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.boolean,.swagger-ui .opblock-body .right-side-wrapper pre span.token.number{color:#bd93f9 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-name,.swagger-ui .opblock-body .right-side-wrapper pre span.token.builtin,.swagger-ui .opblock-body .right-side-wrapper pre span.token.char,.swagger-ui .opblock-body .right-side-wrapper pre span.token.inserted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.selector,.swagger-ui .opblock-body .right-side-wrapper pre span.token.string{color:#50fa7b !important}
+.swagger-ui .opblock-body .right-side-wrapper pre.language-css span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre.style span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre span.token.entity,.swagger-ui .opblock-body .right-side-wrapper pre span.token.operator,.swagger-ui .opblock-body .right-side-wrapper pre span.token.url,.swagger-ui .opblock-body .right-side-wrapper pre span.token.variable{color:#f8f8f2 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.atrule,.swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-value,.swagger-ui .opblock-body .right-side-wrapper pre span.token.class-name,.swagger-ui .opblock-body .right-side-wrapper pre span.token.function{color:#f1fa8c !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.keyword{color:#8be9fd !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.important,.swagger-ui .opblock-body .right-side-wrapper pre span.token.regex{color:#ffb86c !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.bold,.swagger-ui .opblock-body .right-side-wrapper pre span.token.important{font-weight:700 !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.italic{font-style:italic !important}
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.entity{cursor:help !important}

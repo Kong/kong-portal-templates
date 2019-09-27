@@ -1,0 +1,44 @@
+  <form id="login" data-type="openid-connect">
+    <p class="form-error-message toggle-content"></p>
+
+    <button
+      id="login-button"
+      class="btn btn-primary"
+      type="submit">{{l("login_form_button_text", "Login")}}</button>
+  </form>
+
+  <script type="text/javascript">
+    window.addEventListener("load", function() {
+      var $FORM = $("#login");
+      var $FORM_ERROR = $FORM.find(".form-error-message")
+
+      // Submission variables
+      var baseApiUrl = window.Kong.getApiUrl();
+      var redirectTo = Kong.Auth.getRedirectTo('{{portal.redirect.login}}')
+
+      // Handle form state
+      var onSubmit = function() {
+        $FORM_ERROR
+          .removeClass('is-visible')
+          .html('');
+
+        Kong.Auth.loginWithOpenIdConnect({
+          baseUrl: baseApiUrl,
+          redirectTo: redirectTo
+        });
+      }
+
+      var onError = function(data) {
+        $FORM_ERROR
+          .addClass('is-visible')
+          .html(data.message || 'An unexpected error occurred. Please try again.');
+      }
+
+
+      // Handle form button press
+      $FORM.on('submit', function(event) {
+        event.preventDefault();
+        onSubmit();
+      })
+    })
+  </script>

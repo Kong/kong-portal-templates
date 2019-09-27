@@ -1,0 +1,16 @@
+<section class="homepage-hero">
+  <div class="hero-header">
+    <h2>
+      {{page.hero.title}}
+    </h2>
+    <p>
+      {{page.hero.tagline}}
+    </p>
+  </div>
+
+  <div class="hero-footer">
+    {% if portal.auth and portal.auth ~= "" then %}
+      <a class="btn btn-primary" href="register">Create a Developer Account</a>
+    {% end %}
+  </div>
+</section>

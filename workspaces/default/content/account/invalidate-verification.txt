@@ -1,0 +1,3 @@
+---
+layout: system/invalidate-verification.html
+---
