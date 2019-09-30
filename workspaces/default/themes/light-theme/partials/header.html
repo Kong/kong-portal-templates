@@ -10,9 +10,8 @@
       <nav class="eight columns" role="navigation">
         <li><a href="documentation">Service Catalog</a></li>
         <li><a href="about">About</a></li>
-
         {% if portal.auth and portal.auth ~= "" then %}
-          {% if user.is_authenticated() then %}
+          {% if user.is_authenticated then %}
             <li class="has-dropdown">
               <a href="settings" aria-haspopup="true">{{user.get("email")}}</a>
               <ul class="dropdown" aria-label="submenu">
