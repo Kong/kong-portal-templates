@@ -1,5 +1,5 @@
 <div class="catalog-list">
-  {% for _, spec in each(portal.specs) do %}
+  {% for _, spec in each(specs) do %}
     {(partials/service-catalog/item.html, spec)}
   {% end %}
 </div>

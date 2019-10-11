@@ -1,7 +1,8 @@
 {% layout = "layouts/_page.html" %}
 
 {% context.tags = {} %}
-{% for _, spec in each(portal.specs) do %}
+{% context.specs = portal.specs_by_tag(page.catalog_tag) %}
+{% for _, spec in each(context.specs) do %}
   {% for _, tag in each(spec.parsed.tags or {}) do %}
     {% if tags[tag.name] == nil then %}
       {% tags[tag.name] = 1 %}
