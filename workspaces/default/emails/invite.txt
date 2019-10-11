@@ -1,0 +1,12 @@
+---
+layout: _email_base.html
+
+title: Email
+
+heading: Hello Developer!
+email_text: >
+   You have been invited to create a Developer Portal account at {{portal.url}}.
+   <br>
+   Please visit <a href="{{portal.url}}/register">{{portal.url}}/register</a> to create your account.
+
+---

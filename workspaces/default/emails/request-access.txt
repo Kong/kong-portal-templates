@@ -1,0 +1,11 @@
+---
+layout: _email_base.html
+
+title: Email
+
+heading: Hello Admin!
+email_text: >
+  {{email.developer_name}} ({{email.developer_email}}) has requested Developer Portal access for {{portal.url}}.
+  Please visit <a href="{{email.admin_gui_url}}/developers/requested">{{email.admin_gui_url}}/developers/requested</a> to review this request.
+
+---

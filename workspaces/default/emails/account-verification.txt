@@ -1,0 +1,16 @@
+---
+layout: _email_base.html
+
+title: Email
+
+heading: Hello Developer!
+email_text: >
+  Please click the link below to verify your Developer Portal account at {{portal.url}}.
+  <br>
+  <a href="{{portal.url}}/account/verify?token={{email.token}}&email={{email.developer_email}}">verify account</a>
+  <br>
+  If you didn't make this request, please click the link below to invalidate this request.
+  <br>
+  <a href="{{portal.url}}/account/invalidate-verification?token={{email.token}}&email={{email.developer_email}}">invalidate validation request</a>
+
+---
