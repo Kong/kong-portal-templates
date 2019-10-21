@@ -13,6 +13,8 @@ consumes:
   - application/json
 produces:
   - application/json
+tags:
+  - name: pets
 paths:
   /pets:
     get:
