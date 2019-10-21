@@ -1,5 +1,7 @@
 ---
 layout: system/login.html
+private: true
+
 title: Login
 
 locale:
