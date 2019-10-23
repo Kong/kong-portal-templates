@@ -14,9 +14,6 @@
     "title": "httpbin.org",
     "version": "0.9.3"
   },
-  "x-headmatter": {
-    "readable_by": "*"
-  },
   "paths": {
     "/absolute-redirect/{n}": {
       "get": {
