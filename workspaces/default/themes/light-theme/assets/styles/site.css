@@ -111,11 +111,12 @@ input.has-error {
 .site-header {
   top: 0px;
   width: 100%;
+  display: flex;
+  align-items: center;
   position: fixed;
   background: var(--header, black);
   color: var(--text_primary, white);
   box-shadow: 0 1px 0 var(--accent, grey);
-  padding: 2.5rem 0;
   height: 90px;
   z-index: 90;
 }
@@ -140,12 +141,26 @@ input.has-error {
   display: none;
 }
 
+.site-header .row {
+  display: flex;
+  align-items: center;
+}
+
+.site-header .row .four.columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 @media(max-width: 748px) {
   /* Mobile Toggle */
   .site-header .menu-toggle {
     float: right;
     border-radius: 3px;
     padding: .5em 1em;
+    cursor: pointer;
+  }
+  .site-header .menu-toggle label {
     cursor: pointer;
   }
   .site-header .menu-toggle:hover {
