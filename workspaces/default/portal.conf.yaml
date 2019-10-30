@@ -1,6 +1,6 @@
 name: Kong Portal
 theme:
-  name: light-theme
+  name: base
 redirect:
   unauthenticated: login
   unauthorized: unauthorized
