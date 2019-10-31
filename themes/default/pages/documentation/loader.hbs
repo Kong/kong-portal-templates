@@ -9,12 +9,3 @@
   {{/inline}}
 
 {{/layout}}
-
-{{!-- We need this because our routing for spec pages breaks pushState which is used by swagger
-  state and title can be ignored
- --}}
-<script>
-window.history.pushState = function(state, title, url) {
-  window.location.hash = url;
-}
-</script>

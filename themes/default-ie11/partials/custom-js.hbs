@@ -1,15 +1,24 @@
 {{> unauthenticated/code-snippet-languages}}
 
 <script type="text/javascript">
-  /*
-|--------------------------------------------------------------------------
-| Swagger UI Options
-| e.g. https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md
-|--------------------------------------------------------------------------
-
-window.swaggerUIAdditionalOptions = {
-  oauth2RedirectUrl: '127.0.0.1:8003'
-}
-*/
   "use strict";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Swagger UI Options
+  | e.g. https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md
+  |--------------------------------------------------------------------------
+
+  window.swaggerUIAdditionalOptions = {
+    oauth2RedirectUrl: '127.0.0.1:8003'
+  }
+  */
+  window.swaggerUIAdditionalOptions = {
+    theme: {
+      swaggerAbsoluteTop: '80px',
+      // height of top navbar
+      hasSidebar: true //  sidebar
+
+    }
+  };
 </script>
