@@ -1,0 +1,42 @@
+{% layout = "layouts/_page.html" %}
+
+{-content-}
+<div class="about">
+    <section class="about-hero">
+      <div class="container">
+        <h6>About Us</h6>
+        <h2>{{page.hero.title}}</h2>
+        <ul>
+          {% for _, point in each(page.hero.points) do %}
+            <li>{*point*}</li>
+          {% end %}
+        </ul>
+      </div>
+    </section>
+
+    <section class="about-team">
+      <div class="container">
+        <h4>{{page.team.title}}</h4>
+        <p>{*page.team.slogan*}</p>
+
+        <div class="team-members">
+          <div class="row">
+          {% for _, member in each(page.team.members) do %}
+            <div class="three columns">
+              <div class="team-member">
+                <div class="member-image">
+                  <img src="{{member.image}}" />
+                </div>
+                <div class="member-info">
+                  <h6 class="member-name">{{member.name}}</h6>
+                  <p class="member-title">{{member.title}}</p>
+                </div>
+              </div>
+            </div>
+          {% end %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{-content-}

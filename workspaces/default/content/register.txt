@@ -1,0 +1,25 @@
+---
+layout: system/register.html
+private: true
+title: Register
+
+locale:
+  register_form_header: "Create an account"
+  register_form_content: >
+      Enter your information below to create an account.
+
+  register_side_header: "Welcome to {{portal.name}}"
+  register_side_content: >
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonumm.
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+
+  register_form_key_label: "Api Key"
+  register_form_email_label: "Email"
+  register_form_password_label: "Password"
+  register_form_button_text: "Create Account"
+
+  register_home_link_text: "← Go back home"
+
+  register_login_text: "Already have an account?"
+  register_login_link_text: "Login here"
+---

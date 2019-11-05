@@ -1,0 +1,165 @@
+{% if not page.hide_categories then %}
+<div class="catalog-sidebar">
+  <div class="catalog-categories-component">
+    <h5>{{ l("catalog_categories_header_text", "Category") }}</h5>
+
+    {% for tag, count in each(tags) do %}
+    <a data-tag="{{ tag:lower() }}" class="tag-link">
+      <span class="tag-link--name">{{ tag }}</span>
+      <span class="tag-link--count">{{ count }}</span>
+    </a>
+    {% end %}
+  </div>
+</div>
+{% end %}
+
+
+<script type="text/javascript">
+  window.addEventListener("load", function() {
+    var $CATALOG_TAG_LINKS = $(".tag-link");
+    var $CATALOG_ITEMS = $(".catalog-item");
+    var $CATALOG_FILTER = $(".catalog-filter");
+    var $CATALOG_LIST_NO_RESULTS = $(".catalog-list__no-results");
+
+    // returns hashmap where keys are tags and values are count of items
+    var generateTagList = function() {
+      var output = {};
+
+      $CATALOG_ITEMS.each(function(i, elem) {
+        var tags = elem.dataset.tags;
+        var value = 0;
+
+        value = elem.classList.contains("search-filtered") ? 0 : 1;
+
+        if (tags) {
+          tags = tags.split(",").filter(function(v) {
+            return v;
+          });
+
+          tags.forEach(function(tag) {
+            if (output[tag]) {
+              output[tag] += value;
+            } else {
+              output[tag] = value;
+            }
+          });
+        }
+      });
+
+      return output;
+    };
+
+    // update sidebar tag list counters, hide tags when empty
+    var updateCategories = function() {
+      var tags = generateTagList();
+      var activeTag = $CATALOG_TAG_LINKS.filter(".is-active");
+
+      Object.keys(tags).forEach(function(tag) {
+        var elem = $CATALOG_TAG_LINKS.filter('[data-tag="' + tag + '"]');
+        var count = tags[tag];
+        elem.find(".tag-link--count").html(count);
+
+        if (elem.hasClass('is-active') && count === 0) {
+          $CATALOG_LIST_NO_RESULTS.show();
+        }
+      });
+    };
+
+    var filterArrayByTagData = function(tag) {
+      return function(index, elem) {
+        return elem.dataset.tags.indexOf(tag) < 0;
+      };
+    };
+
+    var filterArrayByValue = function (value) {
+      return $CATALOG_ITEMS
+        .filter(":not(.tag-filtered)")
+        .filter(function(i, elem) {
+          return elem.innerText.toLowerCase().indexOf(value) < 0;
+        });
+    }
+
+    var filterCatalogListByTag = function(tag) {
+      $CATALOG_ITEMS
+        .filter(filterArrayByTagData(tag))
+        .toggleClass("tag-filtered");
+
+      $CATALOG_ITEMS
+        .filter(":not(.search-filtered)")
+        .filter(filterArrayByTagData(tag))
+        .toggleClass("is-visible");
+    };
+
+    var filterCatalogListByValue = function(value) {
+      var filteredItems = $CATALOG_ITEMS
+        .filter(function(i, elem) {
+          return elem.innerText.toLowerCase().indexOf(value) < 0;
+        });
+
+      if (filteredItems.length === $CATALOG_ITEMS.length) {
+        $CATALOG_LIST_NO_RESULTS.show();
+      } else {
+        $CATALOG_LIST_NO_RESULTS.hide();
+      }
+
+      filteredItems.removeClass("is-visible").addClass("search-filtered");
+    };
+
+    var clearTagFilters = function(event) {
+      $CATALOG_LIST_NO_RESULTS.hide();
+      $CATALOG_TAG_LINKS.removeClass("is-active");
+
+      $CATALOG_ITEMS
+        .filter(":not(.is-visible,.search-filtered)")
+        .addClass("is-visible");
+
+      $CATALOG_ITEMS.removeClass("tag-filtered");
+    };
+
+    var clearSearchFilters = function(event) {
+      $CATALOG_LIST_NO_RESULTS.hide();
+
+      $CATALOG_ITEMS
+        .filter(":not(.tag-filtered).search-filtered")
+        .addClass("is-visible");
+
+      $CATALOG_ITEMS.removeClass("search-filtered");
+    };
+
+    var onClickCategory = function(event) {
+      event.preventDefault();
+
+      var target = $(this);
+      if (!target.hasClass("is-active")) {
+        clearTagFilters();
+      }
+      target.toggleClass("is-active");
+
+      filterCatalogListByTag(target.data("tag"));
+      updateCategories();
+      onInputFilter();
+    };
+
+    var onInputFilter = function() {
+      var value = $CATALOG_FILTER.val().toLowerCase();
+
+      clearSearchFilters();
+
+      if (value) {
+        filterCatalogListByValue(value);
+        updateCategories();
+      } else {
+        updateCategories();
+      }
+    };
+
+    $(document).on("click", ".tag-link", onClickCategory);
+
+    $CATALOG_FILTER.on(
+      "keydown",
+      Kong.Utils.debounce(function() {
+        onInputFilter();
+      }, 80)
+    );
+  });
+</script>

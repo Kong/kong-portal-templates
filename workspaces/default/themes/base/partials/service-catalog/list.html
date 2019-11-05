@@ -1,0 +1,16 @@
+<div class="catalog-list">
+  {% if #specs > 0 then %}
+    {% for _, spec in each(specs) do %}
+      {(partials/service-catalog/item.html, spec)}
+    {% end %}
+  {% else %}
+    <div class="catalog-list__no-results">
+      <h4>{{ l("catalog_no_results_header", "Nothing Found, Sorry") }}</h4>
+    </div>
+  {% end %}
+</div>
+
+<div class="catalog-list__no-results toggle-content">
+  <h4>{{ l("catalog_no_results_header", "Nothing Found, Sorry") }}</h4>
+  <p>{{ l("catalog_no_results_content", "No services matched your criteria.") }}</p>
+</div>

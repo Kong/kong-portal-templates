@@ -1,0 +1,4 @@
+---
+layout: system/resend-verification.html
+private: true
+---

@@ -1,0 +1,10 @@
+<div id="breadcrumbs">
+  <a href="">Home</a>
+  {% for i, crumb in each(page.breadcrumbs) do %}
+    {% if crumb.is_last then %}
+      / {{ crumb.display_name }}
+    {% else %}
+      / <a href="{{crumb.path}}">{{ crumb.display_name }}</a>
+    {% end %}
+  {% end %}
+</div>

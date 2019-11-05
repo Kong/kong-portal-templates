@@ -1,0 +1,30 @@
+{% layout = "layouts/_page.html" %}
+
+{% context.tags = {} %}
+{% context.specs = portal.specs_by_tag(page.catalog_tag) %}
+{% for _, spec in each(context.specs) do %}
+  {% for _, tag in each(spec.parsed.tags or {}) do %}
+    {% if tags[tag.name] == nil then %}
+      {% tags[tag.name] = 1 %}
+    {% else %}
+      {% tags[tag.name] = tags[tag.name] + 1 %}
+    {% end %}
+  {% end %}
+{% end %}
+
+{-content-}
+  <div class="service-catalog fixed-filter">
+    {(partials/service-catalog/filter.html, context)}
+
+    <div class="container">
+      <div class="row">
+        <div class="three columns">
+          {(partials/service-catalog/sidebar.html, context)}
+        </div>
+        <div class="nine columns">
+          {(partials/service-catalog/list.html, context)}
+        </div>
+      </div>
+    </div>
+  </div>
+{-content-}

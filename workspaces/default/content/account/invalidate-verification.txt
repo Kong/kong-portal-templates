@@ -1,0 +1,4 @@
+---
+layout: system/invalidate-verification.html
+private: true
+---
