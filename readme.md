@@ -1,6 +1,8 @@
-# Kong Developer Portal Templates
+# Kong Developer Portal Legacy Templates
 
-Developer Portal Template Files for Kong Enterprise Edition
+Developer Portal Legacy Template Files for Kong Enterprise Edition
+
+> NOTE: These templates are for use with Kong Developer Portal v0.36 and below.  Please checkout `https://github.com/Kong/kong-portal-templates` for v1.3 and greater.
 
 ## Client-side Libraries Used
 
