@@ -1,0 +1,4 @@
+{% for i, field in each(portal.developer_meta_fields) do %}
+  <label for="{{field.name}}">{{field.label}}</label>
+  <input id="{{field.name}}" type="{{field.type}}" name="{{field.name}}" {{field.required and "required" or ""}} />
+{% end %}

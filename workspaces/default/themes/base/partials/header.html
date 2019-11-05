@@ -1,0 +1,32 @@
+<header class="site-header">
+  <div class="container">
+    <div class="row">
+      <div class="four columns">
+        <h1 class="brand"><a href=""><img class="logo" src="{{theme.images.logo}}" alt="{{portal.name}}" /></a></h1>
+        <div class="menu-toggle">
+          <label for="header_nav">Menu</label>
+        </div>
+      </div>
+
+      <input type="checkbox" id="header_nav" class="menu-toggle-checkbox" />
+      <nav class="eight columns" role="navigation">
+        <li><a href="documentation">Service Catalog</a></li>
+        <li><a href="about">About</a></li>
+        {% if portal.auth and portal.auth ~= "" then %}
+          {% if user.is_authenticated then %}
+            <li class="has-dropdown">
+              <a href="settings" aria-haspopup="true">{{user.get("email")}}</a>
+              <ul class="dropdown" aria-label="submenu">
+                <li><a href="dashboard">Dashboard</a></li>
+                <li><a href="logout">Logout</a></li>
+              </ul>
+            </li>
+          {% else %}
+            <li><a href="login">Login</a></li>
+            <li><a class="nav-button btn btn-secondary" href="register">Sign Up</a></li>
+          {% end %}
+        {% end %}
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,19 @@
+{% layout = "layouts/_base.html" %}
+
+{-main-}
+<script>
+window.addEventListener("load", function () {
+  var redirectTo = Kong.Auth.getRedirectTo('{{portal.redirect.logout}}')
+
+  Kong.Auth.logout({
+    baseUrl: window.Kong.Utils.getApiUrl(),
+    type: window.Kong.Utils.getAuthType()
+  }).then(() => {
+    window.location.href = redirectTo
+  }).catch((e) => {
+    // TODO handle actual error
+    window.location.href = redirectTo
+  })
+})
+</script>
+{-main-}

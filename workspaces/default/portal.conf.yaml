@@ -1,0 +1,10 @@
+name: Kong Portal
+theme:
+  name: base
+redirect:
+  unauthenticated: login
+  unauthorized: unauthorized
+  login: dashboard
+  logout: ''
+  pending_approval: ''
+  pending_email_verification: ''

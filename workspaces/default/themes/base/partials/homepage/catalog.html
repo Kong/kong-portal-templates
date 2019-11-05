@@ -1,0 +1,20 @@
+<section class="homepage-catalog">
+  <div class="catalog-list">
+    {% for i = 1, 4 do %}
+      {% local spec = portal.specs[i] %}
+      {% if not spec then %}
+        {% break %}
+      {% end %}
+      {(partials/service-catalog/item.html, spec)}
+    {% end %}
+  </div>
+  {% if #portal.specs ~= 0 then %}
+  <div class="catalog-footer">
+    {% if #portal.specs > 4 then %}
+    <a href="documentation">View all {{#portal.specs}} at the Service Catalog</a>
+    {% else %}
+    <a href="documentation">View Catalog</a>
+    {% end %}
+  </div>
+  {% end %}
+</section>

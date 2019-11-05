@@ -1,0 +1,33 @@
+---
+layout: about.html
+
+title: About Us
+
+hero:
+  title: Making Data Available. Anytime. Anywhere.
+  points:
+    - It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+    - The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
+    - Many desktop publishing packages and web page editors now use Lorem Ipsum.
+team:
+  title: Meet our (amazing) team
+  slogan: >
+    It is a long established fact that a reader will be distracted by <br />
+    the readable content of a page when looking at its layout.
+  members:
+    - name: "Alex Y."
+      title: "CEO"
+      image: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80"
+    - name: "Sara L."
+      title: "CTO"
+      image: "https://images.unsplash.com/photo-1527860305340-c42077f06851?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+    - name: "Alamin D."
+      title: "VP of Product"
+      image: "http://genfkd.wpengine.netdna-cdn.com/wp-content/uploads/2018/05/shutterstock_793117360-503x518.jpg"
+    - name: "Tohi B."
+      title: "VP of Engineering"
+      image: "https://images.unsplash.com/photo-1521119989659-a83eee488004?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+    - name: "Mubin P."
+      title: "VP of Happiness"
+      image: "https://images.unsplash.com/photo-1529259646408-5c50deb4cf6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
+---
