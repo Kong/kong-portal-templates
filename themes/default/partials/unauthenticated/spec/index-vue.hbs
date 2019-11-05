@@ -1,0 +1,277 @@
+{{!-- imports --}}
+{{> unauthenticated/search/helpers-js }}
+
+{{!-- template --}}
+<div id="spec-index" :class="{ active: !isLoading }">
+  <div class="page-header">
+    <h1>API Catalog</h1>
+    <input name="filter" v-model="filterModel" placeholder="Search"/>
+  </div>
+
+  <div v-if="filteredSpecs.length > 0" class="list-items">
+    <div v-for="spec in filteredSpecs" class="list-item-container">
+      <div @click="goToSpec(spec.filename)" class="list-item">
+        <a class="title">${ spec.title }</a>
+        <p class="description">${ spec.description }</p>
+        <div class="meta">
+          <p class="version">version: ${ spec.version }</p>
+          <p class="tags">${ formatTags(spec.tags) }</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div v-else class="no-results">
+    <h1>No Results</h1>
+  </div>
+</div>
+
+{{!-- component --}}
+<script>
+window.registerApp(function () {
+  new window.Vue({
+    el: '#spec-index',
+    delimiters: ['${', '}'],
+
+    data () {
+      return {
+        specFiles: [],
+        filteredSpecs: [],
+        filterModel: '',
+        isLoading: true,
+
+        buildUrl: () => { console.log('error: buildUrl helper failed to load') },
+        goToPage: () => { console.log('error: goToPage helper failed to load') }
+      }
+    },
+
+    mounted () {
+      if (window.helpers) {
+        this.buildUrl = window.helpers.buildUrl || this.buildUrl
+        this.goToPage = window.helpers.goToPage || this.goToPage
+      }
+
+      this.getFiles().then((resp) => {
+        this.specFiles = this.fetchSpecs(resp.data.data)
+        this.filteredSpecs = this.filterSpecs()
+        this.isLoading = false
+      })
+    },
+
+    methods: {
+      getFiles () {
+        if (window._kong.isAuthenticated) {
+          return window._kong.api.get('/files?type=spec', { withCredentials: true })
+        }
+
+        return window._kong.api.get('/files/unauthenticated?type=spec')
+      },
+
+      goToSpec(path) {
+        let url = this.buildUrl(`documentation/${path}`)
+        this.goToPage(url)
+      },
+
+      filterSpecs() {
+        if (this.filterModel !== '') {
+          return this.specFiles.filter((spec) => {
+            let specContent = JSON.stringify(spec).toLowerCase()
+            let filterParam = this.filterModel.toLowerCase()
+            return specContent.includes(filterParam)
+          })
+        }
+
+        return this.specFiles
+      },
+
+      fetchSpecs(files) {
+        let specFiles = files.filter((file) => file.type === 'spec')
+        return specFiles.map((spec) => {
+          let specContents = this.parseSpec(spec.contents)
+          let specInfo = specContents.info || {}
+          let filename = spec.name
+          if (filename.includes('unauthenticated/')) {
+            filename = spec.name.split('unauthenticated/')[1]
+          }
+
+          return {
+            title: specInfo.title || spec.name,
+            description: specInfo.description || '',
+            version: specInfo.version || 'unknown',
+            tags: specContents.tags || [],
+            filename: filename || ''
+          }
+        })
+      },
+
+      parseSpec (item) {
+        if (!item) return {}
+
+        let parsedItem = this.parseJSON(item)
+
+        if (!parsedItem) {
+          parsedItem = this.parseYAML(item)
+        }
+
+        if (!parsedItem) {
+          parsedItem = {}
+        }
+
+        return parsedItem
+      },
+
+      parseJSON (item) {
+        try {
+          return JSON.load(item)
+        } catch (e) {
+          return false
+        }
+      },
+
+      parseYAML (item) {
+        try {
+          return window.YAML.load(item)
+        } catch (e) {
+          return false
+        }
+      },
+
+      formatTags (tagObj) {
+        if (!tagObj) return ''
+
+        let tags = Object.keys(tagObj).map((tagKey) => { return tagObj[tagKey].name })
+        let tagStr = tags.slice(0, 3).join(', ')
+        if (tags.length > 3) {
+          let extraTags = tags.length - 3
+          tagStr += `... (${extraTags} more)`
+        }
+        return tagStr
+      }
+    },
+
+    watch: {
+      filterModel: {
+        handler: function() {
+          this.filteredSpecs = this.filterSpecs()
+        }
+      }
+    }
+  })
+})
+</script>
+
+{{!-- style --}}
+<style>
+#spec-index:not(.active) {
+  display: none;
+}
+
+#spec-index .list-items {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 132px 48px;
+}
+
+#spec-index .no-results {
+  text-align: center;
+  color: rgba(0,0,0,0.45);
+}
+
+#spec-index .page-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid #979797;
+  margin: 48px 148px;
+  padding-bottom: 48px;
+}
+
+#spec-index .page-header input {
+  background: url(images/search.svg) no-repeat scroll 8px 12px;
+  padding-left: 30px;
+  font-size: 15px;
+  color: rgba(0,0,0,0.45);
+}
+
+#spec-index .list-item-container {
+  padding: 16px;
+   width: 33.3%;
+}
+
+@media all and (max-width: 1200px) {
+  #spec-index .list-item-container {
+    width: 50%;
+  }
+}
+
+@media all and (max-width: 900px) {
+  #spec-index .list-items {
+    margin: 0 48px 48px;
+  }
+
+  #spec-index .page-header {
+    flex-wrap: wrap;
+    margin: 48px 64px;
+  }
+
+  #spec-index .list-item-container {
+    width: 100%;
+  }
+}
+
+#spec-index .list-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 3px;
+  min-height: 190px;
+  height: 100%;
+  padding: 24px;
+}
+
+#spec-index .list-item:hover {
+  cursor: pointer;
+}
+
+#spec-index .list-item .title {
+  flex-direction: column;
+  flex-grow: 0;
+  font-size: 18px;
+  color: #1270B2;
+}
+
+#spec-index .list-item:hover .title {
+  text-decoration: underline;
+}
+
+#spec-index .list-item .description {
+  flex-grow: 1;
+  font-size: 16px;
+  color: rgba(0,0,0,0.70);
+  line-height: 24px;
+  max-height: 72px;
+  overflow: hidden;
+}
+
+#spec-index .list-item .meta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-grow: 0;
+  font-size: 14px;
+  color: rgba(0,0,0,0.45);
+  line-height: 20px;
+}
+
+.list-item .meta p {
+  margin: 0
+}
+
+.page-header input {
+  height: 40px;
+}
+
+.page-header h1 {
+  margin: 0;
+}
+</style>

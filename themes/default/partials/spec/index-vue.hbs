@@ -5,7 +5,10 @@
 <div id="spec-index" :class="{ active: !isLoading }">
   <div class="page-header">
     <h1>API Catalog</h1>
-    <input name="filter" v-model="filterModel" placeholder="Search"/>
+    <span class="search">
+      {{> unauthenticated/assets/icons/search-widget }}
+      <input name="filter" v-model="filterModel" placeholder="Search"/>
+    </span>
   </div>
 
   <div v-if="filteredSpecs.length > 0" class="list-items">
@@ -182,8 +185,13 @@ window.registerApp(function () {
   padding-bottom: 48px;
 }
 
+#spec-index .search svg {
+  position: absolute;
+  margin: 12px 7px;
+  fill: rgba(0,0,0,0.45);
+}
+
 #spec-index .page-header input {
-  background: url(images/search.svg) no-repeat scroll 8px 12px;
   padding-left: 30px;
   font-size: 15px;
   color: rgba(0,0,0,0.45);
@@ -221,6 +229,7 @@ window.registerApp(function () {
   border: 1px solid rgba(0,0,0,0.12);
   border-radius: 3px;
   min-height: 190px;
+  height: 100%;
   padding: 24px;
 }
 
@@ -233,6 +242,9 @@ window.registerApp(function () {
   flex-grow: 0;
   font-size: 18px;
   color: #1270B2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #spec-index .list-item:hover .title {
@@ -244,8 +256,9 @@ window.registerApp(function () {
   font-size: 16px;
   color: rgba(0,0,0,0.70);
   line-height: 24px;
-  max-height: 72px;
+  height: 72px;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #spec-index .list-item .meta {
@@ -259,7 +272,10 @@ window.registerApp(function () {
 }
 
 .list-item .meta p {
-  margin: 0
+  margin: 0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .page-header input {

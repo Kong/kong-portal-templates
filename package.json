@@ -9,6 +9,19 @@
     "watch": "node bin/sync",
     "push": "PUSH=true node bin/sync",
     "pull": "PULL=true node bin/sync",
-    "wipe": "DELETE_ALL=true node bin/sync"
-  }
+    "wipe": "DELETE_ALL=true node bin/sync",
+    "compile": "node bin/transform"
+  },
+  "devDependencies": {
+    "fs-extra": "^8.0.1",
+    "@babel/core": "7.4.4",
+    "@babel/preset-env": "7.4.4",
+    "jsdom": "15.1.0",
+    "pretty": "2.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 11"
+  ]
 }
