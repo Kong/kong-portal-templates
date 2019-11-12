@@ -1,10 +1,7 @@
-# Workspace name
-# @required
-name: default
 
-# Workspace Upstream URL
+# Kong Admin URL
 # @required
-upstream: http://localhost:8001/default
+admin_url: http://localhost:8001
 
 # Workspace RBAC Token
 # @optional
