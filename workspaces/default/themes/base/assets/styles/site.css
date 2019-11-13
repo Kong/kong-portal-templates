@@ -809,7 +809,7 @@ a.tag-link.is-active {
  * Page -- Auth (Basic Auth / Key Auth / OIDC)
  *****************************************/
 
- .page.dashboard {
+ .page .dashboard {
    padding: 2em 0;
  }
 
