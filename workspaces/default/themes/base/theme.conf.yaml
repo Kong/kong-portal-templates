@@ -6,51 +6,51 @@ fonts:
 colors:
   header:
     value: '#FFFFFF'
-    description: 'Background for header'
+    description: Background for header
   page:
     value: '#FFFFFF'
-    description: 'Background on pages'
+    description: Background on pages
   hero:
     value: '#003459'
     description: 'Background for hero text on hompage, about, login, contact us...'
   text_hero:
     value: '#FFFFFF'
-    description: Text on top of hero, used on homepage, about, login, contact us...
+    description: 'Text on top of hero, used on homepage, about, login, contact us...'
   footer:
     value: '#F7F9FA'
-    description: 'Background on footer'
+    description: Background on footer
   accent:
     value: '#57BBD6'
-    description: 'Borders and catalog preview icons'
+    description: Borders and catalog preview icons
   text_primary:
     value: '#404040'
-    description: 'Main text'
+    description: Main text
   text_secondary:
     value: '#8C8C8C'
     description: 'Supporting text, hints, etc.'
   text_headings:
     value: '#005999'
-    description: 'Headings'
+    description: Headings
   text_links:
     value: '#1782CF'
-    descrption: 'Link color'
+    descrption: Link color
   button_primary_fill:
     value: '#3FA66A'
-    description: 'Background for Primary Button'
+    description: Background for Primary Button
   button_primary_fill_hover:
     value: '#3DCC91'
-    description: 'Hover background for Primary Button'
+    description: Hover background for Primary Button
   button_primary_text:
     value: '#FFFFFF'
-    description: 'Text for Primary Button'
+    description: Text for Primary Button
   button_secondary_fill:
-    description: 'Background for Secondary Button'
+    description: Background for Secondary Button
     value: '#FFFFFF'
   button_secondary_fill_hover:
-    description: 'Hover background for Secondary Button'
+    description: Hover background for Secondary Button
     value: '#F0F9FF'
   button_secondary_border:
-    description: 'Border Secondary Button'
+    description: Border Secondary Button
     value: '#A3D9FF'
   button_secondary_text:
     description: Text for Secondary Button

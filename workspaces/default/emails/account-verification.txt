@@ -1,8 +1,7 @@
 ---
 layout: _email_base.html
 
-title: Email
-
+subject: Developer Portal Account Verification Success {{portal.url}}
 heading: Hello Developer!
 email_text: >
   Please click the link below to verify your Developer Portal account at {{portal.url}}.

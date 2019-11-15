@@ -3,6 +3,7 @@ layout: _email_base.html
 
 title: Email
 
+subject: Request to access Developer Portal {{portal.url}}
 heading: Hello Admin!
 email_text: >
   {{email.developer_name}} ({{email.developer_email}}) has requested Developer Portal access for {{portal.url}}.

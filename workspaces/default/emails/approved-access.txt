@@ -1,8 +1,7 @@
 ---
 layout: _email_base.html
 
-title: Email
-
+subject: Developer Portal access approved {{portal.url}}
 heading: Hello Developer!
 email_text: >
   You have been approved to access {{portal.url}}.
