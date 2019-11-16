@@ -2,14 +2,12 @@
 layout: _email_base.html
 
 subject: Developer Portal Account Verification Success {{portal.url}}
-heading: Hello Developer!
-email_text: >
-  Please click the link below to verify your Developer Portal account at {{portal.url}}.
-  <br>
-  <a href="{{portal.url}}/account/verify?token={{email.token}}&email={{email.developer_email}}">verify account</a>
-  <br>
-  If you didn't make this request, please click the link below to invalidate this request.
-  <br>
-  <a href="{{portal.url}}/account/invalidate-verification?token={{email.token}}&email={{email.developer_email}}">invalidate validation request</a>
-
+heading: Hello {{email.developer_name}}!
 ---
+To verify your Developer Portal account at {{portal.url}}, please click the link below. 
+<br>
+<a href="{{email.verify_url}}">Verify Account</a>
+<br>
+If you didn't make this request, please click the link below to invalidate this request.
+<br>
+<a href="{{email.invalidate_url}}">Invalidate Validation Request</a>

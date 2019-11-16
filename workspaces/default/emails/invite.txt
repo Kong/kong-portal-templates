@@ -2,11 +2,9 @@
 layout: _email_base.html
 
 subject: We invite you to access Developer Portal {{ portal.url }}"
-
-heading: Hello Developer!
-email_text: >
-   You have been invited to create a Developer Portal account at {{portal.url}}.
-   <br>
-   Please visit <a href="{{portal.url}}/register">{{portal.url}}/register</a> to create your account.
+heading: Hello Developer
 
 ---
+You have been invited to create a Developer Portal account at {{portal.url}}.
+<br>
+Please visit <a href="{{portal.url}}/register">{{portal.url}}/register</a> to create your account.
