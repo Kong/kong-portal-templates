@@ -1,5 +1,5 @@
 ---
-layout: _email_base.html
+layout: emails/email_base.html
 
 title: Email
 
