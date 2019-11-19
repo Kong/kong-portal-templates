@@ -1,0 +1,11 @@
+---
+layout: emails/email_base.html
+
+title: Email
+
+subject: Request to access Developer Portal {{portal.url}} {{email.developer_email}}
+heading: Hello Admin!
+---
+{{email.developer_name}} ({{email.developer_email}}) has requested Developer Portal access for {{portal.url}}.
+<br>
+Please visit <a href="{{email.admin_gui_url}}/developers/requested">{{email.admin_gui_url}}/developers/requested</a> to review this request.
