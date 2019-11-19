@@ -1,7 +1,7 @@
 ---
 layout: emails/email_base.html
 
-subject: We invite you to access Developer Portal {{ portal.url }}"
+subject: We invite you to access Developer Portal {{ portal.url }}
 heading: Hello Developer!
 
 ---
