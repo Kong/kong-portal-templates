@@ -299,6 +299,10 @@
   word-break: break-word !important;
 }
 
+.swagger-ui .scheme-container .schemes-title {
+  margin-top: 16px;
+}
+
 .swagger-ui .main .title{
   font-size: 38px;
   font-weight: 300;
