@@ -933,3 +933,33 @@
  */
 .swagger-ui .code-block { max-height: 600px !important }
 
+/*******************************************************************************	
+ * Code Snippet Theme - Twilight	
+ */	
+/* .swagger-ui .opblock-body .right-side-wrapper pre span.token.cdata,.swagger-ui .opblock-body .right-side-wrapper pre span.token.comment,.swagger-ui .opblock-body .right-side-wrapper pre span.token.doctype,.swagger-ui .opblock-body .right-side-wrapper pre span.token.prolog{color:#787878 !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.namespace,.swagger-ui .opblock-body .right-side-wrapper pre span.token.punctuation{opacity:.7 !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.boolean,.swagger-ui .opblock-body .right-side-wrapper pre span.token.deleted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.number,.swagger-ui .opblock-body .right-side-wrapper pre span.token.tag{color:#cf694a !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.builtin,.swagger-ui .opblock-body .right-side-wrapper pre span.token.constant,.swagger-ui .opblock-body .right-side-wrapper pre span.token.keyword,.swagger-ui .opblock-body .right-side-wrapper pre span.token.property,.swagger-ui .opblock-body .right-side-wrapper pre span.token.selector,.swagger-ui .opblock-body .right-side-wrapper pre span.token.symbol{color:#f9ee9a !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre.language-css span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre.style span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-name,.swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-value,.swagger-ui .opblock-body .right-side-wrapper pre span.token.char,.swagger-ui .opblock-body .right-side-wrapper pre span.token.entity,.swagger-ui .opblock-body .right-side-wrapper pre span.token.inserted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.operator,.swagger-ui .opblock-body .right-side-wrapper pre span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre span.token.url,.swagger-ui .opblock-body .right-side-wrapper pre span.token.variable{color:#919e6b !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.atrule{color:#7386a5 !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.important,.swagger-ui .opblock-body .right-side-wrapper pre span.token.regex{color:#e9c163 !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.bold,.swagger-ui .opblock-body .right-side-wrapper pre span.token.important{font-weight:700 !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.italic{font-style:italic !important}	
+.swagger-ui .opblock-body .right-side-wrapper pre span.token.entity{cursor:help !important} */	
+
+/*******************************************************************************	
+ * Code Snippet Theme - Dracula	
+ */	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.cdata,.swagger-ui .opblock-body .right-side-wrapper pre span.token.comment,.swagger-ui .opblock-body .right-side-wrapper pre span.token.doctype,.swagger-ui .opblock-body .right-side-wrapper pre span.token.prolog{color:#6272a4 !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.punctuation{color:#f8f8f2 !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.namespace{opacity:.7 !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.constant,.swagger-ui .opblock-body .right-side-wrapper pre span.token.deleted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.property,.swagger-ui .opblock-body .right-side-wrapper pre span.token.symbol,.swagger-ui .opblock-body .right-side-wrapper pre span.token.tag{color:#ff79c6 !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.boolean,.swagger-ui .opblock-body .right-side-wrapper pre span.token.number{color:#bd93f9 !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-name,.swagger-ui .opblock-body .right-side-wrapper pre span.token.builtin,.swagger-ui .opblock-body .right-side-wrapper pre span.token.char,.swagger-ui .opblock-body .right-side-wrapper pre span.token.inserted,.swagger-ui .opblock-body .right-side-wrapper pre span.token.selector,.swagger-ui .opblock-body .right-side-wrapper pre span.token.string{color:#50fa7b !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre.language-css span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre.style span.token.string,.swagger-ui .opblock-body .right-side-wrapper pre span.token.entity,.swagger-ui .opblock-body .right-side-wrapper pre span.token.operator,.swagger-ui .opblock-body .right-side-wrapper pre span.token.url,.swagger-ui .opblock-body .right-side-wrapper pre span.token.variable{color:#f8f8f2 !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.atrule,.swagger-ui .opblock-body .right-side-wrapper pre span.token.attr-value,.swagger-ui .opblock-body .right-side-wrapper pre span.token.class-name,.swagger-ui .opblock-body .right-side-wrapper pre span.token.function{color:#f1fa8c !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.keyword{color:#8be9fd !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.important,.swagger-ui .opblock-body .right-side-wrapper pre span.token.regex{color:#ffb86c !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.bold,.swagger-ui .opblock-body .right-side-wrapper pre span.token.important{font-weight:700 !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.italic{font-style:italic !important}	
+ .swagger-ui .opblock-body .right-side-wrapper pre span.token.entity{cursor:help !important} 
