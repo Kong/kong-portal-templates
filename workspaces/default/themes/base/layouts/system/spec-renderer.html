@@ -4,7 +4,6 @@
   <link href="assets/styles/swagger-ui.css" rel="stylesheet">
   <link href="assets/styles/framework-overrides.css" rel="stylesheet" />
   <link href="assets/styles/swagger-ui-kong-theme.css" rel="stylesheet" />
-
   <div id="ui-wrapper">
     <div class="loading">
       <div class="sidebar">
@@ -25,7 +24,6 @@
   <script>
     window.onload = function () {
       var swaggerUIOptions = {
-        spec: {* helpers.json_encode(page.parsed_body) *}, // Define data to be used
         dom_id: '#ui-wrapper', // Determine what element to load swagger ui
         docExpansion: 'list',
         deepLinking: true, // Enables dynamic deep linking for tags and operations
@@ -44,10 +42,22 @@
           swaggerAbsoluteTop: "90px"
         }
       }
+      
+      // determine spec render strategy at time of render
+      {% if page.spec_url then %}
+        // use external url
+        swaggerUIOptions.url = {* page.spec_url *}
+      {% elseif page.spec_name then %}
+        // render user specified url
+        swaggerUIOptions.url = window.Kong.getApiUrl() + "/files/specs/{* page.spec_name *}/raw"
+      {% else %}
+        // render spec via current path
+        swaggerUIOptions.url = window.Kong.getApiUrl() + "/files/{* page.path *}/raw"
+      {% end %}
 
       var ui = SwaggerUIBundle(swaggerUIOptions)
 
-      /** Export to window for use in custom js */
+      // Export to window for use in custom js
       window.ui = ui
     }
 
