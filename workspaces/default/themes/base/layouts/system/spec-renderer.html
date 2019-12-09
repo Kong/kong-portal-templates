@@ -40,25 +40,36 @@
         theme: {
           hasSidebar: true,
           swaggerAbsoluteTop: "90px"
-        }
+        },
       }
       
       // determine spec render strategy at time of render
       {% if page.spec_url then %}
         // use external url
         swaggerUIOptions.url = {* page.spec_url *}
+        var ui = SwaggerUIBundle(swaggerUIOptions)
+
+        // Export to window for use in custom js
+        window.ui = ui
+
       {% elseif page.spec_name then %}
-        // render user specified url
-        swaggerUIOptions.url = window.Kong.getApiUrl() + "/files/specs/{* page.spec_name *}/raw"
+        // render spec via current path
+        let url = window.Kong.getApiUrl() + "/files/specs/{* page.spec_name *}/raw"
+        let res = window.Kong.SpecRenderer.getSpec(url).then((spec) => {
+          swaggerUIOptions.spec = JSON.parse(spec)
+          var ui = SwaggerUIBundle(swaggerUIOptions)
+          window.ui = ui
+        })
+
       {% else %}
         // render spec via current path
-        swaggerUIOptions.url = window.Kong.getApiUrl() + "/files/{* page.path *}/raw"
+        let url = window.Kong.getApiUrl() + "/files/{* page.path *}/raw"
+        let res = window.Kong.SpecRenderer.getSpec(url).then((spec) => {
+          swaggerUIOptions.spec = spec
+          var ui = SwaggerUIBundle(swaggerUIOptions)
+          window.ui = ui
+        })
       {% end %}
-
-      var ui = SwaggerUIBundle(swaggerUIOptions)
-
-      // Export to window for use in custom js
-      window.ui = ui
     }
 
     // overwrite push state to not break deeplinking
