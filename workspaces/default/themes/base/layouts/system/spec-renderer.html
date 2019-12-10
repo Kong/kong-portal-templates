@@ -43,6 +43,12 @@
           swaggerAbsoluteTop: "90px"
         },
       }
+
+      {% if user.is_editor_admin then %}
+        let api_url = "{% portal.admin_api_uri %}"
+      {% else %}
+        let api_url = window.Kong.getApiUrl()
+      {% end %}
       
       // determine spec render strategy at time of render
       {% if page.spec_url then %}
@@ -56,7 +62,7 @@
 
       {% elseif page.spec_name then %}
         // render spec via current path
-        let url = window.Kong.getApiUrl() + "/files/specs/{* page.spec_name *}/raw"
+        let url = api_url + "/files/specs/{* page.spec_name *}/raw"
         let res = window.Kong.SpecRenderer.getSpec(url).then((spec) => {
           swaggerUIOptions.spec = jsyaml.load(spec)
           var ui = SwaggerUIBundle(swaggerUIOptions)
@@ -65,7 +71,7 @@
 
       {% else %}
         // render spec via current path
-        let url = window.Kong.getApiUrl() + "/files/{* page.path *}/raw"
+        let url = api_url + "/files/{* page.path *}/raw"
         let res = window.Kong.SpecRenderer.getSpec(url).then((spec) => {
           swaggerUIOptions.spec = jsyaml.load(spec)
           var ui = SwaggerUIBundle(swaggerUIOptions)
