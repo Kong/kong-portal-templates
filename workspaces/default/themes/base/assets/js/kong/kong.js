@@ -1,10 +1,7 @@
 window.Kong = window.Kong || {}
 window.Kong.SpecRenderer = window.Kong.SpecRenderer || {}
 
-window.Kong.SpecRenderer.getSpec = function(url, options) {
-  // var type = options.type
-  // var fields = window.Kong.Utils.serializeFieldsArrayToObject(options.fields)
-
+window.Kong.SpecRenderer.getSpec = function(url) {
   return new Promise((res, rej) => {
     $.ajax({
       type: 'GET',

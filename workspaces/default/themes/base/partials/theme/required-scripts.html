@@ -21,6 +21,22 @@
     return url
   }
 
+  window.Kong.getAdminApiUrl = window.Kong.Utils.getAdminApiUrl = function() {
+    const port = window.parent.location.protocol.toLowerCase() === 'https:' ? '{*portal.admin_api_ssl_port*}' : '{*portal.admin_api_port*}'
+    const baseUrl = `${window.parent.location.protocol}//${window.parent.location.hostname}:${port}`
+    const admin_api_uri = '{*portal.admin_api_uri*}'
+    let urlConfig = null
+
+    if (admin_api_uri) {
+      const protocolPattern = /^https?:\/\//i
+      urlConfig = protocolPattern.test(admin_api_uri)
+        ? admin_api_uri
+        : `${window.parent.location.protocol}//${admin_api_uri}`
+    }
+
+    return `${urlConfig || baseUrl}`
+  },
+
   // Get portal authentication type
   window.Kong.Utils.getAuthType = function() {
     return "{{portal.auth}}"

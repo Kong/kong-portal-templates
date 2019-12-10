@@ -45,7 +45,7 @@
       }
 
       {% if user.is_editor_admin then %}
-        let api_url = "{% portal.admin_api_uri %}"
+        let api_url = window.Kong.getAdminApiUrl()
       {% else %}
         let api_url = window.Kong.getApiUrl()
       {% end %}
