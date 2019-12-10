@@ -665,7 +665,7 @@
   display: grid !important;
   display: -ms-grid !important;
   grid-template-columns: 80px auto 30px;
-  grid-template-rows: 50px auto;
+  grid-template-rows: auto auto;
   -ms-grid-columns: 80px 1fr 30px;
   -ms-grid-rows: 50px auto;
   border: none !important;
@@ -681,13 +681,18 @@
   -ms-grid-column: 1;
   grid-row-start: 2;
   -ms-grid-row: 2;
+
+  /* not tested in ie, but makes method centered */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   /* I have no clue why this is needed #ie */
   display: -ms-grid;
 
   border-radius: 3px 0 0 3px;
   min-width: unset;
-  height: 36px;
-  line-height: 36px;
+  height: 100%;
   padding: 0;
 }
 
@@ -703,7 +708,7 @@
   /* font-family: Roboto !important; */
   font-size: 20px;
   font-weight: 500;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
 }
 
 .swagger-ui .opblock .opblock-summary .authorization__btn {
@@ -724,8 +729,9 @@
   -ms-grid-row: 2;
 
   background-color: rgb(245, 245, 245);
-  height: 36px;
+  padding: 10px 10px;
   font-size: 16px;
+  word-break: break-all;
 }
 
 .swagger-ui .opblock-body {
