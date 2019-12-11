@@ -278,7 +278,6 @@
 
 .swagger-ui .main-container {
   margin: 0 32px;
-  word-break: break-word;
 }
 
 .swagger-ui .tab {
@@ -329,6 +328,7 @@
   margin: 0;
   padding: 0;
   font-size: 16px;
+  word-break: break-word;
 }
 
 .swagger-ui .opblock-description-wrapper p,
