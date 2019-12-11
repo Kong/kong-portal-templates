@@ -4,6 +4,9 @@
   <link href="assets/styles/swagger-ui.css" rel="stylesheet">
   <link href="assets/styles/framework-overrides.css" rel="stylesheet" />
   <link href="assets/styles/swagger-ui-kong-theme.css" rel="stylesheet" />
+  <div id="spec-object" style="display: none">
+    {* json_encode(page.body) *}
+  </div>
   <div id="ui-wrapper">
     <div class="loading">
       <div class="sidebar">
@@ -23,6 +26,20 @@
   <script src="assets/js/swagger-ui-kong-theme-667aef8.min.js"></script>
   <script src="assets/js/third-party/js-yaml-3.13.1.min.js"></script>	
   <script>
+    function htmlDecode (html) {
+      let txt = document.createElement('textarea')
+      txt.innerHTML = html
+      return txt.value
+    }
+
+    function getTemplateObject (id) {
+      let element = document.getElementById(id)
+      let html = htmlDecode(element.innerHTML)
+      let templateObject = JSON.parse(html)
+      element.parentNode.removeChild(element)
+      return templateObject
+    }
+
     window.onload = function () {
       var swaggerUIOptions = {
         dom_id: '#ui-wrapper', // Determine what element to load swagger ui
@@ -44,12 +61,6 @@
         },
       }
 
-      {% if user.is_editor_admin then %}
-        let api_url = window.Kong.getAdminApiUrl()
-      {% else %}
-        let api_url = window.Kong.getApiUrl()
-      {% end %}
-      
       // determine spec render strategy at time of render
       {% if page.spec_url then %}
         // use external url
@@ -61,6 +72,8 @@
         window.ui = ui
 
       {% elseif page.spec_name then %}
+        let api_url = window.Kong.getApiUrl()
+
         // render spec via current path
         let url = api_url + "/files/specs/{* page.spec_name *}/raw"
         let res = window.Kong.SpecRenderer.getSpec(url).then((spec) => {
@@ -71,12 +84,11 @@
 
       {% else %}
         // render spec via current path
-        let url = api_url + "/files/{* page.path *}/raw"
-        let res = window.Kong.SpecRenderer.getSpec(url).then((spec) => {
-          swaggerUIOptions.spec = jsyaml.load(spec)
-          var ui = SwaggerUIBundle(swaggerUIOptions)
-          window.ui = ui
-        })
+        let newSpec = getTemplateObject("spec-object")
+        swaggerUIOptions.spec = jsyaml.load(newSpec)
+        var ui = SwaggerUIBundle(swaggerUIOptions)
+        window.ui = ui
+
       {% end %}
     }
 
