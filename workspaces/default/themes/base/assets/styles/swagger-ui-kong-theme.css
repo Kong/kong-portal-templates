@@ -356,6 +356,12 @@
   display: none;
 }
 
+.swagger-ui .download-contents {
+  right: 20px;
+  word-break: normal;
+  padding: 4px 0px;
+}
+
 .swagger-ui .opblock .opblock-section-header h4 {
   font-size: 16px;
 }
@@ -610,7 +616,7 @@
 }
 
 .swagger-ui .response-col_status .response-undocumented {
-  padding-left: 30px;
+  display: none;
 }
 
 .swagger-ui .opblock-body .responses-table .response-col_description div > h5{
