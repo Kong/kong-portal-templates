@@ -56,4 +56,4 @@ colors:
     description: Text for Secondary Button
     value: '#21A66F'
 images:
-  logo: assets/images/logo-developers-light.svg
+  logo: assets/images/logo-developers-light.png
