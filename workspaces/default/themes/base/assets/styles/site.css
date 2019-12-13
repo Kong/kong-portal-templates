@@ -129,7 +129,7 @@ input.has-error {
 }
 
 .site-header .brand .logo {
-  max-height: 64px;
+  max-height: 32px;
 }
 
 .site-header nav {
