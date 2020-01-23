@@ -4,4 +4,4 @@ kong_admin_url: http://localhost:8001
 
 # Kong Admin Token
 # @optional
-kong_admin_token: 'handyshake'
+kong_admin_token: ''
