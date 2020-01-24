@@ -22,7 +22,7 @@ $ portal deploy default
 
 Path: `workspaces/<workspace-name>`
 
-Workspaces are a way to segment entities within Kong. Each workspace contains 
+Workspaces are a way to segment entities within Kong. Each workspace contains
 one portal each with it's own content and themes.
 
 Each Workspace follows the following structure:
@@ -37,19 +37,20 @@ Each Workspace follows the following structure:
 
 Path: `workspaces/<workspace-name>/cli.conf.yaml`
 
-Workspace CLI configuration file is used by the Kong Portal CLI tool, see CLI 
+Workspace CLI configuration file is used by the Kong Portal CLI tool, see CLI
 configuration documentation for more details.
 
 ### Portal Configuration
 
 Path: `workspaces/<workspace-name>/portal.conf.yaml`
 
-Workspace specific portal configuration. 
+Workspace specific portal configuration.
 
-Values declared here will take priority over both `theme.conf.yaml` and values 
+Values declared here will take priority over both `theme.conf.yaml` and values
 defined in your Kong `kong.conf`.
 
 ### Templates Documentation
+
 - [Structure and Filetypes](https://docs.konghq.com/enterprise/1.3-x/developer-portal/structure-and-file-types/)
 - [Working with Templates](https://docs.konghq.com/enterprise/1.3-x/developer-portal/working-with-templates/)
 - [Portal CLI](https://docs.konghq.com/enterprise/1.3-x/developer-portal/helpers/cli/)
