@@ -1,0 +1,11 @@
+---
+layout: emails/email_base.html
+
+subject: Your account at {{portal.url}} is Approved!
+heading: Hello {{email.developer_name}}!
+---
+We are emailing you to let you know that your Developer Portal account at <a href="{{portal.url}}">{{portal.url}}</a> has been verified.
+<br>
+Click the link below to Sign in.
+<br>
+<a href="{{portal.url}}/login">{{portal.url}}/login</a>

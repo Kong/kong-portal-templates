@@ -1,0 +1,9 @@
+---
+layout: emails/email_base.html
+
+subject: Developer Portal access approved {{portal.url}}
+heading: Hello {{email.developer_name}}!
+---
+You have been approved to access {{portal.url}}.
+<br>
+Please visit <a href="{{portal.url}}/login">{{portal.url}}/login</a> to login.

@@ -1,0 +1,11 @@
+---
+layout: emails/email_base.html
+
+subject: Developer Portal ({{portal.url}}) Account Verification Success
+heading: Hello {{email.developer_name}}!
+---
+We are emailing you to let you know that your Developer Portal account at <a href="{{portal.url}}">{{portal.url}}</a> has been verified.
+<br>
+Your account is still pending approval.
+<br>
+You will receive another email when your account has been approved.
