@@ -57,6 +57,6 @@ defined in your Kong `kong.conf`.
 
 ## Libraries Used
 
-- [Lua Resty Template](https://handlebarsjs.com/)
+- [Lua Resty Template](https://github.com/bungle/lua-resty-template)
 - [Swagger UI](https://github.com/swagger-api/swagger-ui)
 - [VueJS](https://vuejs.org/)
