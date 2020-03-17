@@ -1,0 +1,4 @@
+---
+layout: system/oauth2-redirect.html
+comment: This content file is required to support oauth2 redirect for Swagger UI.
+---
