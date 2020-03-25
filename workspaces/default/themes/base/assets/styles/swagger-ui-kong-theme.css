@@ -276,6 +276,29 @@
 
 /* main */
 
+.swagger-ui .scheme-container .schemes-title {
+  /* display: none; */
+}
+
+.swagger-ui .scheme-container {
+  box-shadow: none;
+}
+
+.swagger-ui .btn.authorize {
+  color: rgb(0, 149, 255);
+  border: 1px rgb(0, 149, 255) solid;
+}
+
+.swagger-ui .btn.authorize svg {
+  fill: rgb(0, 149, 255);
+}
+
+.swagger-ui .register-wrapper button {
+  background-color: rgb(0, 149, 255);
+  color: white;
+  border-color: rgb(0, 149, 255);
+}
+
 .swagger-ui .main-container {
   margin: 0 32px;
 }
@@ -285,8 +308,25 @@
 }
 
 .swagger-ui .scheme-container {
-  background-color: #ebf7ff;
-  padding: 20px;
+  background-color: rgb(250, 250, 250);
+  border-bottom: 1px rgb(240, 240, 240) solid;
+  padding: 32px 0;
+}
+
+.swagger-ui .scheme-container .schemes.wrapper {
+  padding: 0 30px;
+  justify-content: space-between;
+}
+
+.swagger-ui .scheme-container .schemes.wrapper .actions {
+  display: flex;
+}
+
+.swagger-ui .scheme-container .schemes select {
+  background-color: rgb(250, 250, 250);
+  border-radius: 3px;
+  border: 1px solid rgb(224, 224, 224);
+  box-shadow: none;
 }
 
 .swagger-ui .wrapper{
@@ -297,16 +337,35 @@
   word-break: break-word !important;
 }
 
-.swagger-ui .scheme-container .schemes-title {
-  margin-top: 16px;
-}
-
-.swagger-ui .main .title{
+.swagger-ui .main .title {
   font-size: 38px;
   font-weight: 300;
-  border-bottom: 2px solid #E6E6E6;
+  border-bottom-width: 0;
+  padding-bottom: 0;
+}
+
+.swagger-ui .main .header {
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.swagger-ui .main .header button {
+  border: 1px solid rgb(224, 224, 224);
+  background-color: rgb(250, 250, 250);
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 0 12px;
+}
+
+.info-augment-wrapper {
   padding-bottom: 30px;
   margin-bottom: 30px;
+}
+
+.info-augment-wrapper .info {
+  margin-bottom: 0;
 }
 
 .swagger-ui .opblock {

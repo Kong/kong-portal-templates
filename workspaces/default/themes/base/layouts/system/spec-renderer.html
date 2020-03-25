@@ -21,7 +21,7 @@
     </div>
   </div>
   <div id="spec-object" style="display: none">
-      {{ json_encode(page.body) }}
+    {{ json_encode(page.body) }}
   </div>
   <div id="document-object" style="display: none">
     {{ json_encode(page.document_object) }}
@@ -41,7 +41,6 @@
       let element = document.getElementById(id)
       let html = htmlDecode(element.innerHTML)
       let templateObject = JSON.parse(html)
-      element.parentNode.removeChild(element)
       return templateObject
     }
 
