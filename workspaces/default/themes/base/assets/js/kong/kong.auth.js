@@ -42,15 +42,7 @@ window.Kong.Auth.OIDC = {
 }
 
 window.Kong.Auth.getRedirectTo = function (redirectTo) {
-  var queryValue = window.Kong.Utils.getParameterByName('redirectTo')
-
-  // Query value or default value
-  redirectTo = queryValue != null ? queryValue : redirectTo
-
-  // Is it a redirect alias?
-  redirectTo = window.Kong.Auth.REDIRECT_ALIASES[redirectTo] || redirectTo
-
-  return redirectTo
+  return window.Kong.Auth.REDIRECT_ALIASES[redirectTo] || redirectTo || ''
 }
 
 
