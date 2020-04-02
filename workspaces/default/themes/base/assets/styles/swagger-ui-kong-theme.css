@@ -320,6 +320,8 @@
 
 .swagger-ui .scheme-container .schemes.wrapper .actions {
   display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
 }
 
 .swagger-ui .scheme-container .schemes select {
