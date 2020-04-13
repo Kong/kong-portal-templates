@@ -1,0 +1,6 @@
+---
+readable_by: '*'
+layout: system/applications.html
+private: true
+title: Applications
+---

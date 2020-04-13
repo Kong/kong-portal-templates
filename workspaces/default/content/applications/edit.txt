@@ -1,0 +1,6 @@
+---
+readable_by: '*'
+layout: system/edit-app.html
+private: true
+title: Edit Application
+---
