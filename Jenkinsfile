@@ -8,16 +8,35 @@ pipeline {
     timeout(time: 45, unit: 'MINUTES')
   }
   environment {
-    DOCKER_CREDENTIALS = credentials('dockerhub')
-    NPM_TOKEN = credentials('NPM_TOKEN')
     DOCKER_HOST = 'unix:///var/run/docker.sock'
     COMPOSE_PROJECT_NAME = "${env.GIT_COMMIT}"
     GITHUB_TOKEN = credentials('GITHUB_TOKEN')
+    DOCKER_REGISTRY = credentials('DOCKER_REGISTRY')
+    INTERNAL_DOCKER_REGISTRY = 'https://registry.kongcloud.io/v2'
   }
   stages {
     stage('Build') {
       steps {
-        sh 'echo hello world'
+        sh 'make -f bootstrap.mk'
+        sh 'make build'
+      }
+    }
+    stage('E2E') {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'dev-master'
+          changeRequest target: 'master'
+          changeRequest target: 'dev-master'
+        }
+      }
+      steps {
+        sh 'make run-e2e'
+      }
+      post {
+        always {
+          sh 'make compose-cleanup'
+        }
       }
     }
   }
