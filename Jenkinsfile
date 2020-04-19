@@ -8,6 +8,7 @@ pipeline {
     timeout(time: 45, unit: 'MINUTES')
   }
   environment {
+    DOCKER_HOST = 'unix:///var/run/docker.sock'
     COMPOSE_PROJECT_NAME = "${env.GIT_COMMIT}"
     GITHUB_TOKEN = credentials('GITHUB_TOKEN')
     DOCKER_REGISTRY = credentials('DOCKER_REGISTRY')
