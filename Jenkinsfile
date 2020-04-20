@@ -32,6 +32,7 @@ pipeline {
       }
       steps {
         sh 'make run-e2e'
+        sh 'echo yeeee'
       }
       post {
         always {
