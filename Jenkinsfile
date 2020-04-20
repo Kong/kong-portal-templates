@@ -19,6 +19,7 @@ pipeline {
       steps {
         sh 'make -f bootstrap.mk'
         sh 'make build'
+        sh 'echo test 3'
       }
     }
     stage('E2E') {
