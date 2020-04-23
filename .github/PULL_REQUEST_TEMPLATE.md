@@ -9,7 +9,7 @@ Also read the CODE_OF_CONDUCT.md to get the idea about code format and policies 
 SUMMARY_GOES_HERE
 <!---- Please write summery as elaborative as you can it will help the contributors ---->
 
-### Implemenations
+### Implementations
 
 1.
 2.
