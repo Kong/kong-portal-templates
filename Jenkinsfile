@@ -35,6 +35,7 @@ pipeline {
     stage('Portal Files') {
       when {
         anyOf {
+          changeRequest target: 'dev-master'
           branch 'dev-master'
         }
       }
