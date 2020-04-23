@@ -10,7 +10,7 @@ pipeline {
   environment {
     DOCKER_HOST = 'unix:///var/run/docker.sock'
     COMPOSE_PROJECT_NAME = "${env.GIT_COMMIT}"
-    GITHUB_TOKEN = credentials('GITHUB_TOKEN')
+    GITHUB_TOKEN = credentials('PORTAL_GITHUB_TOKEN')
     DOCKER_REGISTRY = credentials('DOCKER_REGISTRY')
     INTERNAL_DOCKER_REGISTRY = 'https://registry.kongcloud.io/v2'
   }
@@ -24,19 +24,22 @@ pipeline {
     stage('E2E') {
       when {
         anyOf {
-          branch 'master'
           branch 'dev-master'
-          changeRequest target: 'master'
           changeRequest target: 'dev-master'
         }
       }
       steps {
         sh 'make run-e2e'
       }
-      post {
-        always {
-          sh 'make compose-cleanup'
+    }
+    stage('Portal Files') {
+      when {
+        anyOf {
+          branch 'dev-master'
         }
+      }
+      steps {
+        sh 'make create-portal-files'
       }
     }
   }
