@@ -8,3 +8,9 @@ redirect:
   logout: ''
   pending_approval: ''
   pending_email_verification: ''
+
+collections:
+  posts:
+    layout: system/markdown.html
+    output: true
+    route: /posts/:name
