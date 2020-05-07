@@ -1,6 +1,6 @@
 ---
 layout: system/markdown.html
-css: assets/styles/markdown.css
+css_path: assets/styles/markdown.css
 ---
 
 ---
