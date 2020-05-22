@@ -1,0 +1,29 @@
+{% for _, menu_entry in each(context.local_menu) do %}
+    {% if menu_entry.sub_menu then %}
+        {% 
+        menu_class = 'class="has-dropdown"'
+        %}
+    {% end %}
+    {% if menu_entry.needs_auth then %}
+        {% if user.is_authenticated then %}
+        {% if menu_entry.needs_role then %}
+            {% if user.has_role(menu_entry.needs_role) then %}
+            <li {{menu_class}}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+            {% end %}
+        {% else %}
+            <li {{menu_class}}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+        {% end %}
+        {% end %}
+    {% else %}
+        <li {{menu_class}}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+    {% end %}
+    {% if menu_entry.sub_menu then %}
+        {%
+        context.local_menu = menu_entry.sub_menu
+        %}
+        <ul>
+        {(partials/menu.html)}   
+        </ul>
+    {% end %}
+    </li>
+{% end %}

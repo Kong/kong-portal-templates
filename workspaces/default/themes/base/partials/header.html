@@ -10,10 +10,12 @@
 
       <input type="checkbox" id="header_nav" class="menu-toggle-checkbox" />
       <nav class="eight columns" role="navigation">
-        <li><a href="documentation">Catalog</a></li>
+        {%
+          context.local_menu = portal.menu
+        %}
+        {(partials/menu.html)}    
         {% if portal.auth and portal.auth ~= "" then %}
           {% if user.is_authenticated then %}
-            <li><a href="applications">My Apps</a></a</li>
             <li class="has-dropdown">
               <a href="settings" aria-haspopup="true">{{user.get("email")}}</a>
               <ul class="dropdown" aria-label="submenu">

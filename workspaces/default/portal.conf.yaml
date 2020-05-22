@@ -8,3 +8,31 @@ redirect:
   logout: ''
   pending_approval: ''
   pending_email_verification: ''
+menu:
+  - title: Catalog
+    url: documentation
+    needs_auth: false
+  - title: Public
+    url: /partners
+    needs_auth: false
+    needs_role: Partners
+  - title: Auth
+    url: /partners
+    needs_auth: true
+  - title: Auth and role
+    url: /partners
+    needs_auth: true
+    needs_role: Partners
+  - title: With submenu
+    url: /partners
+    needs_auth: false
+    sub_menu:
+      - title: Sub Entry
+        url: /demo-services
+        needs_auth: false
+      - title: Sub Auth
+        url: /demo-services
+        needs_auth: true     
+  - title: My Apps
+    url: applications
+    needs_auth: true
