@@ -1,7 +1,6 @@
 # Kong Admin URL
 # @required
 kong_admin_url: http://localhost:8001
-# kong_admin_url: https://admin-reference.kong-cloud.com
 
 # Kong Admin Token
 # @optional
