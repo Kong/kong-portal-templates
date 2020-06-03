@@ -2,10 +2,10 @@
 readable_by: '*'
 layout: system/markdown.html
 title: View Application
-css_path: markdown.css
+css_path: assets/styles/markdown.css
 ---
 
-## Resources
+### Resources
 
 - Okta
   - [Authorization Code Flow](https://developer.okta.com/docs/guides/implement-auth-code/overview/)
@@ -20,3 +20,11 @@ css_path: markdown.css
   - [Authorization Code Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
   - [Client Credentials Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow)
   - [Implicit Grant Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-implicit-grant-flow)
+
+``` js
+var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));
+```

@@ -3,10 +3,12 @@ readable_by: '*'
 layout: system/view-app.html
 private: true
 title: View Application
-doc_css_path: markdown.css
+doc_css_path: assets/styles/markdown.css
 ---
 
-## Resources
+How you authenticate with this service depends on its underlying OAuth2 implementation.  Please reference the resources/documentation below for more information. 
+
+### Resources
 
 - Okta
   - [Authorization Code Flow](https://developer.okta.com/docs/guides/implement-auth-code/overview/)

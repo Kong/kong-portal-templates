@@ -1004,3 +1004,7 @@
   margin: 0 .2em .25em -1.6em;
   vertical-align: middle;
 }
+
+.markdown-body li {
+  list-style-position: outside !important;
+}
