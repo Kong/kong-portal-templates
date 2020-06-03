@@ -1,9 +1,8 @@
 ---
 readable_by: '*'
-layout: system/view-app.html
-private: true
+layout: system/markdown.html
 title: View Application
-doc_css_path: markdown.css
+css_path: markdown.css
 ---
 
 ## Resources
