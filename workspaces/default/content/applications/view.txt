@@ -3,4 +3,23 @@ readable_by: '*'
 layout: system/view-app.html
 private: true
 title: View Application
+doc_css_path: assets/styles/markdown.css
 ---
+
+How you authenticate with this service depends on its underlying OAuth2 implementation.  Please reference the resources/documentation below for more information. 
+
+### Resources
+
+- Okta
+  - [Authorization Code Flow](https://developer.okta.com/docs/guides/implement-auth-code/overview/)
+  - [Authorization Code Flow (PKCE)](https://developer.okta.com/docs/guides/implement-auth-code-pkce/overview/)
+  - [Client Credentials Flow](https://developer.okta.com/docs/guides/implement-client-creds/overview/)
+  - [Implicit Grant Flow](https://developer.okta.com/docs/guides/implement-implicit/overview/)
+
+- Ping Identity
+  - [Oauth2 Developers Guide](https://www.pingidentity.com/developer/en/resources/oauth-2-0-developers-guide.html)
+
+- Azure
+  - [Authorization Code Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+  - [Client Credentials Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow)
+  - [Implicit Grant Flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-implicit-grant-flow)
