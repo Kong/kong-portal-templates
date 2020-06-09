@@ -1,7 +1,14 @@
 {% for _, menu_entry in each(context.local_menu) do %}
 
-  {% if menu_entry.css_class then %}
-    {% menu_class = 'class=' .. menu_entry.css_class %}
+  {% if menu_entry.dynamic_title then
+    menu_entry.title = include("{*" .. menu_entry.dynamic_title .. "*}")
+  end %}  
+
+  {% if menu_entry.css_classes then %}
+    {% menu_class = 'class=' %}
+    {% for _, class_name in each(menu_entry.css_classes) do %}
+      {% menu_class = menu_class .. class_name .. " " %}
+    {% end %}
   {% else  %}
     {% if menu_entry.sub_menu then %}
       {% menu_class = 'class="has-dropdown"' %}
@@ -14,7 +21,7 @@
     {% if user.is_authenticated then %}
       {% if menu_entry.needs_role then %}
         {% if user.has_role(menu_entry.needs_role) then %}
-          <li {{menu_class}}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+          <li class="{{menu_entry.css_classes}}"><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
           {% if menu_entry.sub_menu then %}
             {% context.local_menu = menu_entry.sub_menu %}
             <ul>
@@ -23,7 +30,7 @@
           {% end %}
         {% end %}
       {% else %}
-        <li {{menu_class}}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+        <li class="{{table.concat(menu_entry.css_classes or {}, ' ')}}"><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
         {% if menu_entry.sub_menu then %}
           {% context.local_menu = menu_entry.sub_menu %}
           <ul>
@@ -46,7 +53,7 @@
         {% end %}
       {% end %}   
     {% else %}
-      <li {{menu_class}}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+      <li class="{{concat(menu_entry.css_classes or {}, ' ')}}"><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
       {% if menu_entry.sub_menu then %}
         {% context.local_menu = menu_entry.sub_menu %}
         <ul>
