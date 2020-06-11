@@ -36,6 +36,7 @@ pipeline {
       when {
         anyOf {
           branch 'dev-master'
+          changeRequest target: 'dev-master'
         }
       }
       steps {
