@@ -29,7 +29,14 @@ pipeline {
         }
       }
       steps {
-        sh 'make run-e2e'
+        parallel(
+          kong-oauth2: {
+            'make run-e2e-kong-oauth'
+          },
+          external-oauth2: {
+            'make run-e2e-external-oauth'
+          },
+        )
       }
     }
     stage('Portal Files') {
