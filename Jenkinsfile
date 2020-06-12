@@ -33,7 +33,7 @@ pipeline {
           steps {
             sh 'make run-e2e-kong-oauth'
           }
-        },
+        }
         stage('external-oauth2') {
           steps {
             sh 'make run-e2e-external-oauth'
