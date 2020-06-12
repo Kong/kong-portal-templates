@@ -31,10 +31,14 @@ pipeline {
       steps {
         parallel(
           stage('kong-oauth2') {
-            'make run-e2e-kong-oauth'
+            steps {
+              sh 'make run-e2e-kong-oauth'
+            }
           },
           stage('external-oauth2') {
-            'make run-e2e-external-oauth'
+            steps {
+              sh 'make run-e2e-external-oauth'
+            }
           },
         )
       }
