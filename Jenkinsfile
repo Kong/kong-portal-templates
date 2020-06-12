@@ -30,10 +30,10 @@ pipeline {
       }
       steps {
         parallel(
-          kong-oauth2: {
+          stage('kong-oauth2') {
             'make run-e2e-kong-oauth'
           },
-          external-oauth2: {
+          stage('external-oauth2') {
             'make run-e2e-external-oauth'
           },
         )
