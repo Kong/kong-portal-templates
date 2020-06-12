@@ -28,19 +28,17 @@ pipeline {
           changeRequest target: 'dev-master'
         }
       }
-      steps {
-        parallel(
-          stage('kong-oauth2') {
-            steps {
-              sh 'make run-e2e-kong-oauth'
-            }
-          },
-          stage('external-oauth2') {
-            steps {
-              sh 'make run-e2e-external-oauth'
-            }
-          },
-        )
+      parallel {
+        stage('kong-oauth2') {
+          steps {
+            sh 'make run-e2e-kong-oauth'
+          }
+        },
+        stage('external-oauth2') {
+          steps {
+            sh 'make run-e2e-external-oauth'
+          }
+        }
       }
     }
     stage('Portal Files') {
