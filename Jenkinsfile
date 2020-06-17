@@ -29,7 +29,8 @@ pipeline {
         }
       }
       steps {
-        sh 'make run-e2e'
+        sh 'make run-e2e-kong-oauth'
+        sh 'make run-e2e-external-oauth'
       }
     }
     stage('Portal Files') {
