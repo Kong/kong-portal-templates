@@ -6,7 +6,7 @@ title: View Application
 doc_css_path: assets/styles/markdown.css
 ---
 
-How you authenticate with this service depends on its underlying OAuth2 implementation.  Please reference the resources/documentation below for more information. 
+How you authenticate with this service depends on its underlying OAuth2 implementation.  Please reference the resources/documentation below for more information.
 
 ### Resources
 
