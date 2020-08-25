@@ -1,12 +1,15 @@
 {% layout = "layouts/_app.html" %}
 
 {-content-}
+<link href="assets/styles/markdown-fixes.css" rel="stylesheet">
+
 <div id="params" style="display: none">
-  <meta name="portal_app_auth" content="{{portal.app_auth}}" >
+  <meta name="cssPath" content="{{page.css_path or ""}}" >
+  <meta name="body" content="{{page.body or ""}}" >
 </div>
 
 <div class="dashboard">
-  <div id="portal-dashboard" page="create-app"></div>
+  <div id="portal-dashboard" page="markdown"></div>
 </div>
 
 <style>
