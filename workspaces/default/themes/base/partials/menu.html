@@ -5,23 +5,21 @@
   end %}  
 
   {% if menu_entry.css_classes then %}
-    {% menu_class = 'class=' %}
-    {% for _, class_name in each(menu_entry.css_classes) do %}
-      {% menu_class = menu_class .. class_name .. " " %}
-    {% end %}
+      {% menu_class = 'class="' %}
+      {% menu_class = "class=\"" ..  table.concat(menu_entry.css_classes or {}, ' ') .. "\"" %}
   {% else  %}
     {% if menu_entry.sub_menu then %}
       {% menu_class = 'class="has-dropdown"' %}
     {% else %}
-      {% menu_class = '' %}
+      {% menu_class = null %}
     {% end %}
   {% end %}
-  
+
   {% if menu_entry.needs_auth then %}
     {% if user.is_authenticated then %}
       {% if menu_entry.needs_role then %}
         {% if user.has_role(menu_entry.needs_role) then %}
-          <li class="{{menu_entry.css_classes}}"><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+          <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
           {% if menu_entry.sub_menu then %}
             {% context.local_menu = menu_entry.sub_menu %}
             <ul>
@@ -30,7 +28,7 @@
           {% end %}
         {% end %}
       {% else %}
-        <li class="{{table.concat(menu_entry.css_classes or {}, ' ')}}"><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+        <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
         {% if menu_entry.sub_menu then %}
           {% context.local_menu = menu_entry.sub_menu %}
           <ul>
@@ -42,9 +40,9 @@
   {% else %}
     {% if user.is_authenticated then %}
       {% if menu_entry.hide_when_authenticated then %} 
-         
+
       {% else %}
-        <li {{menu_class}}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+        <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
         {% if menu_entry.sub_menu then %}
           {% context.local_menu = menu_entry.sub_menu %}
           <ul>
@@ -53,7 +51,7 @@
         {% end %}
       {% end %}   
     {% else %}
-      <li class="{{concat(menu_entry.css_classes or {}, ' ')}}"><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+      <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
       {% if menu_entry.sub_menu then %}
         {% context.local_menu = menu_entry.sub_menu %}
         <ul>
