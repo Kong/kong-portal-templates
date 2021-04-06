@@ -10,22 +10,15 @@
 
       <input type="checkbox" id="header_nav" class="menu-toggle-checkbox" />
       <nav class="eight columns" role="navigation">
-        <li><a href="documentation">Catalog</a></li>
-        {% if portal.auth and portal.auth ~= "" then %}
-          {% if user.is_authenticated then %}
-            <li><a href="applications">My Apps</a></a</li>
-            <li class="has-dropdown">
-              <a href="settings" aria-haspopup="true">{{user.get("email")}}</a>
-              <ul class="dropdown" aria-label="submenu">
-                <li><a href="dashboard">Dashboard</a></li>
-                <li><a href="logout">Logout</a></li>
-              </ul>
-            </li>
+
+          {% if portal.auth and portal.auth ~= "" then %}
+            {% context.local_menu = portal.menu %}
           {% else %}
-            <li><a href="login">Login</a></li>
-            <li><a class="nav-button btn btn-secondary" href="register">Sign Up</a></li>
+            {% context.local_menu = portal.menu_no_auth   %}
           {% end %}
-        {% end %}
+
+          {(partials/menu.html)} 
+
       </nav>
     </div>
   </div>

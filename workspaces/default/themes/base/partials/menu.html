@@ -1,0 +1,64 @@
+{% for _, menu_entry in each(context.local_menu) do %}
+
+  {% if menu_entry.dynamic_title then
+    menu_entry.title = include("{*" .. menu_entry.dynamic_title .. "*}")
+  end %}  
+
+  {% if menu_entry.css_classes then %}
+      {% menu_class = 'class="' %}
+      {% menu_class = "class=\"" ..  table.concat(menu_entry.css_classes or {}, ' ') .. "\"" %}
+  {% else  %}
+    {% if menu_entry.sub_menu then %}
+      {% menu_class = 'class="has-dropdown"' %}
+    {% else %}
+      {% menu_class = null %}
+    {% end %}
+  {% end %}
+
+  {% if menu_entry.needs_auth then %}
+    {% if user.is_authenticated then %}
+      {% if menu_entry.needs_role then %}
+        {% if user.has_role(menu_entry.needs_role) then %}
+          <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+          {% if menu_entry.sub_menu then %}
+            {% context.local_menu = menu_entry.sub_menu %}
+            <ul>
+            {(partials/menu.html)}  
+            </ul>
+          {% end %}
+        {% end %}
+      {% else %}
+        <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+        {% if menu_entry.sub_menu then %}
+          {% context.local_menu = menu_entry.sub_menu %}
+          <ul>
+           {(partials/menu.html)}  
+          </ul>
+        {% end %}
+      {% end %}
+    {% end %}
+  {% else %}
+    {% if user.is_authenticated then %}
+      {% if menu_entry.hide_when_authenticated then %} 
+
+      {% else %}
+        <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+        {% if menu_entry.sub_menu then %}
+          {% context.local_menu = menu_entry.sub_menu %}
+          <ul>
+           {(partials/menu.html)}  
+          </ul>
+        {% end %}
+      {% end %}   
+    {% else %}
+      <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
+      {% if menu_entry.sub_menu then %}
+        {% context.local_menu = menu_entry.sub_menu %}
+        <ul>
+         {(partials/menu.html)}  
+        </ul>
+      {% end %}
+    {% end %}
+  {% end %}
+  </li>
+{% end %}
