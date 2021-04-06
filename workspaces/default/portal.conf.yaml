@@ -9,3 +9,69 @@ redirect:
   logout: ''
   pending_approval: ''
   pending_email_verification: ''
+
+# main menu 
+menu:
+  - title: Catalog
+    url: documentation
+    needs_auth: false
+  - title: My Apps
+    url: applications
+    needs_auth: true
+  - dynamic_title: user.get("email")
+    needs_auth: true
+    sub_menu:
+      - title: Dashboard
+        url: dashboard
+        needs_auth: true
+      - title: Logout
+        url: logout
+        needs_auth: true     
+  - title: Login
+    url: login
+    needs_auth: false
+    hide_when_authenticated: true
+  - title: Sign up
+    url: register
+    needs_auth: false
+    hide_when_authenticated: true
+    css_classes:
+    - nav-button
+    - btn
+    - btn-secondary
+
+
+# main menu if authentication is not enabled in dev portal 
+menu_no_auth:
+  - title: Catalog
+    url: documentation
+    needs_auth: false
+
+# menu examples
+# menu:    
+#   - title: Catalog
+#     url: documentation
+#     needs_auth: false
+#   - title: Public
+#     url: partners
+#     needs_auth: false
+#   - title: Auth
+#     url: partners
+#     needs_auth: true
+#   - title: Auth and role
+#     url: partners
+#     needs_auth: true
+#     needs_role: Partners
+#   - title: With submenu
+#     url: partners
+#     needs_auth: false
+#     sub_menu:
+#       - title: Sub Entry
+#         url: sub-page1
+#         needs_auth: false
+#       - title: Sub Auth
+#         url: sub-page2
+#         needs_auth: true     
+#   - title: My Apps
+#     url: applications
+#     needs_auth: true
