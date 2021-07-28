@@ -24,8 +24,8 @@ pipeline {
     stage('E2E') {
       when {
         anyOf {
-          branch 'dev-master'
-          changeRequest target: 'dev-master'
+          branch 'master'
+          changeRequest target: 'master'
         }
       }
       steps {
@@ -36,7 +36,7 @@ pipeline {
     stage('Portal Files') {
       when {
         anyOf {
-          branch 'dev-master'
+          branch 'master'
         }
       }
       steps {
