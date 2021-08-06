@@ -2,7 +2,9 @@
 
 ## Updating all changes in Portal Templates
 
-Get the latest updates from this repo in your portal by merging in changes from the `master` branch, like this:
+Apply the latest updates to your `default` workspace by merging in changes from the `master` branch.
+
+> Note: This will only update the `default` workspace. For updating other workspaces, you must integrate changes manually. See the section "Manually updating swagger-ui-kong-theme" below for how to do this for the swagger-ui-kong-theme.
 
 1. Ensure that you are a tracking Kong's remote repo with `git remote -v`
     - Look for the remote that is tracking Kong's remote repo, in this case it is named `kong`
@@ -43,7 +45,7 @@ Get the latest updates from this repo in your portal by merging in changes from 
 
 ## Manually updating swagger-ui-kong-theme
 
-Note: Updating the theme can also be done by merging all the changes from the `master` branch as described above. If you only want to update Kong's Swagger UI theme, you can do it manually like this:
+> Note: Updating the theme for the `default` workspace can also be done by merging all the changes from the `master` branch as described above. If you only want to update Kong's Swagger UI theme, you can do it manually like this:
 
 1. Download the new version of `swagger-ui-kong-theme-<HASH>.min.js`:
     - **Raw:** [https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-c0e498a.min.js](https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-c0e498a.min.js)
