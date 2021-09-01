@@ -57,7 +57,7 @@
       Object.keys(tags).forEach(function(tag) {
         var elem = $CATALOG_TAG_LINKS.filter('[data-tag="' + tag + '"]');
         var count = tags[tag];
-        elem.find(".tag-link--count").html(count);
+        elem.find(".tag-link--count").text(count);
 
         if (elem.hasClass('is-active') && count === 0) {
           $CATALOG_LIST_NO_RESULTS.show();

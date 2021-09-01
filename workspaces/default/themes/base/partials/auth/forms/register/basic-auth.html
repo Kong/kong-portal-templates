@@ -4,7 +4,7 @@
     {(partials/auth/custom-fields.html, context)}
 
     <label for="email">{{l("register_form_email_label", "Email")}}</label>
-    <input id="email" type="email" name="email" required />
+    <input id="email" type="string" name="email" required />
     <p class="field-error toggle-content" for="email"></p>
 
     <label for="password">{{l("register_form_password_label", "Password")}}</label>
@@ -73,12 +73,12 @@
               .addClass('has-error')
             $(".field-error[for='" + field + "']")
               .addClass('is-visible')
-              .html(response.fields[field])
+              .text(response.fields[field])
           }
         } else {
           $FORM_ERROR
             .addClass('is-visible')
-            .html(data.message || fallbackErrorMessage);
+            .text(data.message || fallbackErrorMessage);
         }
       }
 
@@ -87,7 +87,7 @@
       $FORM.on('submit', function(event) {
         event.preventDefault();
         $('.has-error').removeClass('has-error');
-        $('.is-visible').removeClass('is-visible').html('');
+        $('.is-visible').removeClass('is-visible').text('');
         fields = $FORM.serializeArray()
         onSubmit();
       })

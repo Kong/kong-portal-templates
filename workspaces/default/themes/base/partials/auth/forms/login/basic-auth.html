@@ -33,7 +33,7 @@
       var onSubmit = function() {
         $FORM_ERROR
           .removeClass('is-visible')
-          .html('');
+          .text('');
 
         Kong.Auth.login({
           baseUrl: baseApiUrl,
@@ -49,7 +49,7 @@
       var onError = function(data) {
         $FORM_ERROR
           .addClass('is-visible')
-          .html(data.message || 'An unexpected error occurred. Please try again.');
+          .text(data.message || 'An unexpected error occurred. Please try again.');
       }
 
 
