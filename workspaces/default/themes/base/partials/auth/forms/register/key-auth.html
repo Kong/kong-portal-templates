@@ -71,12 +71,12 @@
               .addClass('has-error')
             $(".field-error[for='" + field + "']")
               .addClass('is-visible')
-              .html(response.fields[field])
+              .text(response.fields[field])
           }
         } else {
           $FORM_ERROR
             .addClass('is-visible')
-            .html(data.message || fallbackErrorMessage);
+            .text(data.message || fallbackErrorMessage);
         }
       }
 
@@ -85,7 +85,7 @@
       $FORM.on('submit', function(event) {
         event.preventDefault();
         $('.has-error').removeClass('has-error');
-        $('.is-visible').removeClass('is-visible').html('');
+        $('.is-visible').removeClass('is-visible').text('');
         fields = $FORM.serializeArray()
         onSubmit();
       })
