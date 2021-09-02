@@ -1040,6 +1040,11 @@
   }
 }
 
+.modal button.button.copy.rounded.primary {
+  background-color: #1456cb !important;
+  color: #fff !important;
+}
+
 /**************************************************************************
  * swagger-ui operation panel theming
  */
