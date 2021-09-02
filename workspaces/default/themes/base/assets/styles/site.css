@@ -46,6 +46,12 @@ a:hover {
   text-decoration: none;
 }
 
+.btn:active,
+.btn:focus {
+  color: white;
+  border-color: var(--button_secondary_border,lightblue);
+}
+
 .btn:hover {
   background-color:#000;
   color: white;
@@ -217,6 +223,10 @@ input.has-error {
   .site-header nav {
     display: block;
     padding-top: .3em;
+  }
+
+  .site-header nav li a {
+    display: inline-block;
   }
 
   .site-header nav li a:not(.nav-button) {
@@ -501,9 +511,13 @@ a.tag-link.is-active {
   text-align: left;
 }
 
+.catalog-item .catalog-details h2.catalog-title {
+  font-size: 2.4 rem;
+}
 .catalog-item .catalog-details .catalog-title {
   color: var(--text_links, blue);
   margin-bottom: 1rem;
+
 }
 
 .catalog-item .catalog-details .catalog-desc {
@@ -652,10 +666,16 @@ a.tag-link.is-active {
 .homepage-clients .client {
   padding: 2.5rem 5rem;
   margin: 1rem;
-  background: #f5f5f5;
-  color: #aaa;
-  font-weight: 500;
+  /* steel-200 */
+  background: #dae3f2;
   display: inline-block;
+}
+
+.homepage-clients .client a {
+  font-weight: 500;
+  /* steel-600 */
+  color: #395380;
+  text-decoration: none;;
 }
 
 /*****************************************
@@ -796,7 +816,7 @@ a.tag-link.is-active {
 .auth-page .right-pane .inner h4,
 .auth-page .right-pane .inner h5,
 .auth-page .right-pane .inner p {
-  color: var(--accent, white);
+  color: var(--text_hero, white);
 }
 
 @media (min-width: 768px) {

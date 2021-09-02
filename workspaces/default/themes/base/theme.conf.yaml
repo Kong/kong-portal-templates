@@ -20,22 +20,26 @@ colors:
     value: '#F7F9FA'
     description: 'Background on footer'
   accent:
-    value: '#57BBD6'
+    # blue-500
+    value: '#1456CB'
     description: 'Borders and catalog preview icons'
   text_primary:
     value: '#404040'
     description: 'Main text'
   text_secondary:
-    value: '#8C8C8C'
+    # steel-600
+    value: '#395380'
     description: 'Supporting text, hints, etc.'
   text_headings:
     value: '#005999'
     description: 'Headings'
   text_links:
-    value: '#1782CF'
+    # blue-600
+    value: '#083C99'
     descrption: 'Link color'
   button_primary_fill:
-    value: '#3FA66A'
+    # green-400
+    value: '#008036'
     description: 'Background for Primary Button'
   button_primary_fill_hover:
     value: '#3DCC91'
