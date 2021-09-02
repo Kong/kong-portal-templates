@@ -1082,12 +1082,17 @@
 }
 
 .swagger-ui .opblock-summary-post.opblock-summary .opblock-summary-method {
-  background-color: #19a654;
+  background-color: #008036;
   color: #fff;
 }
 .swagger-ui .opblock-summary-put.opblock-summary .opblock-summary-method {
   background-color: #f2a230;
   color: #3B3B3B;
+}
+
+.swagger-ui .opblock.opblock-deprecated .opblock-summary-method {
+  background-color: #636e72;
+  color: #dfe6e9;
 }
 
 /*******************************************************************************
