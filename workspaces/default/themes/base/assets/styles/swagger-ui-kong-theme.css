@@ -345,13 +345,16 @@
   color: #1456cb !important;
 }
 
-
-
 .swagger-ui .main .title {
   font-size: 38px;
   font-weight: 300;
   border-bottom-width: 0;
   padding-bottom: 0;
+}
+
+.swagger-ui .info .title small {
+  background-color: #636e72;
+  color:#dfe6e9;
 }
 
 .swagger-ui .main .header {
