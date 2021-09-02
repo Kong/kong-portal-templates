@@ -1067,6 +1067,29 @@
 .swagger-ui .opblock-body .right-side-wrapper pre span.token.italic{font-style:italic !important}
 .swagger-ui .opblock-body .right-side-wrapper pre span.token.entity{cursor:help !important} */
 
+
+.swagger-ui .opblock-summary-get.opblock-summary .opblock-summary-method {
+  background-color: #1456cb;
+}
+
+.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+  background-color: #e6173a;
+}
+
+.swagger-ui .opblock-summary-patch.opblock-summary .opblock-summary-method {
+  background-color: #82d9a6;
+  color: #3B3B3B;
+}
+
+.swagger-ui .opblock-summary-post.opblock-summary .opblock-summary-method {
+  background-color: #19a654;
+  color: #fff;
+}
+.swagger-ui .opblock-summary-put.opblock-summary .opblock-summary-method {
+  background-color: #f2a230;
+  color: #3B3B3B;
+}
+
 /*******************************************************************************
  * Code Snippet Theme - Dracula
  */
