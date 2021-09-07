@@ -661,6 +661,7 @@ a.tag-link.is-active {
 .homepage-clients {
   padding: 100px 0;
   text-align: center;
+  list-style-type: none;
 }
 
 .homepage-clients .client {
