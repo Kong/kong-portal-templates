@@ -134,7 +134,7 @@
   overflow: hidden;
 }
 .sidebar-list ul li .submenu-items a {
-  color: #1456cb;
+  color: var(--accent, blue);
   display: block;
   line-height: 1.2;
   font-weight: normal;
@@ -286,18 +286,18 @@
 }
 
 .swagger-ui .btn.authorize {
-  color: #1456cb;
-  border: 1px #1456cb solid;
+  color: var(--accent, blue);
+  border: 1px var(--accent, blue) solid;
 }
 
 .swagger-ui .btn.authorize svg {
-  fill: #1456cb;
+  fill: var(--accent, blue);
 }
 
 .swagger-ui .register-wrapper button {
-  background-color: #1456cb;
+  background-color: var(--accent, blue);
   color: white;
-  border-color: #1456cb;
+  border-color: var(--accent, blue);
 }
 
 .swagger-ui .main-container {
@@ -341,7 +341,7 @@
 }
 
 .swagger-ui .info a {
-  color: #1456cb !important;
+  color: var(--accent, blue) !important;
 }
 
 .swagger-ui .main .title {
@@ -1040,7 +1040,7 @@
 }
 
 .modal button.button.copy.rounded.primary {
-  background-color: #1456cb !important;
+  background-color: var(--accent, blue) !important;
   color: #fff !important;
 }
 
@@ -1073,7 +1073,7 @@
 
 
 .swagger-ui .opblock-summary-get.opblock-summary .opblock-summary-method {
-  background-color: #1456cb;
+  background-color: var(--accent, blue);
 }
 
 .swagger-ui .opblock.opblock-delete .opblock-summary-method {
