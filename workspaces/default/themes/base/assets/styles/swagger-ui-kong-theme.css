@@ -1076,7 +1076,7 @@
   background-color: var(--accent, blue);
 }
 
-.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+.swagger-ui .opblock-summary-delete.opblock-summary .opblock-summary-method {
   background-color: #e6173a;
 }
 
