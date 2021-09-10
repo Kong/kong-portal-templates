@@ -3,6 +3,64 @@
   src: url("/fonts/Roboto-Medium.ttf") format("ttf");
 } */
 
+:root {
+  /* kong colors https://kongponents.konghq.com/style-guide/colors.html*/
+  --blue-100: #F2F6FE;
+  --blue-200: #BDD3F9;
+  --blue-300: #5888DB;
+  --blue-400: #2E6EE0;
+  --blue-500: #1155CB;
+  --blue-600: #003694;
+  --blue-700: #0a2b66;
+
+  --steel-100: #f0f4fa;
+  --steel-200: #dae3f2;
+  --steel-300: #a3b6d9;
+  --steel-400: #7d91b3;
+  --steel-500: #727E94;
+  --steel-600: #395380;
+  --steel-700: #273c61;
+
+  --red-100: #FFDEDE;
+  --red-200: #FFCCCC;
+  --red-300: #FF9A99;
+  --red-400: #FF7877;
+  --red-500: #EB5A3B;
+  --red-600: #E50000;
+  --red-700: #922021;
+
+  --green-100: #E8F8F5;
+  --green-200: #C0F2D5;
+  --green-300: #84E5AE;
+  --green-400: #42D782;
+  --green-500: #14B59A;
+
+  --yellow-100: #FFF3D8;
+  --yellow-200: #FFE6BA;
+  --yellow-300: #FFD68C;
+  --yellow-400: #FABE5F;
+  --yellow-500: #C67C06;
+
+  --grey-100: #F8F8FA;
+  --grey-200: #F1F1F5;
+  --grey-300: #E7E7EC;
+  --grey-400: #B6B6BD;
+
+  --black-85: rgba(0, 0, 0, .85);
+  --black-70: rgba(0, 0, 0, .70);
+  --black-45: rgba(0, 0, 0, .45);
+  --black-25: rgba(0, 0, 0, .25);
+  --black-10: rgba(0, 0, 0, .10);
+
+  --black-100: #DFDFDF;
+  --black-200: #B1B2B1;
+  --black-300: #797979;
+  --black-400: #3B3B3B;
+  --black-500: #1D1D1D;
+
+  --white: #ffffff;
+}
+
 .wide {
   width: 100%;
   left: 0px;
@@ -24,7 +82,7 @@
   top: 80px;
   width: 260px;
   height: calc(100vh - 80px);
-  background: #fff;
+  background: var(--white);
   overflow-y: auto;
   border-right: 1px solid #eee;
 }
@@ -33,7 +91,7 @@
 }
 #sidebar .sidebar-list li.list-title {
   font-weight: bold;
-  color: rgb(38, 38, 38);
+  color: #262626;
   font-size: 16px;
 }
 #sidebar .sidebar-list li.spec.list-title {
@@ -42,6 +100,7 @@
 #sidebar .sidebar-list {
   padding: 0;
   margin-top: 2rem;
+  background-color: var(--white);
 }
 #sidebar .sidebar-list.info {
   padding-left: 1.8rem;
@@ -62,7 +121,7 @@
 .sidebar-list .method{
   border-radius: 3px;
   margin-left: 0.4rem;
-  padding: 0.3rem 0rem 0.5rem 1.6rem;
+  padding: 0.4rem 0rem 0.5rem 1.6rem;
 }
 .sidebar-list .method:hover {
   background-color: rgba(237, 30, 30, 0.12);
@@ -71,6 +130,7 @@
   cursor: pointer;
   position: relative;
   padding-left: 40px;
+  background-color: var(--white);
 }
 .sidebar-list ul li {
   padding: 0.3rem 0.2rem 0.3rem 0;
@@ -134,30 +194,43 @@
   overflow: hidden;
 }
 .sidebar-list ul li .submenu-items a {
-  color: var(--accent, blue);
+  position:relative;
   display: block;
+  border-style: solid;
+  border-width: 2px;
+  /* pre-focus/hover this allows prevents page jank during change */
+  border-color: transparent;
   line-height: 1.2;
   font-weight: normal;
-  /* text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden; */
+  padding: 2rem 1rem;
+  text-align: start;
+  white-space: break-spaces;
+  color:var(--blue-500);
+  text-transform: unset;
+  height: unset;
+  width:unset;
 }
-.sidebar-list li.active > a {
+.sidebar-list ul li .submenu-items a:focus,
+.sidebar-list ul li .submenu-items a:active {
+  border-style: solid;
+}
+.sidebar-list ul li .submenu-items li.active > a {
   font-weight: 500;
 }
-.sidebar-list ul li .method-post:before,
-.sidebar-list ul li .method-put:before,
-.sidebar-list ul li .method-get:before,
-.sidebar-list ul li .method-delete:before,
-.sidebar-list ul li .method-patch:before,
-.sidebar-list ul li .method-head:before,
-.sidebar-list ul li .method-options:before {
-  color: white;
+/* overrules specificity from swagger-ui */
+.spec.sidebar-list ul li .method-post:before,
+.spec.sidebar-list ul li .method-put:before,
+.spec.sidebar-list ul li .method-get:before,
+.spec.sidebar-list ul li .method-delete:before,
+.spec.sidebar-list ul li .method-patch:before,
+.spec.sidebar-list ul li .method-head:before,
+.spec.sidebar-list ul li .method-options:before {
+  color: var(--white);
   font-size: 9px;
   padding: .28rem .1rem;
   position: absolute;
-  top: 0px;
-  left: -9px;
+  top: 2px;
+  left: 1rem;
   border-radius: 3px;
   font-weight: 600;
   width: 38px;
@@ -166,25 +239,30 @@
   font-family: monospace;
   margin-right: 5px;
 }
+
+/* colors below should match kong-portal-templates colors for summary methods */
 .sidebar-list ul li .method-post:before {
   content: "POST";
-  background: #49cc90;
+  background-color: var(--green-500);
+  color: var(--white);
 }
 .sidebar-list ul li .method-put:before {
   content: "PUT";
-  background: #fca130;
+  background-color: var(--yellow-400);
+  color: var(--black-400) !important;
 }
 .sidebar-list ul li .method-get:before {
   content: "GET";
-  background: #61affe;
+  background: var(--blue-500);
 }
 .sidebar-list ul li .method-delete:before {
   content: "DELETE";
-  background: #f93e3e;
+  background-color: var(--red-600);
 }
 .sidebar-list ul li .method-patch:before {
   content: "PATCH";
-  background: #50e3c2;
+  background-color: var(--green-300);
+  color: var(--black-400) !important;
 }
 .sidebar-list ul li .method-head:before {
   content: "HEAD";
@@ -277,27 +355,23 @@
 
 /* main */
 
-.swagger-ui .scheme-container .schemes-title {
-  /* display: none; */
-}
-
 .swagger-ui .scheme-container {
   box-shadow: none;
 }
 
 .swagger-ui .btn.authorize {
-  color: var(--accent, blue);
-  border: 1px var(--accent, blue) solid;
+  color: rgb(0, 149, 255);
+  border: 1px rgb(0, 149, 255) solid;
 }
 
 .swagger-ui .btn.authorize svg {
-  fill: var(--accent, blue);
+  fill: rgb(0, 149, 255);
 }
 
 .swagger-ui .register-wrapper button {
-  background-color: var(--accent, blue);
-  color: white;
-  border-color: var(--accent, blue);
+  background-color: rgb(0, 149, 255);
+  color: var(--white);
+  border-color: rgb(0, 149, 255);
 }
 
 .swagger-ui .main-container {
@@ -340,20 +414,11 @@
   word-break: break-word !important;
 }
 
-.swagger-ui .info a {
-  color: var(--accent, blue) !important;
-}
-
 .swagger-ui .main .title {
   font-size: 38px;
   font-weight: 300;
   border-bottom-width: 0;
   padding-bottom: 0;
-}
-
-.swagger-ui .info .title small {
-  background-color: #636e72;
-  color:#dfe6e9;
 }
 
 .swagger-ui .main .header {
@@ -388,7 +453,7 @@
   box-shadow: none;
   margin-top: 32px;
   padding-bottom: 5px;
-  background-color: white !important;
+  background-color: var(--white) !important;
 
 }
 
@@ -447,7 +512,7 @@
 }
 
 .swagger-ui .opblock-tag .nostyle span {
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black-70);
   font-size: 24px;
   font-weight: normal;
 }
@@ -455,6 +520,7 @@
 .swagger-ui .opblock-tag small {
   font-family: sans-serif;
   font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
   padding-left: 10px;
 }
 
@@ -484,8 +550,8 @@
 }
 
 .swagger-ui .opblock-section pre{
-  background-color: white;
-  color: rgba(0, 0, 0, 0.7);
+  background-color: var(--white);
+  color: var(--black-70);
   border-radius: 0 0 3px;
   border: 1px solid rgb(230, 230, 230);
 }
@@ -498,7 +564,7 @@
 }
 .swagger-ui .opblock textarea,
 .swagger-ui textarea[disabled]{
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black-70);
   background-color: rgb(250, 250, 250);
   border-radius: 0 0 3px;
   border: 1px solid rgb(230, 230, 230);
@@ -542,7 +608,7 @@
   overflow-wrap: break-word;
   font-family: monospace;
   font-size: 15px;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black-70);
   font-weight: 500;
 }
 
@@ -618,12 +684,12 @@
 
 .swagger-ui .opblock-body .responses-wrapper pre {
   background-color: #ebf7ff;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black-70);
   background: rgba(0,0,0,.1);
 }
 
 .swagger-ui .swagger-ui .responses-table {
-  color: white !important;
+  color: var(--white) !important;
   padding-left: 0;
 }
 
@@ -706,7 +772,7 @@
 .swagger-ui .response-col_description__inner div.renderedMarkdown p,
 .swagger-ui .response-col_description__inner div.markdown {
   background-color: #ebf7ff;
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--black-70);
   font-size: 15px;
 }
 
@@ -746,7 +812,7 @@
   -ms-grid-rows: 50px auto;
   border: none !important;
   border-bottom: none !important;
-  background-color: white !important;
+  background-color: var(--white) !important;
   padding-left: 0;
   padding-right: 0;
   padding-bottom: 33px;
@@ -813,7 +879,7 @@
 .swagger-ui .opblock-body {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--white);
 }
 
 @media (min-width: 1000px) {
@@ -1039,11 +1105,6 @@
   }
 }
 
-.modal button.button.copy.rounded.primary {
-  background-color: var(--accent, blue) !important;
-  color: #fff !important;
-}
-
 /**************************************************************************
  * swagger-ui operation panel theming
  */
@@ -1073,30 +1134,30 @@
 
 
 .swagger-ui .opblock-summary-get.opblock-summary .opblock-summary-method {
-  background-color: var(--accent, blue);
+  background: var(--blue-500);
 }
 
 .swagger-ui .opblock-summary-delete.opblock-summary .opblock-summary-method {
-  background-color: #e6173a;
+  background-color: var(--red-600);
 }
 
 .swagger-ui .opblock-summary-patch.opblock-summary .opblock-summary-method {
-  background-color: #82d9a6;
-  color: #3B3B3B;
+  background-color: var(--green-300);
+  color: var(--black-400) !important;
 }
 
 .swagger-ui .opblock-summary-post.opblock-summary .opblock-summary-method {
-  background-color: #008036;
-  color: #fff;
+  background-color: var(--green-500);
+  color: var(--white);
 }
 .swagger-ui .opblock-summary-put.opblock-summary .opblock-summary-method {
-  background-color: #f2a230;
-  color: #3B3B3B;
+  background-color: var(--yellow-400);
+  color: var(--black-400) !important;
 }
 
 .swagger-ui .opblock.opblock-deprecated .opblock-summary-method {
-  background-color: #636e72;
-  color: #dfe6e9;
+  background-color: var(--steel-600);
+  color: var(--black-100);
 }
 
 /*******************************************************************************

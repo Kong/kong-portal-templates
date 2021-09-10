@@ -9,8 +9,7 @@
       </div>
 
       <input type="checkbox" id="header_nav" class="menu-toggle-checkbox" />
-      <nav class="eight columns" role="navigation" aria-labelledby="top-navigation">
-        <div id="top-navigation" hidden>Header Navigation</div>
+      <nav class="eight columns" role="navigation" aria-label="Header Navigation">
           {% if portal.auth and portal.auth ~= "" then %}
             {% context.local_menu = portal.menu %}
           {% else %}
