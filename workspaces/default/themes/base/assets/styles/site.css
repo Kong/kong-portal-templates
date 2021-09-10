@@ -158,6 +158,10 @@ input.has-error {
   justify-content: space-between;
 }
 
+.site-header .top-menu {
+  margin-bottom: unset;
+}
+
 @media(max-width: 748px) {
   /* Mobile Toggle */
   .site-header .menu-toggle {
