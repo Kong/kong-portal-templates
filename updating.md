@@ -48,13 +48,36 @@ Apply the latest updates to your `default` workspace by merging in changes from 
 > Note: Updating the theme for the `default` workspace can also be done by merging all the changes from the `master` branch as described above. If you only want to update Kong's Swagger UI theme, you can do it manually like this:
 
 1. Download the new version of `swagger-ui-kong-theme-<HASH>.min.js`:
-    - **Raw:** [https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-c0e498a.min.js](https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-c0e498a.min.js)
-    - **Github:** [https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-c0e498a.min.js](https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-c0e498a.min.js)
-2. Place in your workspace at `workspaces/<space>/themes/base/assets/js/swagger-ui-kong-theme-c0e498a.min.js`
+    - **Raw:** [https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js](https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js)
+    - **Github:** [https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js](https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js)
+2. Place in your workspace at `workspaces/<space>/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js`
 3. Open `workspaces/<space>/themes/base/layouts/system/spec-renderer.html` and update the `<script src=""></script>` tag that imports the theme
 
     ```html
-    <script src="assets/js/swagger-ui-kong-theme-c0e498a.min.js"></script>
+    <script src="assets/js/swagger-ui-kong-theme-dcc10d8.min.js"></script>
     ```
 
 4. Delete the old theme file at `workspaces/<space>/themes/base/assets/js/swagger-ui-kong-theme-<OLDHASH>.min.js`
+
+## Manually updating swagger-ui-bundle (swagger UI version)
+
+> Note: Updating the theme for the `default` workspace can also be done by merging all the changes from the `master` branch as described above. If you only want to update Kong's Swagger UI bundle (swagger UI version), you can do it manually like this:
+
+1. Download the new version of `swagger-ui-bundle-<SWAGGER-UI-VERSION>.min.js`:
+    - **Raw:** [https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/third-party/swagger-ui-bundle-3.26.0.min.js](https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/third-party/swagger-ui-bundle-3.26.0.min.js)
+    - **Github:** [https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/third-party/swagger-ui-bundle-3.26.0.min.js](https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/third-party/swagger-ui-bundle-3.26.0.min.js)
+2. Place in your workspace at `workspaces/<space>/themes/base/assets/js/third-party/swagger-ui-bundle-3.26.0.min.js`
+3. Open `workspaces/<space>/themes/base/layouts/system/spec-renderer.html` and update the `<script src=""></script>` tag that imports the swagger ui bundle
+
+    ```html
+    <script src="assets/js/third-party/swagger-ui-bundle-3.26.0.min.js"></script>
+    ```
+
+4. (If Applicable) Delete any swagger ui bundle script tags in `workspaces/<space>/themes/base/layouts/system/spec-renderer.html` that do not include `<SWAGGER-UI-VERSION>` in the bundled file name. Older versions of the templates do not include the version in the file name and should be replaced by the tag from step #3 above. Example of old swagger ui bundle script tag to delete:
+
+    ```html
+    <!-- Delete this tag if found -->
+    <script src="assets/js/third-party/swagger-ui-bundle.min.js"></script>
+    ```
+
+5. Delete the old swagger ui bundle file at `workspaces/<space>/themes/base/assets/js/third-party/swagger-ui-bundle-<OLD-SWAGGER-UI-VERSION>.min.js` or `workspaces/<space>/themes/base/assets/js/third-party/swagger-ui-bundle.min.js` for older templates that did not include the swagger ui bundle version in the file name.
