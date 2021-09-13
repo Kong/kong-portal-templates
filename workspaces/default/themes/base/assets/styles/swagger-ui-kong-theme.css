@@ -130,7 +130,6 @@
   cursor: pointer;
   position: relative;
   padding-left: 40px;
-  background-color: var(--white);
 }
 .sidebar-list ul li {
   padding: 0.3rem 0.2rem 0.3rem 0;
@@ -195,20 +194,19 @@
 }
 .sidebar-list ul li .submenu-items a {
   position:relative;
-  display: block;
   border-style: solid;
   border-width: 2px;
   /* pre-focus/hover this allows prevents page jank during change */
   border-color: transparent;
   line-height: 1.2;
   font-weight: normal;
-  padding: 2rem 1rem;
   text-align: start;
   white-space: break-spaces;
   color:var(--blue-500);
   text-transform: unset;
   height: unset;
-  width:unset;
+  display: inline-block;
+  width: calc(100% - 45px);
 }
 .sidebar-list ul li .submenu-items a:focus,
 .sidebar-list ul li .submenu-items a:active {
