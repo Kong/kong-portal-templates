@@ -11,8 +11,7 @@ pipeline {
     DOCKER_HOST = 'unix:///var/run/docker.sock'
     COMPOSE_PROJECT_NAME = "${env.GIT_COMMIT}"
     GITHUB_TOKEN = credentials('PORTAL_GITHUB_TOKEN')
-    DOCKER_REGISTRY = credentials('DOCKER_REGISTRY')
-    INTERNAL_DOCKER_REGISTRY = 'https://registry.kongcloud.io/v2'
+    DOCKER_REGISTRY = credentials('DOCKERHUB_KONGCLOUD_PULL')
   }
   stages {
     stage('Build') {
