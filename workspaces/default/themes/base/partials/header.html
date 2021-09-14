@@ -9,15 +9,14 @@
       </div>
 
       <input type="checkbox" id="header_nav" class="menu-toggle-checkbox" />
-      <nav class="eight columns" role="navigation">
-
+      <nav class="eight columns" role="navigation" aria-label="Header Navigation">
           {% if portal.auth and portal.auth ~= "" then %}
             {% context.local_menu = portal.menu %}
           {% else %}
             {% context.local_menu = portal.menu_no_auth   %}
           {% end %}
 
-          {(partials/menu.html)} 
+          {(partials/menu.html)}
 
       </nav>
     </div>

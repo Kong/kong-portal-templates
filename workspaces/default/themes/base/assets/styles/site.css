@@ -158,6 +158,10 @@ input.has-error {
   justify-content: space-between;
 }
 
+.site-header .top-menu {
+  margin-bottom: unset;
+}
+
 @media(max-width: 748px) {
   /* Mobile Toggle */
   .site-header .menu-toggle {
@@ -661,6 +665,7 @@ a.tag-link.is-active {
 .homepage-clients {
   padding: 100px 0;
   text-align: center;
+  list-style-type: none;
 }
 
 .homepage-clients .client {

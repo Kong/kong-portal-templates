@@ -1,8 +1,9 @@
-{% for _, menu_entry in each(context.local_menu) do %}
+<ul class="top-menu">
+  {% for _, menu_entry in each(context.local_menu) do %}
 
   {% if menu_entry.dynamic_title then
     menu_entry.title = include("{*" .. menu_entry.dynamic_title .. "*}")
-  end %}  
+  end %}
 
   {% if menu_entry.css_classes then %}
       {% menu_class = 'class="' %}
@@ -23,7 +24,7 @@
           {% if menu_entry.sub_menu then %}
             {% context.local_menu = menu_entry.sub_menu %}
             <ul>
-            {(partials/menu.html)}  
+            {(partials/menu.html)}
             </ul>
           {% end %}
         {% end %}
@@ -32,33 +33,35 @@
         {% if menu_entry.sub_menu then %}
           {% context.local_menu = menu_entry.sub_menu %}
           <ul>
-           {(partials/menu.html)}  
+           {(partials/menu.html)}
           </ul>
         {% end %}
       {% end %}
     {% end %}
   {% else %}
     {% if user.is_authenticated then %}
-      {% if menu_entry.hide_when_authenticated then %} 
+      {% if menu_entry.hide_when_authenticated then %}
 
       {% else %}
         <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
         {% if menu_entry.sub_menu then %}
           {% context.local_menu = menu_entry.sub_menu %}
           <ul>
-           {(partials/menu.html)}  
+           {(partials/menu.html)}
           </ul>
         {% end %}
-      {% end %}   
+      {% end %}
     {% else %}
       <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
       {% if menu_entry.sub_menu then %}
         {% context.local_menu = menu_entry.sub_menu %}
         <ul>
-         {(partials/menu.html)}  
+         {(partials/menu.html)}
         </ul>
       {% end %}
     {% end %}
   {% end %}
   </li>
 {% end %}
+
+</ul>
