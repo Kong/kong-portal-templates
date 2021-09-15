@@ -48,13 +48,13 @@ Apply the latest updates to your `default` workspace by merging in changes from 
 > Note: Updating the theme for the `default` workspace can also be done by merging all the changes from the `master` branch as described above. If you only want to update Kong's Swagger UI theme, you can do it manually like this:
 
 1. Download the new version of `swagger-ui-kong-theme-<HASH>.min.js`:
-    - **Raw:** [https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js](https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js)
-    - **Github:** [https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js](https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js)
-2. Place in your workspace at `workspaces/<space>/themes/base/assets/js/swagger-ui-kong-theme-dcc10d8.min.js`
+    - **Raw:** [https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-180e210.min.js](https://raw.githubusercontent.com/Kong/kong-portal-templates/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-180e210.min.js)
+    - **Github:** [https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-180e210.min.js](https://github.com/Kong/kong-portal-templates/blob/master/workspaces/default/themes/base/assets/js/swagger-ui-kong-theme-180e210.min.js)
+2. Place in your workspace at `workspaces/<space>/themes/base/assets/js/swagger-ui-kong-theme-180e210.min.js`
 3. Open `workspaces/<space>/themes/base/layouts/system/spec-renderer.html` and update the `<script src=""></script>` tag that imports the theme
 
     ```html
-    <script src="assets/js/swagger-ui-kong-theme-dcc10d8.min.js"></script>
+    <script src="assets/js/swagger-ui-kong-theme-180e210.min.js"></script>
     ```
 
 4. Delete the old theme file at `workspaces/<space>/themes/base/assets/js/swagger-ui-kong-theme-<OLDHASH>.min.js`
