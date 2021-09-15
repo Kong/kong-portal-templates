@@ -55,6 +55,10 @@ defined in your Kong `kong.conf`.
 - [Working with Templates](https://docs.konghq.com/enterprise/1.3-x/developer-portal/working-with-templates/)
 - [Portal CLI](https://docs.konghq.com/enterprise/1.3-x/developer-portal/helpers/cli/)
 
+### Template Updates
+
+To integrate updates from this repo into your portal, see the doc at [updating.md](updating.md)
+
 ## Libraries Used
 
 - [Lua Resty Template](https://github.com/bungle/lua-resty-template)
