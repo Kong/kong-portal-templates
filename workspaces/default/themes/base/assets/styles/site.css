@@ -158,7 +158,7 @@ input.has-error {
   justify-content: space-between;
 }
 
-.site-header .top-menu {
+.site-header nav > .top-menu {
   margin-bottom: unset;
 }
 
@@ -266,11 +266,18 @@ input.has-error {
     transition: all 0.5s ease;
     z-index: 99;
     left: 0;
-    right: 0;
     border-radius: 8px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     padding-top: 1em;
     display: none;
+  }
+
+  .site-header nav li.has-dropdown ul {
+    top: 2.1em;
+    left: .8em;
+    padding: unset;
+    margin: unset;
+    text-align: left;
   }
 
   .site-header nav > .has-dropdown:hover > a {
@@ -282,7 +289,7 @@ input.has-error {
   .site-header nav li ul:hover {
     visibility: visible;
     opacity: 1;
-    display: block;
+    display: inline-block;
   }
 
   /* Keyboard user support */
