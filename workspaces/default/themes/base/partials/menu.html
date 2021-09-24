@@ -23,18 +23,14 @@
           <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
           {% if menu_entry.sub_menu then %}
             {% context.local_menu = menu_entry.sub_menu %}
-            <ul>
             {(partials/menu.html)}
-            </ul>
           {% end %}
         {% end %}
       {% else %}
         <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
         {% if menu_entry.sub_menu then %}
           {% context.local_menu = menu_entry.sub_menu %}
-          <ul>
            {(partials/menu.html)}
-          </ul>
         {% end %}
       {% end %}
     {% end %}
@@ -46,18 +42,14 @@
         <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
         {% if menu_entry.sub_menu then %}
           {% context.local_menu = menu_entry.sub_menu %}
-          <ul>
            {(partials/menu.html)}
-          </ul>
         {% end %}
       {% end %}
     {% else %}
       <li {* menu_class *}><a href="{{menu_entry.url}}">{{menu_entry.title}}</a>
       {% if menu_entry.sub_menu then %}
         {% context.local_menu = menu_entry.sub_menu %}
-        <ul>
          {(partials/menu.html)}
-        </ul>
       {% end %}
     {% end %}
   {% end %}
