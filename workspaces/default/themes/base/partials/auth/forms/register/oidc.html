@@ -19,6 +19,16 @@
       var $FORM_ERROR = $FORM.find(".form-error-message")
       var fields = null
 
+      // oidc preauth claims mapping to inputs
+      {% context.preauth_claims = user.preauth_claims %}
+      {% if context.preauth_claims and next(context.preauth_claims) ~= nil then %}
+        {% for k, v in each(context.preauth_claims) do %}
+            if ('{{v}}') {
+              $('input#{{k}}').val('{{v}}')
+              $('input#{{k}}').prop('readonly', true)
+            }
+        {% end %}
+      {% end %}
 
       // Messaging
       var accountIsPendingEmailVerificationMessage = 'Thank you for registering! Please check your email to verify your account.'
