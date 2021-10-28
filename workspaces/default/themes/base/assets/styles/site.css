@@ -803,6 +803,22 @@ a.tag-link.is-active {
   width: 40rem;
 }
 
+.auth-page .left-pane .inner .title {
+  color: var(--text_headings,  #888888);
+  font-size: 3rem;
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+@media (min-width: 550px) {
+  .auth-page .left-pane .inner .title {
+    font-size: 3.6rem;
+  }
+}
+
 .auth-page .left-pane input {
   width: 100%;
 }
