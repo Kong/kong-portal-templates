@@ -407,7 +407,7 @@ input.has-error {
   border-bottom: 1px solid #eee;
 }
 
-.catalog-filter-component h2 {
+.catalog-filter-component h1 {
   color: var(--text_hero, white);
   font-size: 32px;
 }
