@@ -526,8 +526,8 @@ a.tag-link.is-active {
   text-align: left;
 }
 
-.catalog-item .catalog-details h2.catalog-title {
-  font-size: 2.4 rem;
+.catalog-item .catalog-details h1.catalog-title {
+  font-size: 2.4rem;
 }
 .catalog-item .catalog-details .catalog-title {
   color: var(--text_links, blue);

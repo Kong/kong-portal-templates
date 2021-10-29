@@ -1,4 +1,4 @@
-<div class="catalog-list">
+<section class="catalog-list">
   {% if #specs > 0 then %}
     {% for _, spec in each(specs) do %}
       {(partials/service-catalog/item.html, spec)}
@@ -8,7 +8,7 @@
       <h4>{{ l("catalog_no_results_header", "Nothing Found, Sorry") }}</h4>
     </div>
   {% end %}
-</div>
+</section>
 
 <div class="catalog-list__no-results toggle-content">
   <h4>{{ l("catalog_no_results_header", "Nothing Found, Sorry") }}</h4>
