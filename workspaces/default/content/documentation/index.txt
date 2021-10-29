@@ -7,5 +7,5 @@ hide_categories: false
 locale:
   catalog_no_results_header: "No Results Found"
   catalog_no_results_content: "No services matched your criteria. Try another query?"
-  catalog_categories_header_text: "Category"
+  catalog_categories_header_text: "Category Filter"
 ---
