@@ -615,8 +615,9 @@ a.tag-link.is-active {
   color: var(--text_hero, #FFFFFF);
 }
 
-.homepage-hero h2 {
+.homepage-hero h1 {
   margin-bottom: 1rem;
+  font-size: 4.2rem;
   color: var(--text_hero, #FFFFFF);
 }
 
