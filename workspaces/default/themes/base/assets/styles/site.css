@@ -442,7 +442,7 @@ a.tag-link .tag-link--name {
 
 a.tag-link .tag-link--count {
   float: right;
-  color: #888;
+  color: #666;
 }
 
 a.tag-link.is-active .tag-link--count {
