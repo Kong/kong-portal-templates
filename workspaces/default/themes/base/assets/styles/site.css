@@ -844,12 +844,17 @@ a.tag-link.is-active {
   width: 40%;
 }
 
+.auth-page .right-pane .inner h1,
 .auth-page .right-pane .inner h2,
 .auth-page .right-pane .inner h3,
 .auth-page .right-pane .inner h4,
 .auth-page .right-pane .inner h5,
 .auth-page .right-pane .inner p {
   color: var(--text_hero, white);
+}
+
+.auth-page .right-pane .inner h1 {
+  font-size: 3rem;
 }
 
 @media (min-width: 768px) {
