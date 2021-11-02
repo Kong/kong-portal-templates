@@ -1,7 +1,7 @@
 {% if not page.hide_categories then %}
-<div class="catalog-sidebar">
+<section class="catalog-sidebar">
   <div class="catalog-categories-component">
-    <h5>{{ l("catalog_categories_header_text", "Category Filter") }}</h5>
+    <h1>{{ l("catalog_categories_header_text", "Category Filter") }}</h1>
 
     {% for tag, count in each(tags) do %}
     <a data-tag="{{ tag:lower() }}" class="tag-link">
@@ -10,7 +10,7 @@
     </a>
     {% end %}
   </div>
-</div>
+</section>
 {% end %}
 
 

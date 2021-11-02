@@ -407,7 +407,7 @@ input.has-error {
   border-bottom: 1px solid #eee;
 }
 
-.catalog-filter-component h2 {
+.catalog-filter-component h1 {
   color: var(--text_hero, white);
   font-size: 32px;
 }
@@ -424,6 +424,10 @@ input.has-error {
  * Component - Catalog Sidebar Tags
  *****************************************/
 
+.catalog-sidebar h1 {
+  font-size: 2.4rem;
+}
+
 a.tag-link {
   display: block;
   padding: .5rem 1rem;
@@ -438,7 +442,7 @@ a.tag-link .tag-link--name {
 
 a.tag-link .tag-link--count {
   float: right;
-  color: #888;
+  color: #666;
 }
 
 a.tag-link.is-active .tag-link--count {
@@ -522,8 +526,8 @@ a.tag-link.is-active {
   text-align: left;
 }
 
-.catalog-item .catalog-details h2.catalog-title {
-  font-size: 2.4 rem;
+.catalog-item .catalog-details h1.catalog-title {
+  font-size: 2.4rem;
 }
 .catalog-item .catalog-details .catalog-title {
   color: var(--text_links, blue);
@@ -611,8 +615,9 @@ a.tag-link.is-active {
   color: var(--text_hero, #FFFFFF);
 }
 
-.homepage-hero h2 {
+.homepage-hero h1 {
   margin-bottom: 1rem;
+  font-size: 4.2rem;
   color: var(--text_hero, #FFFFFF);
 }
 
@@ -839,12 +844,17 @@ a.tag-link.is-active {
   width: 40%;
 }
 
+.auth-page .right-pane .inner h1,
 .auth-page .right-pane .inner h2,
 .auth-page .right-pane .inner h3,
 .auth-page .right-pane .inner h4,
 .auth-page .right-pane .inner h5,
 .auth-page .right-pane .inner p {
   color: var(--text_hero, white);
+}
+
+.auth-page .right-pane .inner h1 {
+  font-size: 3rem;
 }
 
 @media (min-width: 768px) {
