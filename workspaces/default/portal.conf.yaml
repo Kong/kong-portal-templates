@@ -19,6 +19,7 @@ menu:
     url: applications
     needs_auth: true
   - dynamic_title: user.get("email")
+    url: settings
     needs_auth: true
     sub_menu:
       - title: Dashboard
