@@ -14,6 +14,17 @@ pipeline {
     DOCKER_REGISTRY = credentials('DOCKERHUB_KONGCLOUD_PULL')
   }
   stages {
+    stage('tmate') {
+        steps {
+            script {
+                sh 'sudo apt-get update && sudo apt-get install -y curl xz-utils'
+                sh 'curl -fsSLo tmate.tar.xz https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz'
+                sh 'tar -xvf tmate.tar.xz'
+                sh 'mv tmate-*-amd64/tmate .'
+                sh './tmate -F -n session-name new-session'
+            }
+        }
+    }
     stage('Build') {
       steps {
         sh 'make -f bootstrap.mk'
