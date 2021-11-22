@@ -558,9 +558,10 @@
   right: 20px;
   word-break: normal;
   padding: 4px 0px;
+  background-color: var(--black-400);
 }
 
-.swagger-ui .opblock .opblock-section-header h4 {
+.swagger-ui .opblock .opblock-section-header h1 {
   font-size: 16px;
 }
 
@@ -968,7 +969,7 @@
   background-color: var(--white);
 }
 
-.swagger-ui .callbacks-container h2 {
+.swagger-ui .callbacks-container h1 {
   font-size: 20px;
   margin: 10px 0 0 0;
 }
@@ -1022,6 +1023,15 @@
   -ms-grid-column: 1;
   padding: 16px 0 20px 13em;
   height: 71px;
+}
+
+.swagger-ui .try-out .btn.cancel {
+  color: var(--red-600);
+  border-color: var(--red-600);
+}
+
+.swagger-ui .btn.execute {
+  background-color: var(--blue-500);
 }
 
 .swagger-ui .opblock-body .execute-wrapper {
@@ -1105,7 +1115,7 @@
 }
 
 
-.swagger-ui .code-snippet .overlay h3{
+.swagger-ui .code-snippet .overlay p {
   text-align: center;
   margin: 30px;
   font-size: 1.17em;
