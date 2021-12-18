@@ -73,10 +73,11 @@
               .addClass('is-visible')
               .text(response.fields[field])
           }
-        } else {
+        }  else {
+          const uiErrorMessage = data && data.message && typeof data.message  === "string" ? data.message : fallbackErrorMessage;
           $FORM_ERROR
             .addClass('is-visible')
-            .text(data.message || fallbackErrorMessage);
+            .text(uiErrorMessage);
         }
       }
 
