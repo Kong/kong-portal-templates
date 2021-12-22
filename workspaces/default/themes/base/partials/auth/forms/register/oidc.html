@@ -33,7 +33,6 @@
       // Messaging
       var accountIsPendingEmailVerificationMessage = 'Thank you for registering! Please check your email to verify your account.'
       var accountisPendingVerificationMessage = 'Thank you for registering! Your account is under admin review. You will be emailed once approved.'
-      var fallbackErrorMessage = 'An unexpected error occurred. Please try again.'
 
 
       // Submission variables
@@ -65,20 +64,6 @@
         }
       }
 
-      var getErrorMessage = function (response) {
-        try {
-          let tmp = '';
-          // Handle SMTP sending errors:
-          for (const email in response.message.error.emails) {
-            const errorMessage = response.message.error.emails[email];
-            tmp += '\n' + errorMessage;
-          }
-          return tmp;
-        } catch (error) {
-          return fallbackErrorMessage;
-        }
-      }
-
       var onError = function(data) {
         var response = data.xhr.responseJSON
         if (response && response.fields) {
@@ -90,7 +75,7 @@
               .text(response.fields[field])
           }
         } else {
-          const uiErrorMessage = getErrorMessage(data);
+          const uiErrorMessage = window.Kong.Utils.getErrorMessage(data);
           $FORM_ERROR
             .addClass('is-visible')
             .text(uiErrorMessage);
