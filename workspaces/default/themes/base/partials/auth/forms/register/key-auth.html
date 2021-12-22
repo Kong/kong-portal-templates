@@ -63,6 +63,20 @@
         }
       }
 
+      var getErrorMessage = function (response) {
+        try {
+          let tmp = '';
+          // Handle SMTP sending errors:
+          for (const email in response.message.error.emails) {
+            const errorMessage = response.message.error.emails[email];
+            tmp += '\n' + errorMessage;
+          }
+          return tmp;
+        } catch (error) {
+          return fallbackErrorMessage;
+        }
+      }
+
       var onError = function(data) {
         var response = data.xhr.responseJSON
         if (response && response.fields) {
@@ -74,7 +88,7 @@
               .text(response.fields[field])
           }
         }  else {
-          const uiErrorMessage = data && data.message && typeof data.message  === "string" ? data.message : fallbackErrorMessage;
+          const uiErrorMessage = getErrorMessage(data);
           $FORM_ERROR
             .addClass('is-visible')
             .text(uiErrorMessage);
