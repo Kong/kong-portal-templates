@@ -25,7 +25,6 @@
       // Messaging
       var accountIsPendingEmailVerificationMessage = 'Thank you for registering! Please check your email to verify your account.'
       var accountisPendingVerificationMessage = 'Thank you for registering! Your account is under admin review. You will be emailed once approved.'
-      var fallbackErrorMessage = 'An unexpected error occurred. Please try again.'
 
 
       // Submission variables
@@ -73,10 +72,11 @@
               .addClass('is-visible')
               .text(response.fields[field])
           }
-        } else {
+        }  else {
+          const uiErrorMessage = window.Kong.Utils.getErrorMessage(data);
           $FORM_ERROR
             .addClass('is-visible')
-            .text(data.message || fallbackErrorMessage);
+            .text(uiErrorMessage);
         }
       }
 
