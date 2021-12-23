@@ -46,6 +46,11 @@ window.Kong.Utils.serializeFieldsArrayToObject = function (fieldsArray) {
 };
 
 window.Kong.Utils.getErrorMessage = function (response) {
+
+  if (typeof response.message === "string") {
+    return response.message;
+  }
+
   try {
     // we want errors to be unique
     let foundErrors = new Set();
