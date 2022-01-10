@@ -51,9 +51,9 @@ defined in your Kong `kong.conf`.
 
 ### Templates Documentation
 
-- [Structure and Filetypes](https://docs.konghq.com/enterprise/1.3-x/developer-portal/structure-and-file-types/)
-- [Working with Templates](https://docs.konghq.com/enterprise/1.3-x/developer-portal/working-with-templates/)
-- [Portal CLI](https://docs.konghq.com/enterprise/1.3-x/developer-portal/helpers/cli/)
+- [Structure and Filetypes](https://docs.konghq.com/gateway/latest/developer-portal/structure-and-file-types/)
+- [Working with Templates](https://docs.konghq.com/gateway/latest/developer-portal/working-with-templates/)
+- [Portal CLI](https://docs.konghq.com/gateway/latest/developer-portal/helpers/cli/)
 
 ### Template Updates
 
