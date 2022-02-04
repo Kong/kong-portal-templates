@@ -12,10 +12,10 @@ colors:
     description: 'Background on pages'
   hero:
     value: '#003459'
-    description: 'Background for hero text on hompage, about, login, contact us...'
+    description: 'Background for hero text on homepage, about, login, contact us...'
   text_hero:
     value: '#FFFFFF'
-    description: Text on top of hero, used on homepage, about, login, contact us...
+    description: 'Text on top of hero, used on homepage, about, login, contact us...'
   footer:
     value: '#F7F9FA'
     description: 'Background on footer'
@@ -36,7 +36,7 @@ colors:
   text_links:
     # blue-600
     value: '#083C99'
-    descrption: 'Link color'
+    description: 'Link color'
   button_primary_fill:
     # green-400
     value: '#008036'
@@ -48,16 +48,16 @@ colors:
     value: '#FFFFFF'
     description: 'Text for Primary Button'
   button_secondary_fill:
-    description: 'Background for Secondary Button'
     value: '#FFFFFF'
+    description: 'Background for Secondary Button'
   button_secondary_fill_hover:
-    description: 'Hover background for Secondary Button'
     value: '#F0F9FF'
+    description: 'Hover background for Secondary Button'
   button_secondary_border:
-    description: 'Border Secondary Button'
     value: '#A3D9FF'
+    description: 'Border Secondary Button'
   button_secondary_text:
-    description: Text for Secondary Button
     value: '#21A66F'
+    description: 'Text for Secondary Button'
 images:
   logo: assets/images/logo-developers-light.png
