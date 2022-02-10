@@ -1,5 +1,5 @@
 name: Kong Portal
-app_version: 87d369b
+app_version: 1ba196f
 theme:
   name: base
 redirect:
