@@ -213,7 +213,7 @@
 .sidebar-list ul li .submenu-items a:active {
   border-style: solid;
 }
-.sidebar-list ul li .submenu-items li.active > a {
+.sidebar-list ul li .submenu-items li.active a {
   font-weight: 500;
 }
 
@@ -246,6 +246,11 @@
 }
 .sidebar-list ul li.method {
   display: flex;
+  align-items: center;
+}
+.sidebar-list ul li.method div.method-button-wrapper {
+  display: flex;
+  width: 100%;
   align-items: center;
 }
 
