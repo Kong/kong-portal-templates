@@ -1,0 +1,22 @@
+---
+layout: emails/email_base.html
+
+title: Email
+
+subject: Request to access Developer Portal {{portal.url}} service from {{email.developer_email}}
+heading: Hello Admin!
+---
+{{email.developer_name}} ({{email.developer_email}}) has requested application access for {{portal.url}}.
+<br>
+<p>
+  Requested workspace: {{email.workspace}}
+  <br>
+  Requested application: {{email.application_name}}
+  <br>
+  Requested service: {{email.service_name}}
+</p>
+<p>
+  Please visit <a href="{{email.admin_gui_url}}/{{email.workspace}}/applications/{{email.application_id}}#requested">
+    {{email.admin_gui_url}}/{{email.workspace}}/applications/{{email.application_id}}#requested
+  </a> to review this request.
+</p>
