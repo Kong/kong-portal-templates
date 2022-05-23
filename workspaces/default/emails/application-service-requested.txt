@@ -6,7 +6,8 @@ title: Email
 subject: Request to access Developer Portal {{portal.url}} service from {{email.developer_email}}
 heading: Hello Admin!
 ---
-{{email.developer_name}} ({{email.developer_email}}) has requested application access for {{portal.url}}.
+{{email.developer_name}} ({{email.developer_email}}) has requested application access for
+<a href="{{portal.url}}">{{portal.url}}</a>.
 <br>
 <p>
   Requested workspace: {{email.workspace}}
