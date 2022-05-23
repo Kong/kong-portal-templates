@@ -8,6 +8,4 @@ We are emailing you to let you know that your request for application access fro
 Developer Portal account at <a href="{{portal.url}}">{{portal.url}}</a> has been approved.
 <p>
   Application: {{email.application_name}}
-  <br>
-  Service: {{email.service_name}}
 </p>

@@ -13,8 +13,6 @@ heading: Hello Admin!
   Requested workspace: {{email.workspace}}
   <br>
   Requested application: {{email.application_name}}
-  <br>
-  Requested service: {{email.service_name}}
 </p>
 <p>
   Please visit <a href="{{email.admin_gui_url}}/applications/{{email.application_id}}#requested">
