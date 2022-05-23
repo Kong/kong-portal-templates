@@ -23,8 +23,8 @@ pipeline {
     stage('E2E') {
       when {
         anyOf {
-          branch 'master'
-          changeRequest target: 'master'
+          branch 'release/2.8.1.1'
+          changeRequest target: 'release/2.8.1.1'
         }
       }
       steps {
@@ -35,7 +35,7 @@ pipeline {
     stage('Portal Files') {
       when {
         anyOf {
-          branch 'master'
+          branch 'release/2.8.1.1'
         }
       }
       steps {
