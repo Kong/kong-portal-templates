@@ -16,7 +16,7 @@ heading: Hello Admin!
   Requested service: {{email.service_name}}
 </p>
 <p>
-  Please visit <a href="{{email.admin_gui_url}}/{{email.workspace}}/applications/{{email.application_id}}#requested">
-    {{email.admin_gui_url}}/{{email.workspace}}/applications/{{email.application_id}}#requested
+  Please visit <a href="{{email.admin_gui_url}}/applications/{{email.application_id}}#requested">
+    {{email.admin_gui_url}}/applications/{{email.application_id}}#requested
   </a> to review this request.
 </p>
