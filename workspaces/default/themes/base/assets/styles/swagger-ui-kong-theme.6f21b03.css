@@ -953,6 +953,14 @@
   -ms-grid-row: 1
 }
 
+.swagger-ui .opblock .opblock-summary .opblock-summary-path a.has-arrow,
+.swagger-ui .opblock .opblock-summary .opblock-summary-path__deprecated a.has-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .swagger-ui .opblock .opblock-summary .opblock-summary-path,
 .swagger-ui .opblock .opblock-summary .opblock-summary-path__deprecated {
   grid-column-start: 2;
@@ -1178,6 +1186,10 @@
   height: unset;
 }
 
+.swagger-ui .parameters .parameters-col_description .parameter-row-error  {
+  font-size: 12px;
+  color: var(--red-600);
+}
 
 /**************************************************************************
  * From templates repo, not sure if needed, consildating all css in one spot before removing
