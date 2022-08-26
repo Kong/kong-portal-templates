@@ -414,6 +414,12 @@
   box-shadow: none;
 }
 
+.swagger-ui .btn:focus {
+  outline: solid;
+  outline-color: var(--black-500);
+  transition: outline 1ms linear;
+}
+
 .swagger-ui .btn.authorize {
   color: rgb(0, 149, 255);
   border: 1px rgb(0, 149, 255) solid;
@@ -1184,6 +1190,10 @@
 
 .swagger-ui .parameters-col_description > select {
   height: unset;
+}
+
+.swagger-ui .parameters .error-parameter-name {
+  margin-bottom: 0;
 }
 
 .swagger-ui .parameters .parameters-col_description .parameter-row-error  {
