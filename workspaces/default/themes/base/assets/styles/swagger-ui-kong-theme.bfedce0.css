@@ -592,6 +592,10 @@
   padding: 12px 0;
 }
 
+.swagger-ui .opblock-tag .text-wrapper {
+  margin-bottom: 0;
+}
+
 .swagger-ui .opblock-tag .nostyle span {
   color: var(--black-70);
   font-size: 24px;
@@ -604,10 +608,32 @@
   font-size: 14px;
   color: var(--black-70);
   padding-left: 10px;
+  text-align: left;
 }
 
 .swagger-ui .opblock-tag small p {
   color: var(--black-70);
+}
+
+.swagger-ui .opblock-tag .arrow-wrapper {
+  padding: 0 30px;
+}
+
+.swagger-ui button.opblock-tag.opblock-tag-btn {
+  border-top: none;
+  height: auto;
+  border-left: none;
+  border-right: none;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  box-shadow: none;
+  border-radius: 0;
+  border-bottom-width: 1px;
+}
+.swagger-ui button.opblock-tag.opblock-tag-btn:focus,
+.swagger-ui button.opblock-tag.opblock-tag-btn:active {
+  border: none;
 }
 
 .swagger-ui .opblock .body-param .body-param-options label {
@@ -1206,6 +1232,33 @@
 .swagger-ui .parameters .parameters-col_description .parameter-row-error  {
   font-size: 12px;
   color: var(--red-600);
+}
+
+.swagger-ui .models button {
+  border: none;
+  width: 100%;
+  display: block;
+  padding: 0;
+}
+
+.swagger-ui section.models .flex-wrapper {
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+  margin: 0;
+  padding: 10px 20px 10px 10px;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: sans-serif;
+  color: #606060;
+}
+
+.swagger-ui section.models .flex-wrapper :first-child {
+  flex: 1;
+  text-align: left;
+}
+.swagger-ui section.models .flex-wrapper svg {
+  transition: all .4s;
 }
 
 /**************************************************************************
