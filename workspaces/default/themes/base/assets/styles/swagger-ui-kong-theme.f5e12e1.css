@@ -1241,6 +1241,10 @@
   padding: 0;
 }
 
+.swagger-ui .toggle-model-icon .arrow.opened {
+  margin-left: 10px;
+}
+
 .swagger-ui section.models .flex-wrapper {
   display: flex;
   font-size: 16px;
