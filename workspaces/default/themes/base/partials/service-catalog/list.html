@@ -1,6 +1,10 @@
 <section class="catalog-list">
   {% if #specs > 0 then %}
     {% for _, spec in each(specs) do %}
+      {# You can expose any spec properties by adding them to the table below #}
+      {# If you want to enable frontend search on these fields, please update the updateSearchParams #}
+      {# function arguments in sidebar.html #}
+      {% spec.json = json_encode({ info = spec.parsed.info, tags = spec.parsed.tags or {} }) %}
       {(partials/service-catalog/item.html, spec)}
     {% end %}
   {% else %}

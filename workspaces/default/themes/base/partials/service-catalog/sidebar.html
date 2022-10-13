@@ -15,147 +15,172 @@
 
 
 <script type="text/javascript">
-  window.addEventListener("load", function() {
+  window.addEventListener("load", function () {
     var $CATALOG_TAG_LINKS = $(".tag-link");
     var $CATALOG_ITEMS = $(".catalog-item");
-    var $CATALOG_FILTER = $(".catalog-filter");
+    var $CATALOG_FILTER_INPUT = $(".catalog-filter");
     var $CATALOG_LIST_NO_RESULTS = $(".catalog-list__no-results");
 
-    // returns hashmap where keys are tags and values are count of items
-    var generateTagList = function() {
-      var output = {};
-
-      $CATALOG_ITEMS.each(function(i, elem) {
-        var tags = elem.dataset.tags;
-        var value = 0;
-
-        value = elem.classList.contains("search-filtered") ? 0 : 1;
-
-        if (tags) {
-          tags = tags.split(",").filter(function(v) {
-            return v;
-          });
-
-          tags.forEach(function(tag) {
-            if (output[tag]) {
-              output[tag] += value;
-            } else {
-              output[tag] = value;
-            }
-          });
-        }
-      });
-
-      return output;
+    var searchParams = {
+      activeTag: null,
+      phrase: "",
     };
 
-    // update sidebar tag list counters, hide tags when empty
-    var updateCategories = function() {
-      var tags = generateTagList();
-      var activeTag = $CATALOG_TAG_LINKS.filter(".is-active");
-
-      Object.keys(tags).forEach(function(tag) {
-        var elem = $CATALOG_TAG_LINKS.filter('[data-tag="' + tag + '"]');
-        var count = tags[tag];
-        elem.find(".tag-link--count").text(count);
-
-        if (elem.hasClass('is-active') && count === 0) {
-          $CATALOG_LIST_NO_RESULTS.show();
-        }
+    var catalogItems = [];
+    $CATALOG_ITEMS.each(function (index, element) {
+      var data = $(element).data("json");
+      var tags = Object.keys(data.tags || {}).map(function (key) {
+        return data.tags[key].name.toLowerCase();
       });
-    };
 
-    var filterArrayByTagData = function(tag) {
-      return function(index, elem) {
-        return elem.dataset.tags.indexOf(tag) < 0;
+      catalogItems.push({
+        data: data,
+        tags: tags,
+        element: element,
+      });
+    });
+
+    var categories = {};
+    $CATALOG_TAG_LINKS.each(function (index, element) {
+      var tag = $(element).data("tag");
+      var countElement = $(element).find(".tag-link--count");
+
+      categories[tag] = {
+        tag: tag,
+        element: element,
+        countElement: countElement,
+        count: parseInt(countElement.text(), 10),
       };
-    };
+    });
 
-    var filterArrayByValue = function (value) {
-      return $CATALOG_ITEMS
-        .filter(":not(.tag-filtered)")
-        .filter(function(i, elem) {
-          return elem.innerText.toLowerCase().indexOf(value) < 0;
-        });
+    var filteredCatalogItems = catalogItems;
+
+    function countCatalogItemsForTag (tag) {
+      var count = 0;
+
+      for (let item of catalogItems) {
+        if (item.tags && item.tags.indexOf(tag) !== -1) {
+          count++;
+        }
+      }
+
+      return count;
     }
 
-    var filterCatalogListByTag = function(tag) {
-      $CATALOG_ITEMS
-        .filter(filterArrayByTagData(tag))
-        .toggleClass("tag-filtered");
+    function updateCategoriesDOM() {
+      Object.keys(categories).forEach(function (key) {
+        var category = categories[key];
 
-      $CATALOG_ITEMS
-        .filter(":not(.search-filtered)")
-        .filter(filterArrayByTagData(tag))
-        .toggleClass("is-visible");
-    };
+        $(category.countElement).text(countCatalogItemsForTag(category.tag));
 
-    var filterCatalogListByValue = function(value) {
-      var filteredItems = $CATALOG_ITEMS
-        .filter(function(i, elem) {
-          return elem.innerText.toLowerCase().indexOf(value) < 0;
-        });
+        if (category.tag === searchParams.activeTag) {
+          $(category.element).addClass("is-active");
+        } else {
+          $(category.element).removeClass("is-active");
+        }
+      })
+    }
 
-      if (filteredItems.length === $CATALOG_ITEMS.length) {
+    function updateItemsDOM() {
+      catalogItems.forEach(function (catalogItem) {
+        $(catalogItem.element).removeClass("is-visible");
+        $(catalogItem.element).css("order", "initial");
+      })
+
+      filteredCatalogItems.forEach(function (filteredItem, index) {
+        $(filteredItem.element).addClass("is-visible");
+        $(filteredItem.element).css("order", index + 1);
+      });
+
+      if (filteredCatalogItems.length === 0) {
         $CATALOG_LIST_NO_RESULTS.show();
       } else {
         $CATALOG_LIST_NO_RESULTS.hide();
       }
+    }
 
-      filteredItems.removeClass("is-visible").addClass("search-filtered");
-    };
+    function updateDOM() {
+      updateCategoriesDOM();
+      updateItemsDOM();
+    }
 
-    var clearTagFilters = function(event) {
-      $CATALOG_LIST_NO_RESULTS.hide();
-      $CATALOG_TAG_LINKS.removeClass("is-active");
+    function updateSearchParams(obj) {
+      if (obj.hasOwnProperty("activeTag")) {
+        searchParams.activeTag = obj.activeTag;
+      }
 
-      $CATALOG_ITEMS
-        .filter(":not(.is-visible,.search-filtered)")
-        .addClass("is-visible");
+      if (obj.hasOwnProperty("phrase")) {
+        searchParams.phrase = obj.phrase;
+      }
 
-      $CATALOG_ITEMS.removeClass("tag-filtered");
-    };
+      var items = catalogItems;
+      if (searchParams.activeTag) {
+        items = items.filter(function (item) {
+          return item.tags.indexOf(searchParams.activeTag) !== -1;
+        })
+      }
 
-    var clearSearchFilters = function(event) {
-      $CATALOG_LIST_NO_RESULTS.hide();
+      var phrase = searchParams.phrase;
+      // Start searching when phrase has at least 3 characters
+      if (phrase.length < 3) {
+        phrase = "";
+      }
 
-      $CATALOG_ITEMS
-        .filter(":not(.tag-filtered).search-filtered")
-        .addClass("is-visible");
+      // You can provide any keys to search specs by as long as they're included in the item's data-json attribute
+      // See service-catalog/item.html and Kong.Utils.searchSimilar docs for more details
+      filteredCatalogItems = Kong.Utils.searchSimilar(
+        items,
+        phrase,
+        {
+          keys: [
+            {
+              key: "data.info.title",
+              weight: 3,
+            },
+            {
+              key: "data.info.description",
+            },
+            {
+              key: "data.tags",
+              weight: 2,
+            },
+          ],
+          threshold: 1,
+        }
+      );
 
-      $CATALOG_ITEMS.removeClass("search-filtered");
-    };
+      updateDOM();
+    }
 
     var onClickCategory = function(event) {
       event.preventDefault();
 
       var target = $(this);
-      if (!target.hasClass("is-active")) {
-        clearTagFilters();
-      }
-      target.toggleClass("is-active");
+      var tag = target.data("tag");
 
-      filterCatalogListByTag(target.data("tag"));
-      updateCategories();
-      onInputFilter();
+      if (searchParams.activeTag === tag) {
+        // Unset the tag if it's active
+        updateSearchParams({
+          activeTag: null,
+        });
+      } else {
+        updateSearchParams({
+          activeTag: tag,
+        })
+      }
     };
 
     var onInputFilter = function() {
-      var value = $CATALOG_FILTER.val().toLowerCase();
+      var value = $CATALOG_FILTER_INPUT.val();
 
-      clearSearchFilters();
-
-      if (value) {
-        filterCatalogListByValue(value);
-        updateCategories();
-      } else {
-        updateCategories();
-      }
+      updateSearchParams({
+        phrase: value,
+      });
     };
 
     $(document).on("click", ".tag-link", onClickCategory);
 
-    $CATALOG_FILTER.on(
+    $CATALOG_FILTER_INPUT.on(
       "keydown",
       Kong.Utils.debounce(function() {
         onInputFilter();
