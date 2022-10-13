@@ -66,7 +66,7 @@ window.Kong.Utils.getErrorMessage = function (response) {
 };
 
 /**
- * Get value of specified descendent property of an object or object array.
+ * Get value of specified nested property of an object or object array.
  *
  * The `key` argument accepts dot characters (`.`) to deeply traverse input objects
  * and asterisk characters (`*`) to select all properties of currently selected object.
@@ -94,13 +94,13 @@ window.Kong.Utils.getErrorMessage = function (response) {
  *
  *   `tags.*.name` key will get the values of the `name` property in all object properties inside the `tags` object.
  *
- * @param {Object|Object[]} objOrObjs - An object or array of objects to extract the values from
+ * @param {Object|Object[]} data - An object or array of objects to extract the values from
  * @param {string} key - Key to get the properties from given object(s)
  * @returns {string[]} Values of requested properties
  */
-window.Kong.Utils.getDescendantProperties = function (objOrObjs, key) {
-  if (!Array.isArray(objOrObjs)) {
-    objOrObjs = [objOrObjs];
+window.Kong.Utils.getNestedProperties = function (data, key) {
+  if (!Array.isArray(data)) {
+    data = [data];
   }
 
   var tree = key.split(".");
@@ -109,7 +109,7 @@ window.Kong.Utils.getDescendantProperties = function (objOrObjs, key) {
 
   if (currentKey === "*") {
     // Find all keys of given object if current key is *
-    newObjs = objOrObjs.reduce(function (acc, obj) {
+    newObjs = data.reduce(function (acc, obj) {
       Object.keys(obj).forEach(function (key) {
         acc.push(obj[key]);
       })
@@ -117,14 +117,14 @@ window.Kong.Utils.getDescendantProperties = function (objOrObjs, key) {
     }, []);
   } else {
     // Select the requested key from all input objects
-    newObjs = objOrObjs.map(function (obj) {
+    newObjs = data.map(function (obj) {
       return obj[currentKey];
     });
   }
 
   if (tree.length > 0) {
     // Recursively process nested objects
-    return window.Kong.Utils.getDescendantProperties(
+    return window.Kong.Utils.getNestedProperties(
       newObjs,
       tree.join("."),
     );
@@ -219,15 +219,15 @@ window.Kong.Utils.searchSimilar = function(items, phrase, options) {
 
       var weight = keyConfig.weight || 1;
 
-      window.Kong.Utils.getDescendantProperties(item, key).forEach(function (valueOrValues) {
+      window.Kong.Utils.getNestedProperties(item, key).forEach(function (data) {
         // The final selected property value can either have a string-like type or array of string-like types
-        if (!Array.isArray(valueOrValues)) {
-          valueOrValues = [valueOrValues];
+        if (!Array.isArray(data)) {
+          data = [data];
         }
 
         // Calculate score for all array items and get *only* the highest one.
         // This is a "one of" search
-        score += valueOrValues
+        score += data
           .map(function (value) {
             return window.Kong.Utils.getStringSimilarity((value || "").toString(), phrase, options.nGram) * weight;
           })
