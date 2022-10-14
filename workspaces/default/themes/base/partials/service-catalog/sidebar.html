@@ -16,10 +16,10 @@
 
 <script type="text/javascript">
   window.addEventListener("load", function () {
-    var tagLinkElements = document.querySelectorAll('.tag-link');
-    var catalogItemElements = document.querySelectorAll('.catalog-item');
-    var filterInputElement = document.querySelector('.catalog-filter');
-    var noResultsElement = document.querySelector('.catalog-list__no-results');
+    var tagLinkElements = document.querySelectorAll(".tag-link");
+    var catalogItemElements = document.querySelectorAll(".catalog-item");
+    var filterInputElement = document.querySelector(".catalog-filter");
+    var noResultsElement = document.querySelector(".catalog-list__no-results");
 
     var searchParams = {
       activeTag: null,
@@ -27,7 +27,7 @@
     };
 
     var catalogItems = [];
-    catalogItemElements.forEach(function (element) {
+    Array.prototype.forEach.call(catalogItemElements, function (element) {
       var data = JSON.parse(element.dataset.json);
       var tags = Object.keys(data.tags || {}).map(function (key) {
         return data.tags[key].name.toLowerCase();
@@ -41,9 +41,9 @@
     });
 
     var categories = {};
-    tagLinkElements.forEach(function (element) {
+    Array.prototype.forEach.call(tagLinkElements, function (element) {
       var tag = element.dataset.tag;
-      var countElement = element.querySelector('.tag-link--count');
+      var countElement = element.querySelector(".tag-link--count");
 
       categories[tag] = {
         tag: tag,
@@ -52,7 +52,7 @@
         count: parseInt(countElement.innerText, 10),
       };
 
-      element.addEventListener('click', onClickCategory);
+      element.addEventListener("click", onClickCategory);
     });
 
     var filteredCatalogItems = catalogItems;
@@ -176,6 +176,6 @@
       });
     }
 
-    filterInputElement.addEventListener('keydown', Kong.Utils.debounce(onInputFilter, 80));
+    filterInputElement.addEventListener("keydown", Kong.Utils.debounce(onInputFilter, 80));
   });
 </script>
