@@ -55,20 +55,11 @@
 
     var filteredCatalogItems = catalogItems;
 
-    function countCatalogItemsForTag (tag) {
-      return catalogItems.reduce(function(sum, item) {
-        if (item.tags && item.tags.indexOf(tag) !== -1) {
-          sum += 1;
-        }
-        return sum;
-      }, 0);
-    }
-
     function updateCategoriesDOM() {
       Object.keys(categories).forEach(function (key) {
         var category = categories[key];
 
-        $(category.countElement).text(countCatalogItemsForTag(category.tag));
+        $(category.countElement).text(category.count);
 
         if (category.tag === searchParams.activeTag) {
           $(category.element).addClass("is-active");
@@ -110,13 +101,6 @@
         searchParams.phrase = obj.phrase;
       }
 
-      var items = catalogItems;
-      if (searchParams.activeTag) {
-        items = items.filter(function (item) {
-          return item.tags.indexOf(searchParams.activeTag) !== -1;
-        })
-      }
-
       var phrase = searchParams.phrase;
       // Start searching when phrase has at least 3 characters
       if (phrase.length < 3) {
@@ -126,7 +110,7 @@
       // You can provide any keys to search specs by as long as they're included in the item's data-json attribute
       // See service-catalog/item.html and Kong.Utils.searchSimilar docs for more details
       filteredCatalogItems = Kong.Utils.searchSimilar(
-        items,
+        catalogItems,
         phrase,
         {
           keys: [
@@ -146,10 +130,26 @@
         }
       );
 
+      // Update category results count before filtering out catalog items by tag
+      Object.keys(categories).forEach(function (key) {
+        var category = categories[key];
+
+        category.count = filteredCatalogItems.filter(function (item) {
+          return item.tags.indexOf(category.tag) !== -1;
+        }).length;
+      });
+
+      // Filter out catalog items not having the selected tag
+      if (searchParams.activeTag) {
+        filteredCatalogItems = filteredCatalogItems.filter(function (item) {
+          return item.tags.indexOf(searchParams.activeTag) !== -1;
+        })
+      }
+
       updateDOM();
     }
 
-    var onClickCategory = function(event) {
+    function onClickCategory (event) {
       event.preventDefault();
 
       var target = $(this);
@@ -167,7 +167,7 @@
       }
     };
 
-    var onInputFilter = function() {
+    function onInputFilter () {
       var value = $CATALOG_FILTER_INPUT.val();
 
       updateSearchParams({
