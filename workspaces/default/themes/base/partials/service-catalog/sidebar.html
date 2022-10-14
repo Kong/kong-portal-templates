@@ -16,10 +16,10 @@
 
 <script type="text/javascript">
   window.addEventListener("load", function () {
-    var $CATALOG_TAG_LINKS = $(".tag-link");
-    var $CATALOG_ITEMS = $(".catalog-item");
-    var $CATALOG_FILTER_INPUT = $(".catalog-filter");
-    var $CATALOG_LIST_NO_RESULTS = $(".catalog-list__no-results");
+    var tagLinkElements = document.querySelectorAll('.tag-link');
+    var catalogItemElements = document.querySelectorAll('.catalog-item');
+    var filterInputElement = document.querySelector('.catalog-filter');
+    var noResultsElement = document.querySelector('.catalog-list__no-results');
 
     var searchParams = {
       activeTag: null,
@@ -27,8 +27,8 @@
     };
 
     var catalogItems = [];
-    $CATALOG_ITEMS.each(function (index, element) {
-      var data = $(element).data("json");
+    catalogItemElements.forEach(function (element) {
+      var data = JSON.parse(element.dataset.json);
       var tags = Object.keys(data.tags || {}).map(function (key) {
         return data.tags[key].name.toLowerCase();
       });
@@ -41,16 +41,18 @@
     });
 
     var categories = {};
-    $CATALOG_TAG_LINKS.each(function (index, element) {
-      var tag = $(element).data("tag");
-      var countElement = $(element).find(".tag-link--count");
+    tagLinkElements.forEach(function (element) {
+      var tag = element.dataset.tag;
+      var countElement = element.querySelector('.tag-link--count');
 
       categories[tag] = {
         tag: tag,
         element: element,
         countElement: countElement,
-        count: parseInt(countElement.text(), 10),
+        count: parseInt(countElement.innerText, 10),
       };
+
+      element.addEventListener('click', onClickCategory);
     });
 
     var filteredCatalogItems = catalogItems;
@@ -59,31 +61,31 @@
       Object.keys(categories).forEach(function (key) {
         var category = categories[key];
 
-        $(category.countElement).text(category.count);
+        category.countElement.innerText = category.count;
 
         if (category.tag === searchParams.activeTag) {
-          $(category.element).addClass("is-active");
+          category.element.classList.add("is-active");
         } else {
-          $(category.element).removeClass("is-active");
+          category.element.classList.remove("is-active");
         }
       })
     }
 
     function updateItemsDOM() {
       catalogItems.forEach(function (catalogItem) {
-        $(catalogItem.element).removeClass("is-visible");
-        $(catalogItem.element).css("order", "initial");
+        catalogItem.element.classList.remove("is-visible");
+        catalogItem.element.style.order = "initial";
       })
 
       filteredCatalogItems.forEach(function (filteredItem, index) {
-        $(filteredItem.element).addClass("is-visible");
-        $(filteredItem.element).css("order", index + 1);
+        filteredItem.element.classList.add("is-visible");
+        filteredItem.element.style.order = index + 1;
       });
 
       if (filteredCatalogItems.length === 0) {
-        $CATALOG_LIST_NO_RESULTS.show();
+        noResultsElement.style.display = "block";
       } else {
-        $CATALOG_LIST_NO_RESULTS.hide();
+        noResultsElement.style.display = "none";
       }
     }
 
@@ -152,8 +154,7 @@
     function onClickCategory (event) {
       event.preventDefault();
 
-      var target = $(this);
-      var tag = target.data("tag");
+      var tag = event.target.dataset.tag;
 
       if (searchParams.activeTag === tag) {
         // Unset the tag if it's active
@@ -165,23 +166,16 @@
           activeTag: tag,
         })
       }
-    };
+    }
 
-    function onInputFilter () {
-      var value = $CATALOG_FILTER_INPUT.val();
+    function onInputFilter (event) {
+      var value = event.target.value;
 
       updateSearchParams({
         phrase: value,
       });
-    };
+    }
 
-    $(document).on("click", ".tag-link", onClickCategory);
-
-    $CATALOG_FILTER_INPUT.on(
-      "keydown",
-      Kong.Utils.debounce(function() {
-        onInputFilter();
-      }, 80)
-    );
+    filterInputElement.addEventListener('keydown', Kong.Utils.debounce(onInputFilter, 80));
   });
 </script>
