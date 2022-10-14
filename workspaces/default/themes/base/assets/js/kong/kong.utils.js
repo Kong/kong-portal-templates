@@ -174,8 +174,8 @@ window.Kong.Utils.getStringSimilarity = function (a, b, nGram) {
     return res;
   }
 
-  var aPairs = getNGramPairs(a, nGram);
-  var bPairs = getNGramPairs(b, nGram);
+  var aPairs = getNGramPairs(a);
+  var bPairs = getNGramPairs(b);
 
   var matches = bPairs.filter(function (pair) {
     return aPairs.indexOf(pair) !== -1;

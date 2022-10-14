@@ -56,15 +56,12 @@
     var filteredCatalogItems = catalogItems;
 
     function countCatalogItemsForTag (tag) {
-      var count = 0;
-
-      for (let item of catalogItems) {
+      return catalogItems.reduce(function(sum, item) {
         if (item.tags && item.tags.indexOf(tag) !== -1) {
-          count++;
+          sum += 1;
         }
-      }
-
-      return count;
+        return sum;
+      }, 0);
     }
 
     function updateCategoriesDOM() {
