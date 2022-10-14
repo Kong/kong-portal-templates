@@ -1,6 +1,6 @@
 <a
   href="{{string.sub(route, 2)}}"
-  data-tags="{% for _, tag in pairs(parsed.tags or {}) do %}{{tag.name:lower()}},{% end %}"
+  data-json="{{ json }}"
   class="catalog-item toggle-content is-visible">
   <div class="catalog-logo">
     {{parsed.info.title:sub(0,2)}}
