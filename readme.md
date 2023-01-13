@@ -2,6 +2,8 @@
 
 Developer Portal Template Files for Kong Enterprise Edition
 
+>IMPORTANT: These templates are **not** compatible with [Konnect](https://docs.konghq.com/konnect/). Only the on-premise enterprise version of Kong is compatible.
+
 >NOTE: These templates are for use with Kong Developer Portal `v1.3` and above. Please checkout https://github.com/Kong/kong-portal-templates/master-legacy for `v0.36.*` and below.
 
 ## Requirements
