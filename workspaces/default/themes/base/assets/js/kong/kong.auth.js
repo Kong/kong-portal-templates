@@ -18,7 +18,7 @@ window.Kong.Auth.BASIC_AUTH = {
   FIELDS: ['email', 'password'],
   getHeaders: function(fields) {
     return {
-      "Authorization": "Basic " + btoa(fields.email + ":" + fields.password)
+      "Authorization": "Basic " + btoa(unescape(encodeURIComponent(fields.email + ":" + fields.password)))
     }
   }
 }
