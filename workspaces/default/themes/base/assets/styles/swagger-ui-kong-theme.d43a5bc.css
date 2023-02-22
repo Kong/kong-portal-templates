@@ -579,8 +579,12 @@
   background-color: var(--black-400);
 }
 
-.swagger-ui .opblock .opblock-section-header h1 {
+.swagger-ui .opblock .opblock-section-header h3 {
+  color: var(--black-400);
+  font-family: sans-serif;
   font-size: 16px;
+  flex: 1;
+  margin: 0;
 }
 
 .swagger-ui .opblock .body-param {
@@ -725,8 +729,12 @@
   width: 13em;
 }
 
-.swagger-ui .parameters thead {
-  display: none;
+.swagger-ui .parameters thead .parameters-col_description {
+  width: unset;
+}
+
+.swagger-ui .parameters thead .col_header {
+  border-bottom: 1px solid #E6E6E6;
 }
 
 .swagger-ui .parameters .parameters-col_name {
@@ -856,7 +864,6 @@
 .swagger-ui .opblock-body .live-responses-table .response-col_status  {
   display: flex;
   text-align: center;
-  padding-left: 30px;
 }
 .swagger-ui .opblock-body .live-responses-table .response-col_status:empty {
   display: none;
@@ -886,7 +893,7 @@
   display: none;
 }
 
-.swagger-ui .opblock-body .responses-table .response-col_description div > h5{
+.swagger-ui .opblock-body .responses-table .response-col_description div > h5 {
   display: none;
 }
 
@@ -927,6 +934,13 @@
 /* hides the "Responses", "Url", "Server Response" above the example responses hidden by js when live response is active   */
 .swagger-ui .responses-inner > div > h4 {
   display: none;
+}
+
+.swagger-ui .responses-inner h3, .swagger-ui .responses-inner h5 {
+  font-size: 12px;
+  margin: 10px 0 5px;
+  font-family: sans-serif;
+  color: var(--black-400,#3b4151);
 }
 
 .swagger-ui .opblock-body .right-side-wrapper pre span {

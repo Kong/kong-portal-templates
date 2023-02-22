@@ -345,7 +345,7 @@ input.has-error {
   padding: 2.5rem 0;
 }
 
-.site-footer h1 {
+.site-footer .brand {
   color: inherit;
   font-size: 1.4rem;
   text-transform: uppercase;
