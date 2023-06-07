@@ -35,3 +35,7 @@ jobs:
         run: |
           make build
 
+      - name: Make run-e2e-kong-oauth
+        run: |
+          run-e2e-kong-oauth
+
