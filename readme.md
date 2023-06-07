@@ -59,7 +59,7 @@ defined in your Kong `kong.conf`.
 
 ### Template Updates
 
-To integrate updates from this repo into your portal, see the doc at [updating.md](updating.md)
+To integrate updates from this repo into your portal, see the doc at [updating.md](updating.md).
 
 ## Libraries Used
 
