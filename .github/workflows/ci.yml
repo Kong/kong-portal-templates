@@ -4,9 +4,34 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 on:
   workflow_dispatch:
+  # push:
+  #   branches:
+  #     - master
+
+env:
+  COMPOSE_PROJECT_NAME: ${{ github.sha }}
+  DOCKER_REGISTRY_USR: ${{ secrets.GHA_DOCKERHUB_PULL_USER }}
+  DOCKER_REGISTRY_PSW: ${{ secrets.GHA_KONG_ORG_DOCKERHUB_PUBLIC_TOKEN }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, World!"
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: checkout kong portal tools
+        uses: actions/checkout@v3
+        with:
+          repository: Kong/kong-portal-tools
+          path: kong-portal-tools
+          token: ${{ secrets.GHA_KONG_BOT_READ_TOKEN }}
+
+      - name: copy kong-portal-tools/kong-portal-ci to current dir
+        run: |
+          cp -a kong-portal-tools/kong-portal-ci/. .
+
+      - name: Make build
+        run: |
+          make build
+
