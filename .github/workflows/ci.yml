@@ -35,7 +35,47 @@ jobs:
         run: |
           make build
 
+  e2e-kong-oauth:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: checkout kong portal tools
+        uses: actions/checkout@v3
+        with:
+          repository: Kong/kong-portal-tools
+          path: kong-portal-tools
+          token: ${{ secrets.GHA_KONG_BOT_READ_TOKEN }}
+
+      - name: copy kong-portal-tools/kong-portal-ci to current dir
+        run: |
+          cp -a kong-portal-tools/kong-portal-ci/. .
+
       - name: Make run-e2e-kong-oauth
         run: |
           make run-e2e-kong-oauth
+
+  run-e2e-external-oauth:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: checkout kong portal tools
+        uses: actions/checkout@v3
+        with:
+          repository: Kong/kong-portal-tools
+          path: kong-portal-tools
+          token: ${{ secrets.GHA_KONG_BOT_READ_TOKEN }}
+
+      - name: copy kong-portal-tools/kong-portal-ci to current dir
+        run: |
+          cp -a kong-portal-tools/kong-portal-ci/. .
+
+      - name: Make run-e2e-external-oauth
+        run: |
+          make run-e2e-external-oauth
 
