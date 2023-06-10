@@ -47,7 +47,7 @@ jobs:
           make run-e2e-external-oauth
 
       - name: Make create-portal-files
-        # if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |
           make create-portal-files
         env:
