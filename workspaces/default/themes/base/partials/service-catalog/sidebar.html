@@ -154,7 +154,7 @@
     function onClickCategory (event) {
       event.preventDefault();
 
-      var tag = event.target.dataset.tag;
+      var tag = event.currentTarget.dataset.tag;
 
       if (searchParams.activeTag === tag) {
         // Unset the tag if it's active
