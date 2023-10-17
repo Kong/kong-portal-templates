@@ -529,6 +529,7 @@ a.tag-link.is-active {
 
 .catalog-item .catalog-details h1.catalog-title {
   font-size: 2.4rem;
+  word-wrap: break-word;
 }
 .catalog-item .catalog-details .catalog-title {
   color: var(--text_links, blue);
