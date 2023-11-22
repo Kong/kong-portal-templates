@@ -1,5 +1,5 @@
 name: Kong Portal
-app_version: 666c294
+app_version: 17a208c
 theme:
   name: base
 redirect:
@@ -10,7 +10,7 @@ redirect:
   pending_approval: ''
   pending_email_verification: ''
 
-# main menu 
+# main menu
 menu:
   - title: Catalog
     url: documentation
@@ -27,7 +27,7 @@ menu:
         needs_auth: true
       - title: Logout
         url: logout
-        needs_auth: true     
+        needs_auth: true
   - title: Login
     url: login
     needs_auth: false
@@ -42,14 +42,14 @@ menu:
     - btn-secondary
 
 
-# main menu if authentication is not enabled in dev portal 
+# main menu if authentication is not enabled in dev portal
 menu_no_auth:
   - title: Catalog
     url: documentation
     needs_auth: false
 
 # menu examples
-# menu:    
+# menu:
 #   - title: Catalog
 #     url: documentation
 #     needs_auth: false
@@ -72,7 +72,7 @@ menu_no_auth:
 #         needs_auth: false
 #       - title: Sub Auth
 #         url: sub-page2
-#         needs_auth: true     
+#         needs_auth: true
 #   - title: My Apps
 #     url: applications
 #     needs_auth: true
