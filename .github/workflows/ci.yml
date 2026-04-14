@@ -28,6 +28,7 @@ jobs:
           repository: Kong/kong-portal-tools
           path: kong-portal-tools
           token: ${{ secrets.GHA_KONG_BOT_READ_TOKEN }}
+          ref: chore/update-portal-files-builder
 
       - run: echo "COMPOSE_PROJECT_NAME=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
@@ -48,7 +49,6 @@ jobs:
           make run-e2e-external-oauth
 
       - name: Make create-portal-files
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run: |
           make create-portal-files
         env:
